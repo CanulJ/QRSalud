@@ -1,13 +1,18 @@
-<mat-card appearance="outlined" class="login-card">
+<div class="card login-card">
   <div class="login-container">
-    <h2>Iniciar Sesión</h2>
+    <div class="header">
+      <mat-icon class="icon-salud">local_hospital</mat-icon>
+      <h2>Bienvenido al Sistema de Salud</h2>
+    </div>
+    <p class="subtitulo">Ingresa tus credenciales para continuar</p>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()">
 
       <!-- Email -->
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Correo</mat-label>
-        <input matInput type="email" formControlName="correo" placeholder="Correo electrónico">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo electrónico</mat-label>
+        <mat-icon matPrefix>mail</mat-icon>
+        <input matInput type="email" formControlName="correo" placeholder="ejemplo@correo.com">
         <mat-error *ngIf="loginForm.get('correo')?.hasError('required')">
           El correo es obligatorio
         </mat-error>
@@ -17,27 +22,26 @@
       </mat-form-field>
 
       <!-- Password -->
-      <mat-form-field appearance="fill" class="full-width">
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>Contraseña</mat-label>
-        <input matInput type="password" formControlName="password" placeholder="Contraseña">
+        <mat-icon matPrefix>lock</mat-icon>
+        <input matInput type="password" formControlName="password" placeholder="••••••••">
         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
           La contraseña es obligatoria
         </mat-error>
       </mat-form-field>
 
-      <!-- Botón de login -->
-      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
-        Ingresar
+      <!-- Botón login -->
+      <button type="submit" [disabled]="loginForm.invalid">
+        <span>Ingresar</span>
       </button>
 
-      <!-- Mensaje de error general -->
+      <!-- Error general -->
       <p class="error" *ngIf="mensajeError">{{ mensajeError }}</p>
-
     </form>
 
     <p class="registro">
-      ¿No tienes una cuenta?
-      <a (click)="irARegistro()">Regístrate ahora</a>
+      ¿No tienes una cuenta? <a (click)="irARegistro()">Regístrate ahora</a>
     </p>
   </div>
-</mat-card>
+</div>

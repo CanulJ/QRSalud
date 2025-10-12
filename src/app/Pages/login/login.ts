@@ -6,13 +6,14 @@ import { UsuariosService } from '../../Services/usuarios.service';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule,MatCardModule,
   FormsModule,
-  ReactiveFormsModule,MatInputModule,MatFormFieldModule],
+  ReactiveFormsModule,MatInputModule,MatFormFieldModule,MatIconModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
