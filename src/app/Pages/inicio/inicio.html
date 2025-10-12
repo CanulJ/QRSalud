@@ -1,0 +1,22 @@
+<div class="inicio-container">
+  <div class="perfil">
+    <div class="foto-perfil">
+      <img src="img/usser.webp" alt="Foto de perfil">
+      <p class="nota">Pronto podrás subir tu foto</p>
+    </div>
+
+    @if (usuario) {
+  <div class="info-usuario">
+    <h2>{{ usuario.nombre }}</h2>
+    <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+    <p><strong>Fecha de registro:</strong> {{ usuario.fecha_creacion | date:'mediumDate' }}</p>
+  </div>
+}
+
+
+  <div class="tarjeta-medica">
+    <h3>Datos Médicos</h3>
+    <p>Aún no has agregado tus datos médicos.</p>
+    <button class="btn-agregar">Agregar información</button>
+  </div>
+</div>

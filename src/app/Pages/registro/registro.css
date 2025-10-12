@@ -1,0 +1,59 @@
+.registro-container {
+  width: 350px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+h2 {
+  color: #1a237e;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+}
+
+button {
+  background: #1a73e8;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0f59d1;
+}
+
+.mensaje {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+.volver-login {
+  margin-top: 15px;
+}
+
+.volver-login a {
+  color: #1a73e8;
+  cursor: pointer;
+  text-decoration: underline;
+}

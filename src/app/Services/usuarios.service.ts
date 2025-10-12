@@ -26,7 +26,7 @@ obtenerUsuario(id: number): Observable<Usuarios> {
   return this.http.get<Usuarios>(`${this.apiUrl}/${id}`);
 }
 
-crearUsuario(usuario: Usuarios): Observable<Usuarios> {
+crearUsuario(usuario: any): Observable<Usuarios> {
   return this.http.post<Usuarios>(this.apiUrl, usuario);
 }
 
@@ -37,4 +37,9 @@ actualizarUsuario(id: number, usuario: Usuarios): Observable<Usuarios> {
 eliminarUsuario(id: number): Observable<void> {
   return this.http.delete<void>(`${this.apiUrl}/${id}`);
 }
+
+login(datos: { correo: string; password: string }): Observable<Usuarios> {
+    return this.http.post<Usuarios>(`${this.apiUrl}/login`, datos);
+  }
+
 }
