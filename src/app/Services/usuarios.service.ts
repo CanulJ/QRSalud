@@ -10,7 +10,7 @@ import { appsettings } from '../Settings/appsettings';
 export class UsuariosService {
 
 private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl + 'Usuarios';
+  private apiUrl: string = appsettings.apiUrl + 'usuarios';
 
   constructor() { }
 
