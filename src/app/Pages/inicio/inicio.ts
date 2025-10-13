@@ -49,31 +49,30 @@ export class Inicio implements OnInit {
   });
 
   sheetRef.afterDismissed().subscribe((result: any) => {
-    if (result) {
-      // Aquí tienes los datos editados desde el BottomSheet
-      const id = this.datosMedicos?.id_datos; // tu ID del registro
-      if (id) {
-        // Llamar al servicio para actualizar
-        this.datosMedicosService.actualizar(id, result).subscribe({
-          next: (updated) => {
-            console.log('Datos médicos actualizados', updated);
-            // Actualizar la vista local para reflejar cambios
-            this.datosMedicos = updated;
-          },
-          error: (err) => console.error('Error al actualizar datos médicos', err)
-        });
-      } else {
-        // Si no existe ID, creamos un nuevo registro
-        this.datosMedicosService.crear(result).subscribe({
-          next: (created) => {
-            console.log('Datos médicos creados', created);
-            this.datosMedicos = created; // actualizar la vista
-          },
-          error: (err) => console.error('Error al crear datos médicos', err)
-        });
-      }
+  if (result) {
+    const id = this.datosMedicos?.id_datos; // tu ID del registro
+    if (id) {
+      // Actualizar
+      this.datosMedicosService.actualizar(id, result).subscribe({
+        next: (updated) => {
+          console.log('Datos médicos actualizados', updated);
+          this.datosMedicos = updated;
+        },
+        error: (err) => console.error('Error al actualizar datos médicos', err)
+      });
+    } else {
+      // Crear nuevo registro
+      const datosConUsuario = { ...result, id_usuario: this.usuario.id }; // <-- importante
+      this.datosMedicosService.crear(datosConUsuario).subscribe({
+        next: (created) => {
+          console.log('Datos médicos creados', created);
+          this.datosMedicos = created; // actualizar vista
+        },
+        error: (err) => console.error('Error al crear datos médicos', err)
+      });
     }
-  });
-}
+  }
+});
 
-}
+
+}}
