@@ -1,22 +1,57 @@
 <div class="inicio-container">
-  <div class="perfil">
-    <div class="foto-perfil">
+
+  <!-- Tarjeta de Perfil -->
+  <div class="card card-perfil">
+    <div class="card__image">
       <img src="/usser.webp" alt="Foto de perfil">
-      <p class="nota">Pronto podrás subir tu foto</p>
     </div>
-
-    @if (usuario) {
-  <div class="info-usuario">
-    <h2>{{ usuario.nombre }}</h2>
-    <p><strong>Correo:</strong> {{ usuario.correo }}</p>
-    <p><strong>Fecha de registro:</strong> {{ usuario.fecha_creacion | date:'mediumDate' }}</p>
+    <div class="card__content">
+      <div class="card__text" style="text-align: center">
+        <p class="card__title">{{ usuario?.nombre || 'Usuario' }}</p>
+        <p class="card__description">
+          <strong>Correo:</strong> {{ usuario?.correo || 'No disponible' }}<br />
+          <strong>Fecha de registro:</strong> {{ usuario?.fecha_creacion | date:'mediumDate' }}
+        </p>
+      </div>
+      <div class="card__footer">
+        <button (click)="editarPerfil()">
+          <span>Editar Perfil</span>
+        </button>
+      </div>
+    </div>
   </div>
-}
 
+  <!-- Tarjeta Médica -->
+  <div class="card card-medica" style="margin-top: 30px;">
+    <div class="card__content">
+      <div class="card__text" style="text-align: center">
+        <p class="card__title">Datos Médicos</p>
 
-  <div class="tarjeta-medica">
-    <h3>Datos Médicos</h3>
-    <p>Aún no has agregado tus datos médicos.</p>
-    <button class="btn-agregar">Agregar información</button>
+        <!-- Mostrar datos si existen -->
+        <div *ngIf="datosMedicos; else sinDatos">
+          <p class="card__description">
+            <strong>Tipo de sangre:</strong> {{ datosMedicos.tipo_sangre }}<br />
+            <strong>Alergias:</strong> {{ datosMedicos.alergias }}<br />
+            <strong>Medicamentos:</strong> {{ datosMedicos.medicamentos }}<br />
+            <strong>Enfermedades:</strong> {{ datosMedicos.enfermedades }}<br />
+            <strong>Contacto de emergencia:</strong> {{ datosMedicos.contacto_emergencia }}
+          </p>
+        </div>
+
+        <!-- Mensaje por defecto si no hay datos -->
+        <ng-template #sinDatos>
+          <p class="card__description">
+            Aún no has agregado tus datos médicos.
+          </p>
+        </ng-template>
+
+      </div>
+      <div class="card__footer">
+        <button class="btn-agregar" (click)="agregarDatosMedicos()">
+          <span>{{ datosMedicos ? 'Editar Información' : 'Agregar Información' }}</span>
+        </button>
+      </div>
+    </div>
   </div>
+
 </div>
