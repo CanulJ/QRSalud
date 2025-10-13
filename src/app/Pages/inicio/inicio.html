@@ -14,9 +14,8 @@
         </p>
       </div>
       <div class="card__footer">
-        <button (click)="editarPerfil()">
-          <span>Editar Perfil</span>
-        </button>
+       
+          
       </div>
     </div>
   </div>
@@ -47,9 +46,10 @@
 
       </div>
       <div class="card__footer">
-        <button class="btn-agregar" (click)="agregarDatosMedicos()">
-          <span>{{ datosMedicos ? 'Editar Información' : 'Agregar Información' }}</span>
-        </button>
+        <button mat-raised-button color="primary" (click)="openBottomSheet()">
+  Agregar / Editar Datos Médicos
+</button>
+
       </div>
     </div>
   </div>
