@@ -1,14 +1,14 @@
 .form-container {
-  background: linear-gradient(160deg, #f9f5ff, #e0d4ff); /* blanco tirando a morado */
+  background: linear-gradient(160deg, #f9f5ff, #e0d4ff);
   padding: 25px;
   border-radius: 15px;
   width: 100%;
-  max-width: 400px; /* ancho normal de tarjeta */
+  max-width: 400px;
   margin: auto;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-
+/* Centrar h3 */
 .form-container h3 {
   text-align: center;
   color: #4b0082;
@@ -19,7 +19,7 @@
 .coolinput {
   display: flex;
   flex-direction: column;
-  width: 100%; /* inputs más grandes */
+  width: 100%;
   max-width: 100%;
   position: relative;
   margin-bottom: 15px;
@@ -56,3 +56,25 @@
   margin-top: 20px;
 }
 
+/* ================== RESPONSIVE ================== */
+@media (max-width: 480px) {
+  .form-container {
+    padding: 15px;
+    border-radius: 12px;
+    max-width: 95%;
+  }
+
+  .coolinput input[type="text"].input {
+    padding: 12px 10px;
+    font-size: 0.85rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .acciones button {
+    width: 100%;
+  }
+}
