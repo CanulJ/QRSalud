@@ -52,19 +52,20 @@ export class Registro {
 
     // Mapear campos correctamente para el backend
     const usuarioParaEnviar = {
-      nombre: u.nombre,
-      apellidos: u.apellidos,
-      correo: u.correo,
-      password: u.password_hash,                  // lo que la API espera
-      curp: u.curp,
-      estado: u.estado || 'Activo',
-      rolid: u.rolid ?? 2,                        // valor por defecto
-      telefono: u.telefono,
-      genero: u.genero,
-      originario: u.originario,
-      fecha_creacion: fechaCreacion.toISOString().split('T')[0],
-      fechanacimiento: fechaNacimiento.toISOString().split('T')[0], // nombre correcto para la DB
-    };
+  nombre: u.nombre,
+  apellidos: u.apellidos,
+  correo: u.correo,
+  password: u.password_hash,
+  curp: u.curp,
+  rolid: u.rolid ?? 2,             // valor por defecto (usuario normal)
+  estado: 'Activo',                // valor por defecto
+  telefono: u.telefono,
+  genero: u.genero,
+  originario: u.originario,
+  fecha_creacion: fechaCreacion.toISOString().split('T')[0],
+  fechanacimiento: fechaNacimiento.toISOString().split('T')[0],
+};
+
 
     console.log('Datos a enviar al backend:', usuarioParaEnviar);
 
