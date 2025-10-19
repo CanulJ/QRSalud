@@ -70,8 +70,10 @@
 .card__footer {
   display: flex;
   justify-content: center;
+  gap: 15px; /* espacio entre botones */
   margin-top: 15px;
 }
+
 
 button, .btn-agregar {
   display: inline-block;

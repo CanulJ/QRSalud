@@ -5,6 +5,10 @@ import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-s
 import { DatosMedicosService } from '../../Services/datos-medicos.service';
 import { DatosMedicos } from '../../Models/DatosMedicos';
 import { DatosMedicos1 } from '../datos-medicos/datos-medicos1';
+import { HistoriaClinica1 } from '../historia-clinica/historia-clinica1';
+import { historiaClinicaService } from '../../Services/historia-clinica.service';
+
+
 
 @Component({
   selector: 'app-inicio',
@@ -21,6 +25,7 @@ export class Inicio implements OnInit {
   private router = inject(Router);
   private datosMedicosService = inject(DatosMedicosService);
   private bottomSheet = inject(MatBottomSheet);
+  private historiaClinicaService = inject(historiaClinicaService);
 
   ngOnInit(): void {
     const usuarioData = sessionStorage.getItem('usuario');
@@ -73,6 +78,24 @@ export class Inicio implements OnInit {
     }
   }
 });
+}
+
+openBottomSheetHistoriaClinica(): void {
+  const sheetRef = this.bottomSheet.open(HistoriaClinica1, {
+    data: { datosMedicosId: this.datosMedicos?.id_datos },
+    panelClass: 'custom-bottom-sheet'
+  });
+
+  sheetRef.afterDismissed().subscribe((result: any) => {
+    if (result) {
+      // Aquí puedes llamar a tu servicio para crear o actualizar historial clínico
+      this.historiaClinicaService.crear(result).subscribe({
+        next: (res) => console.log('Historial creado', res),
+        error: (err) => console.error('Error al crear historial', err)
+      });
+    }
+  });
+}
 
 
-}}
+}

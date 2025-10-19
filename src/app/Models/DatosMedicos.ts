@@ -1,3 +1,4 @@
+import { HistoriaClinica } from "./HistoriaClinica";
 import { Usuarios } from "./Usuarios";
 
 export interface DatosMedicos {
@@ -9,4 +10,5 @@ export interface DatosMedicos {
   medicamentos?: string;
   enfermedades?: string;
   contacto_emergencia?: string;
+  historiales?: HistoriaClinica[];
 }
