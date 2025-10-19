@@ -1,17 +1,56 @@
 <div class="registro-container">
   <h2>Crear cuenta</h2>
 
-  <form (ngSubmit)="registrarUsuario()">
-    <label>Nombre completo</label>
+  <form (ngSubmit)="registrarUsuario()" #formRegistro="ngForm">
+    <!-- Nombre -->
+    <label>Nombre</label>
     <input type="text" [(ngModel)]="nuevoUsuario.nombre" name="nombre" required>
 
+    <!-- Apellidos -->
+    <label>Apellidos</label>
+    <input type="text" [(ngModel)]="nuevoUsuario.apellidos" name="apellidos" required>
+
+    <!-- Correo -->
     <label>Correo electrónico</label>
     <input type="email" [(ngModel)]="nuevoUsuario.correo" name="correo" required>
 
+    <!-- Contraseña -->
     <label>Contraseña</label>
     <input type="password" [(ngModel)]="nuevoUsuario.password_hash" name="password_hash" required>
 
-    <button type="submit">Registrarse</button>
+    <!-- CURP -->
+    <label>CURP</label>
+    <input type="text" [(ngModel)]="nuevoUsuario.curp" name="curp" maxlength="18">
+
+    <!-- Estado -->
+    <label>Estado</label>
+    <input type="text" [(ngModel)]="nuevoUsuario.estado" name="estado">
+
+    <!-- Teléfono -->
+    <label>Teléfono</label>
+    <input type="tel" [(ngModel)]="nuevoUsuario.telefono" name="telefono" pattern="[0-9]{10}" placeholder="Ej. 9811234567">
+
+    <!-- Fecha de nacimiento -->
+    <label>Fecha de nacimiento</label>
+    <input type="date" [(ngModel)]="nuevoUsuario.fechanacimiento" name="fechanacimiento">
+
+    <!-- Género -->
+    <label>Género</label>
+    <select [(ngModel)]="nuevoUsuario.genero" name="genero" required>
+      <option value="">Seleccione...</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+      <option value="Otro">Otro</option>
+    </select>
+
+    <!-- Originario -->
+    <label>Originario de</label>
+    <input type="text" [(ngModel)]="nuevoUsuario.originario" name="originario">
+
+    <!-- Campo oculto de rolid -->
+    <input type="hidden" [(ngModel)]="nuevoUsuario.rolid" name="rolid" value="2">
+
+    <button type="submit" [disabled]="formRegistro.invalid">Registrarse</button>
   </form>
 
   <p class="mensaje" *ngIf="mensaje">{{ mensaje }}</p>
