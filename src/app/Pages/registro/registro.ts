@@ -21,7 +21,6 @@ export class Registro {
     fecha_creacion: new Date(),
     fechanacimiento: new Date(),
     curp: '',
-    estado: 'Activo',
     rolid: 1,
     telefono: '',
     genero: '',
@@ -57,8 +56,7 @@ export class Registro {
   correo: u.correo,
   password: u.password_hash,
   curp: u.curp,
-  rolid: u.rolid ?? 2,             // valor por defecto (usuario normal)
-  estado: 'Activo',                // valor por defecto
+  rolid: u.rolid ?? 2,             // valor por defecto (usuario normal)               // valor por defecto
   telefono: u.telefono,
   genero: u.genero,
   originario: u.originario,

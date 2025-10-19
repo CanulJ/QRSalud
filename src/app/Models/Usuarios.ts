@@ -6,7 +6,6 @@ export interface Usuarios {
   fecha_creacion: Date;
   isActive: boolean;
   curp: string;
-  estado: string;
   rolid: number;
   apellidos: string;
   telefono: string;
