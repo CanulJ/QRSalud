@@ -1,71 +1,36 @@
-<div class="inicio-container">
+<!-- Contenedor principal -->
+<div class="inicio-main">
 
-  <!-- Tarjeta de Perfil -->
-  <div class="card card-perfil">
-    <div class="card__image">
-      <img src="/usser.webp" alt="Foto de perfil">
-    </div>
-    <div class="card__content">
-      <div class="card__text" style="text-align: center">
-        <p class="card__title">{{ usuario?.nombre || 'Usuario' }} {{ usuario?.apellidos || '' }}</p>
-        <p class="card__description">
-          <!-- Datos críticos -->
-          <strong>Fecha de nacimiento:</strong> {{ usuario?.fechanacimiento | date:'mediumDate' }}<br />
-          <strong>Género:</strong> {{ usuario?.genero || 'No disponible' }}<br />
-          <strong>Estado:</strong> {{ usuario?.estado || 'No disponible' }}<br />
-          <strong>Teléfono:</strong> {{ usuario?.telefono || 'No disponible' }}<br />
-          <strong>CURP:</strong> {{ usuario?.curp || 'No disponible' }}<br />
-          <strong>Origen:</strong> {{ usuario?.originario || 'No disponible' }}<br />
-
-          <!-- Datos administrativos / secundarios -->
-          <strong>Correo:</strong> {{ usuario?.correo || 'No disponible' }}<br />
-          <strong>Fecha de registro:</strong> {{ usuario?.fecha_creacion | date:'mediumDate' }}
-        </p>
+  <!-- Contenedor de la tarjeta de perfil -->
+  <div class="card-container">
+    <div class="card card-perfil">
+      <div class="card__image">
+        <img src="/usser.webp" alt="Foto de perfil">
       </div>
-      <div class="card__footer">
-        <!-- Aquí puedes agregar botones o acciones si quieres -->
+      <div class="card__content">
+        <div class="card__text" style="text-align: center">
+          <p class="card__title">{{ usuario?.nombre || 'Usuario' }} {{ usuario?.apellidos || '' }}</p>
+          <p class="card__description">
+            <strong>Fecha de nacimiento:</strong> {{ usuario?.fechanacimiento | date:'mediumDate' }}<br />
+            <strong>Género:</strong> {{ usuario?.genero || 'No disponible' }}<br />
+            <strong>Estado:</strong> {{ usuario?.estado || 'No disponible' }}<br />
+            <strong>Teléfono:</strong> {{ usuario?.telefono || 'No disponible' }}<br />
+            <strong>CURP:</strong> {{ usuario?.curp || 'No disponible' }}<br />
+            <strong>Origen:</strong> {{ usuario?.originario || 'No disponible' }}<br />
+            <strong>Correo:</strong> {{ usuario?.correo || 'No disponible' }}<br />
+            <strong>Fecha de registro:</strong> {{ usuario?.fecha_creacion | date:'mediumDate' }}
+          </p>
+        </div>
+        <div class="card__footer">
+          <!-- botones o acciones -->
+        </div>
       </div>
     </div>
   </div>
 
-
-
-  <!-- Tarjeta Médica -->
-  <div class="card card-medica" style="margin-top: 30px;">
-    <div class="card__content">
-      <div class="card__text" style="text-align: center">
-        <p class="card__title">Datos Médicos</p>
-
-        <!-- Mostrar datos si existen -->
-        <div *ngIf="datosMedicos; else sinDatos">
-          <p class="card__description">
-            <strong>Tipo de sangre:</strong> {{ datosMedicos.tipo_sangre }}<br />
-            <strong>Alergias:</strong> {{ datosMedicos.alergias }}<br />
-            <strong>Medicamentos:</strong> {{ datosMedicos.medicamentos }}<br />
-            <strong>Enfermedades:</strong> {{ datosMedicos.enfermedades }}<br />
-            <strong>Contacto de emergencia:</strong> {{ datosMedicos.contacto_emergencia }}
-          </p>
-        </div>
-
-        <!-- Mensaje por defecto si no hay datos -->
-        <ng-template #sinDatos>
-          <p class="card__description">
-            Aún no has agregado tus datos médicos.
-          </p>
-        </ng-template>
-
-      </div>
-      <div class="card__footer">
-        <button mat-raised-button color="primary" (click)="openBottomSheet()">
-          Agregar / Editar Datos Médicos
-        </button>
-
-        <button mat-raised-button color="accent" *ngIf="datosMedicos" (click)="openBottomSheetHistoriaClinica()">
-          Agregar / Ver Historial Clínico
-        </button>
-
-      </div>
-    </div>
+  <!-- Contenedor de navegación / tabla -->
+  <div class="tabla-container">
+    <app-navegacion></app-navegacion>
   </div>
 
 </div>

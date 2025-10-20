@@ -1,16 +1,20 @@
-/* Contenedor */
-.inicio-container {
-  max-width: 600px;
-  margin: 40px auto;
+/* Contenedor principal */
+.inicio-main {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
+  padding: 20px;
 }
 
-/* Tarjetas base (perfil y médica) */
+/* ==================== Tarjeta de perfil ==================== */
+.card-container {
+  max-width: 600px;
+  margin: 0 auto; /* centrado */
+}
+
 .card {
   --card-bg: #ffffff;
-  --card-accent: #7c3aed; /* morado */
+  --card-accent: #7c3aed;
   --card-text: #1e293b;
   width: 100%;
   display: flex;
@@ -23,7 +27,6 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Imagen de perfil */
 .card__image {
   width: 100%;
   height: 180px;
@@ -42,7 +45,6 @@
   object-fit: cover;
 }
 
-/* Contenido de la tarjeta */
 .card__content {
   padding: 1.25em;
   display: flex;
@@ -70,10 +72,9 @@
 .card__footer {
   display: flex;
   justify-content: center;
-  gap: 15px; /* espacio entre botones */
+  gap: 15px;
   margin-top: 15px;
 }
-
 
 button, .btn-agregar {
   display: inline-block;
@@ -92,7 +93,6 @@ button:hover, .btn-agregar:hover {
   transform: scale(1.05);
 }
 
-/* Hover de la tarjeta */
 .card:hover {
   transform: translateY(-10px);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
@@ -100,3 +100,22 @@ button:hover, .btn-agregar:hover {
   border-color: rgba(124, 58, 237, 0.8);
 }
 
+/* ==================== Tabla y navegación ==================== */
+.tabla-container {
+  width: 90%;           /* ocupa más espacio */
+  max-width: 1000px;    /* evita que se estire demasiado */
+  margin: 0 auto;
+}
+
+.tabla-container app-tabla-medica {
+  width: 100%;
+}
+
+mat-tab-group {
+  width: 100%;
+  height: 70vh; /* opcional: para dar más altura a la tabla */
+}
+
+.tabla-container .mat-table {
+  width: 100%;
+}

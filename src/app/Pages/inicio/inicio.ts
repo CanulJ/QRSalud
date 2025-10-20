@@ -7,13 +7,14 @@ import { DatosMedicos } from '../../Models/DatosMedicos';
 import { DatosMedicos1 } from '../datos-medicos/datos-medicos1';
 import { HistoriaClinica1 } from '../historia-clinica/historia-clinica1';
 import { historiaClinicaService } from '../../Services/historia-clinica.service';
+import { Navegacion } from '../navegacion/navegacion';
 
 
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule],
+  imports: [CommonModule, MatBottomSheetModule, Navegacion],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
 })
@@ -46,56 +47,4 @@ export class Inicio implements OnInit {
       });
     }
   }
-
-  openBottomSheet(): void {
-  const sheetRef = this.bottomSheet.open(DatosMedicos1, {
-    data: this.datosMedicos,
-    panelClass: 'custom-bottom-sheet'
-  });
-
-  sheetRef.afterDismissed().subscribe((result: any) => {
-  if (result) {
-    const id = this.datosMedicos?.id_datos; // tu ID del registro
-    if (id) {
-      // Actualizar
-      this.datosMedicosService.actualizar(id, result).subscribe({
-        next: (updated) => {
-          console.log('Datos médicos actualizados', updated);
-          this.datosMedicos = updated;
-        },
-        error: (err) => console.error('Error al actualizar datos médicos', err)
-      });
-    } else {
-      // Crear nuevo registro
-      const datosConUsuario = { ...result, id_usuario: this.usuario.id }; // <-- importante
-      this.datosMedicosService.crear(datosConUsuario).subscribe({
-        next: (created) => {
-          console.log('Datos médicos creados', created);
-          this.datosMedicos = created; // actualizar vista
-        },
-        error: (err) => console.error('Error al crear datos médicos', err)
-      });
-    }
-  }
-});
-}
-
-openBottomSheetHistoriaClinica(): void {
-  const sheetRef = this.bottomSheet.open(HistoriaClinica1, {
-    data: { datosMedicosId: this.datosMedicos?.id_datos },
-    panelClass: 'custom-bottom-sheet'
-  });
-
-  sheetRef.afterDismissed().subscribe((result: any) => {
-    if (result) {
-      // Aquí puedes llamar a tu servicio para crear o actualizar historial clínico
-      this.historiaClinicaService.crear(result).subscribe({
-        next: (res) => console.log('Historial creado', res),
-        error: (err) => console.error('Error al crear historial', err)
-      });
-    }
-  });
-}
-
-
 }

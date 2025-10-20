@@ -1,0 +1,20 @@
+<div class="form-container">
+  <h3>Agregar Historia Clínica</h3>
+
+  <form>
+    <div class="coolinput">
+      <label class="text" for="descripcion">Descripción:</label>
+      <textarea class="input" [(ngModel)]="historia.descripcion" name="descripcion" placeholder="Escribe aquí..."></textarea>
+    </div>
+
+    <div class="coolinput">
+      <label class="text" for="fecharegistro">Fecha de Registro:</label>
+      <input class="input" [(ngModel)]="historia.fecharegistro" name="fecharegistro" type="date" />
+    </div>
+
+    <div class="acciones">
+      <button mat-flat-button color="primary" (click)="guardar()" [disabled]="!historia.descripcion">Guardar</button>
+      <button mat-button color="warn" (click)="cerrar()">Cancelar</button>
+    </div>
+  </form>
+</div>

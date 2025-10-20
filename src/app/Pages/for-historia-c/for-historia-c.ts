@@ -6,11 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { HistoriaClinica } from '../../Models/HistoriaClinica';
 
 @Component({
-  selector: 'app-datos-medicos',
-  templateUrl: './datos-medicos.html',
-  styleUrls: ['./datos-medicos.css'],
+  selector: 'app-for-historia-c',
+  templateUrl: './for-historia-c.html',
+  styleUrls: ['./for-historia-c.css'],
   standalone: true,
   imports: [
     CommonModule,
@@ -21,32 +22,31 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ]
 })
-export class DatosMedicos1 {
+export class ForHistoriaC {
 
-  @Output() datosGuardados = new EventEmitter<any>(); // para emitir si se usa dentro de HTML
+  @Output() historiaGuardada = new EventEmitter<HistoriaClinica>();
 
-  datos: any = {
-    tipo_sangre: '',
-    alergias: '',
-    medicamentos: '',
-    enfermedades: '',
-    contacto_emergencia: ''
+  historia: HistoriaClinica = {
+    idhistoria: 0,              // el backend lo reemplazará
+    datosmedicosid: 0,
+    descripcion: '',
+    fecharegistro: new Date().toISOString().substring(0,10)
   };
 
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
-    private _bottomSheetRef?: MatBottomSheetRef<DatosMedicos1> // opcional
+    private _bottomSheetRef?: MatBottomSheetRef<ForHistoriaC>
   ) {
-    if (data) this.datos = { ...data };
+    if (data && data.datosmedicosid) {
+      this.historia.datosmedicosid = data.datosmedicosid;
+    }
   }
 
   guardar(): void {
     if (this._bottomSheetRef) {
-      // Si se abrió como Bottom Sheet
-      this._bottomSheetRef.dismiss(this.datos);
+      this._bottomSheetRef.dismiss(this.historia); // devuelve la historia al componente padre
     } else {
-      // Si está en HTML directamente, emitir datos al padre
-      this.datosGuardados.emit(this.datos);
+      this.historiaGuardada.emit(this.historia);
     }
   }
 

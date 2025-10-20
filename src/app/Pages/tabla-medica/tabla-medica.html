@@ -1,0 +1,33 @@
+
+  <!-- Tarjeta Médica -->
+  <div class="card card-medica" style="margin-top: 30px;">
+    <div class="card__content">
+      <div class="card__text" style="text-align: center">
+        <p class="card__title">Datos Médicos</p>
+
+        <!-- Mostrar datos si existen -->
+        <div *ngIf="datosMedicos; else sinDatos">
+          <p class="card__description">
+            <strong>Tipo de sangre:</strong> {{ datosMedicos.tipo_sangre }}<br />
+            <strong>Alergias:</strong> {{ datosMedicos.alergias }}<br />
+            <strong>Medicamentos:</strong> {{ datosMedicos.medicamentos }}<br />
+            <strong>Enfermedades:</strong> {{ datosMedicos.enfermedades }}<br />
+            <strong>Contacto de emergencia:</strong> {{ datosMedicos.contacto_emergencia }}
+          </p>
+        </div>
+
+        <!-- Mensaje por defecto si no hay datos -->
+        <ng-template #sinDatos>
+          <p class="card__description">
+            Aún no has agregado tus datos médicos.
+          </p>
+        </ng-template>
+
+      </div>
+      <div class="card__footer">
+        <button mat-raised-button color="primary" (click)="openBottomSheet()">
+          Agregar / Editar Datos Médicos
+        </button>
+      </div>
+    </div>
+  </div>

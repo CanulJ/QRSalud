@@ -1,0 +1,14 @@
+mat-tab-group {
+  height: 80vh; /* ocupa el 80% del alto de la ventana */
+}
+
+mat-tab-group mat-tab-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+app-tabla-medica {
+  flex: 1 1 auto; /* hace que la tabla llene el espacio disponible */
+  overflow: auto; /* permite scroll si la tabla es más grande que el espacio */
+}

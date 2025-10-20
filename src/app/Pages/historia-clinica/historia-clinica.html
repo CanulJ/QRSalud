@@ -1,1 +1,48 @@
-<p>historia-clinica works!</p>
+<!-- Tarjeta Historia Clínica -->
+<div class="card card-medica" style="margin-top: 30px;">
+  <div class="card__content">
+    <div class="card__text" style="text-align: center">
+      <p class="card__title">Historia Clínica</p>
+
+      <!-- Mostrar tabla si hay registros -->
+      <div *ngIf="historiaClinica.length > 0; else sinRegistros">
+        <table class="mat-elevation-z8" style="width: 100%; margin-top: 15px;">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of historiaClinica">
+              <td>{{ row.fecharegistro }}</td>
+              <td>{{ row.descripcion }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mensaje si no hay registros -->
+      <ng-template #sinRegistros>
+        <p class="card__description" style="margin-top: 15px;">
+          Aún no hay registros de historia clínica.
+        </p>
+      </ng-template>
+
+    </div>
+
+    <!-- Footer con botón agregar -->
+    <div class="card__footer" *ngIf="datosMedicos">
+      <button mat-raised-button color="accent" (click)="agregarHistoria()">
+        Agregar / Ver Historia Clínica
+      </button>
+    </div>
+
+    <!-- Mensaje si no hay datos médicos -->
+    <div class="card__footer" *ngIf="!datosMedicos">
+      <p class="card__description">
+        Primero debes agregar tus datos médicos para poder registrar historia clínica.
+      </p>
+    </div>
+  </div>
+</div>
