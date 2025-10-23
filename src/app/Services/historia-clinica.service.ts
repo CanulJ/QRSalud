@@ -37,4 +37,9 @@ export class historiaClinicaService {
   eliminar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  obtenerPorUsuario(usuarioId: number): Observable<HistoriaClinica[]> {
+    return this.http.get<HistoriaClinica[]>(`${this.apiUrl}/usuario/${usuarioId}`);
+  }
+
 }

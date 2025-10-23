@@ -5,6 +5,7 @@ import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-s
 import { CommonModule } from '@angular/common';
 import { ForAntecedentesC } from '../for-antecedentes-c/for-antecedentes-c';
 import { HistoriaClinica } from '../../Models/HistoriaClinica';
+import { historiaClinicaService } from '../../Services/historia-clinica.service'; // <-- service para obtener historias
 
 @Component({
   selector: 'app-antecedentes-h',
@@ -20,31 +21,42 @@ export class AntecedentesH implements OnInit {
 
   private antecedentesService = inject(antecedentesService);
   private bottomSheet = inject(MatBottomSheet);
+  private historiaService = inject(historiaClinicaService);
 
   ngOnInit(): void {
-    // Intentamos obtener el id de la historia desde sessionStorage
-    let historiaData = sessionStorage.getItem('historiaClinicaId');
+    const usuarioData = sessionStorage.getItem('usuario');
 
-    if (historiaData) {
-      this.idHistoriaClinica = Number(historiaData);
-    } else {
-      // Si no hay id en sessionStorage, buscamos la historia más reciente del usuario
-      const historial: HistoriaClinica[] = JSON.parse(sessionStorage.getItem('historiaClinica') || '[]');
-      if (historial.length > 0) {
-        // Ordenamos por fecha y tomamos la más reciente
-        historial.sort((a, b) => new Date(b.fecharegistro).getTime() - new Date(a.fecharegistro).getTime());
-        this.idHistoriaClinica = historial[0].idhistoria;
-        sessionStorage.setItem('historiaClinicaId', String(this.idHistoriaClinica));
-      }
+    if (!usuarioData) {
+      console.error('No hay usuario logueado');
+      return;
     }
 
-    if (this.idHistoriaClinica) {
-      this.cargarAntecedentes();
-    }
+    const usuario = JSON.parse(usuarioData);
+    
+    // Traemos la historia clínica más reciente del usuario
+    this.historiaService.obtenerPorUsuario(usuario.id).subscribe({
+      next: (historias: HistoriaClinica[]) => {
+        if (historias.length > 0) {
+          // Ordenamos por fecha y tomamos la más reciente
+          historias.sort((a, b) => new Date(b.fecharegistro).getTime() - new Date(a.fecharegistro).getTime());
+          this.idHistoriaClinica = historias[0].idhistoria;
+
+          // Guardamos temporalmente en sessionStorage por si quieres reutilizar
+          sessionStorage.setItem('historiaClinicaId', String(this.idHistoriaClinica));
+
+          // Ahora cargamos los antecedentes
+          this.cargarAntecedentes();
+        } else {
+          console.warn('El usuario no tiene historias clínicas');
+        }
+      },
+      error: (err) => console.error('Error al obtener historias clínicas del usuario', err)
+    });
   }
 
   cargarAntecedentes(): void {
     if (!this.idHistoriaClinica) return;
+
     this.antecedentesService.obtenerPorHistoria(this.idHistoriaClinica).subscribe({
       next: (data) => this.antecedentes = data.length > 0 ? data[0] : null,
       error: (err) => console.error('Error al obtener antecedentes', err)
@@ -70,7 +82,6 @@ export class AntecedentesH implements OnInit {
             error: (err) => console.error('Error al actualizar antecedentes', err)
           });
         } else {
-          // Crear nuevo antecedente usando la historia más reciente
           const datosConHistoria = { ...result, historia: { idhistoria: this.idHistoriaClinica } };
           this.antecedentesService.crear(datosConHistoria).subscribe({
             next: (created) => this.antecedentes = created,
