@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card__content">
+    <h3 class="card__title">Agregar / Editar Antecedentes Familiares</h3>
+
+    <form>
+      <div class="input-container">
+        <label for="padre">Padre:</label>
+        <input [(ngModel)]="antecedentes.padre" name="padre" placeholder="Nombre del padre" type="text" class="input">
+        <div class="underline"></div>
+      </div>
+
+      <div class="input-container">
+        <label for="madre">Madre:</label>
+        <input [(ngModel)]="antecedentes.madre" name="madre" placeholder="Nombre de la madre" type="text" class="input">
+        <div class="underline"></div>
+      </div>
+
+      <div class="input-container">
+        <label for="abuelos">Abuelos:</label>
+        <input [(ngModel)]="antecedentes.abuelos" name="abuelos" placeholder="Información de abuelos" type="text" class="input">
+        <div class="underline"></div>
+      </div>
+
+      <div class="input-container">
+        <label for="hermanos">Hermanos:</label>
+        <input [(ngModel)]="antecedentes.hermanos" name="hermanos" placeholder="Información de hermanos" type="text" class="input">
+        <div class="underline"></div>
+      </div>
+
+      <div class="input-container">
+        <label for="otros">Otros:</label>
+        <input [(ngModel)]="antecedentes.otros" name="otros" placeholder="Otros antecedentes familiares" type="text" class="input">
+        <div class="underline"></div>
+      </div>
+
+      <div class="card__footer">
+        <button mat-flat-button color="primary" (click)="guardar()">Guardar</button>
+        <button mat-button color="warn" (click)="cerrar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

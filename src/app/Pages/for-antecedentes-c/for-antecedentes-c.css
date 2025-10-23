@@ -34,7 +34,7 @@
   text-align: center;
 }
 
-/* ===================== INPUTS / TEXTAREA ===================== */
+/* ===================== INPUTS ===================== */
 .input-container {
   position: relative;
   margin-bottom: 20px;
@@ -48,9 +48,7 @@
   font-size: 1em;
 }
 
-.input[type="text"],
-.input[type="date"],
-textarea.input {
+.input[type="text"] {
   padding: 18px 20px;
   font-size: 1rem;
   border: none;
@@ -60,8 +58,6 @@ textarea.input {
   width: 100%;
   outline: none;
   box-sizing: border-box;
-  resize: vertical; /* textarea puede cambiar altura */
-  min-height: 80px;
 }
 
 .underline {
@@ -74,7 +70,7 @@ textarea.input {
   transition: width 0.3s;
 }
 
-.input:focus + .underline {
+.input[type="text"]:focus + .underline {
   width: 100%;
 }
 

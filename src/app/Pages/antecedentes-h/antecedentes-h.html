@@ -1,0 +1,26 @@
+<div class="card card-antecedentes" style="margin-top: 30px;">
+  <div class="card__content">
+    <div class="card__text" style="text-align: center">
+      <p class="card__title">Antecedentes Familiares</p>
+
+      <div *ngIf="antecedentes; else sinDatos">
+        <p class="card__description">
+          <strong>Padre:</strong> {{ antecedentes.padre }}<br>
+          <strong>Madre:</strong> {{ antecedentes.madre }}<br>
+          <strong>Abuelos:</strong> {{ antecedentes.abuelos }}<br>
+          <strong>Hermanos:</strong> {{ antecedentes.hermanos }}<br>
+          <strong>Otros:</strong> {{ antecedentes.otros }}
+        </p>
+      </div>
+
+      <ng-template #sinDatos>
+        <p class="card__description">Aún no se han registrado antecedentes.</p>
+      </ng-template>
+    </div>
+    <div class="card__footer">
+      <button mat-raised-button color="primary" (click)="openBottomSheet()">
+        Agregar / Editar Antecedentes
+      </button>
+    </div>
+  </div>
+</div>

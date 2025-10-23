@@ -101,7 +101,6 @@ export class Login implements OnInit {
   });
 }
 
-
   irARegistro(): void {
     this.router.navigate(['/registro']);
   }

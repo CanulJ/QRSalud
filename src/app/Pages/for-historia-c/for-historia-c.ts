@@ -7,19 +7,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { HistoriaClinica } from '../../Models/HistoriaClinica';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-for-historia-c',
   templateUrl: './for-historia-c.html',
   styleUrls: ['./for-historia-c.css'],
   standalone: true,
+   providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ]
 })
 export class ForHistoriaC {

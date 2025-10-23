@@ -1,77 +1,167 @@
-.form-container {
-  background: linear-gradient(160deg, #f9f5ff, #e0d4ff);
-  padding: 25px;
-  border-radius: 15px;
-  width: 100%;
-  max-width: 400px;
-  margin: auto;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+/* Contenedor del Bottom Sheet */
+::ng-deep .mat-bottom-sheet-container {
+  display: flex !important;
+  justify-content: center !important; /* centrado horizontal */
+  align-items: flex-start !important;  /* comienza desde arriba */
+  padding: 20px !important;            /* espacio superior */
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  height: 100vh !important;            /* altura total de pantalla */
+  overflow-y: auto !important;         /* scroll único */
 }
 
-/* Centrar h3 */
-.form-container h3 {
-  text-align: center;
-  color: #4b0082;
+/* Tarjeta */
+.card {
+  width: 90%;
+  max-width: 700px;
+  padding: 40px;
+  border-radius: 17px;
+  background: #ffffff;               /* blanco sólido elegante */
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15); /* sombra suave */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  max-height: none;     
+  overflow-y: visible;  
+  margin: 0 auto;       
+}
+
+
+
+/* Hover y click */
+.card:hover {
+  border: 1px solid black;
+  transform: scale(1.02);
+}
+
+.card:active {
+  transform: scale(0.995); /* apenas se reduce */
+}
+
+/* Contenedor formulario */
+.form-container {
+  width: 100%;
+}
+
+/* Inputs flotantes */
+.input-container {
+  position: relative;
   margin-bottom: 20px;
 }
 
-/* Inputs estilo coolinput */
-.coolinput {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 100%;
-  position: relative;
-  margin-bottom: 15px;
-}
-
-.coolinput label.text {
-  font-size: 0.85rem;
-  color: #4b0082;
-  font-weight: 700;
-  margin-left: 7px;
+.input-container label {
+  display: block;
   margin-bottom: 5px;
+  color: #333;
+  font-weight: 600;
 }
 
-.coolinput input[type="text"].input {
-  padding: 14px 12px;
-  font-size: 0.9rem;
-  border: 2px solid #4b0082;
-  border-radius: 8px;
-  background: #ffffff;
+.input[type="text"] {
+  padding: 20px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #f1f1f1;
+  color: #333;
+  width: 100%;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  transition: width 0.3s;
+}
+
+.input[type="text"]:focus + .underline {
+  width: 100%;
+}
+
+/* Botones */
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.acciones button {
+  flex: 1;
+}
+
+.acciones button.mat-button,
+.acciones button.mat-flat-button {
+  display: block;
+  align-items: unset;
+  justify-content: center;
+  text-align: center;
+}
+
+.acciones button.mat-button:hover,
+.acciones button.mat-flat-button:hover {
+  background-color: #C850C0;
+}
+
+
+/* Cambiar fuente global de la tarjeta y formulario */
+.card, 
+.card * {
+  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* elegante y limpia */
+  color: #333;  /* texto legible */
+}
+
+/* Título del formulario */
+.form-container h3 {
+  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;       /* más grande y destacado */
+  font-weight: 600;
+  text-align: center;
+  color: #4b0082;        /* sigue elegante */
+  margin-bottom: 30px;
+}
+
+/* Labels de inputs */
+.input-container label {
+  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;       /* más grande y legible */
+  font-weight: 600;
+  color: #4b0082;        /* más suave que negro */
+  margin-bottom: 8px;
+}
+
+/* Inputs */
+.input[type="text"] {
+  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 18px;       /* más grande para comodidad visual */
+  color: #333;
+  padding: 20px 25px;
+  border-radius: 6px;
+  background-color: #f1f1f1;
+  border: none;
+  outline: none;
   width: 100%;
   box-sizing: border-box;
 }
 
-.coolinput input[type="text"].input:focus {
-  outline: none;
-  border-color: #8a2be2;
-  box-shadow: 0 0 5px rgba(138,43,226,0.5);
-}
 
-/* Botones centrados */
-.acciones {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-/* ================== RESPONSIVE ================== */
-@media (max-width: 480px) {
-  .form-container {
-    padding: 15px;
-    border-radius: 12px;
-    max-width: 95%;
+/* Responsive */
+@media (max-width: 700px) {
+  .card {
+    width: 95%;
+    padding: 25px;
   }
 
-  .coolinput input[type="text"].input {
-    padding: 12px 10px;
-    font-size: 0.85rem;
-  }
-
-  .actions {
+  .acciones {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
 
   .acciones button {

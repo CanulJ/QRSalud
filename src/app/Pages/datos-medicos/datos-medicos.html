@@ -1,30 +1,36 @@
+<div class="card">
 <div class="form-container">
   <h3>Editar Datos Médicos</h3>
 
   <form>
-    <div class="coolinput">
-      <label class="text" for="tipo_sangre">Tipo de Sangre:</label>
-      <input class="input" [(ngModel)]="datos.tipo_sangre" name="tipo_sangre" placeholder="Escribe aquí..." type="text" />
+    <div class="input-container">
+      <label for="tipo_sangre">Tipo de Sangre:</label>
+      <input [(ngModel)]="datos.tipo_sangre" name="tipo_sangre" placeholder="Escribe aquí..." type="text" class="input" />
+      <div class="underline"></div>
     </div>
 
-    <div class="coolinput">
-      <label class="text" for="alergias">Alergias:</label>
-      <input class="input" [(ngModel)]="datos.alergias" name="alergias" placeholder="Escribe aquí..." type="text" />
+    <div class="input-container">
+      <label for="alergias">Alergias:</label>
+      <input [(ngModel)]="datos.alergias" name="alergias" placeholder="Escribe aquí..." type="text" class="input" />
+      <div class="underline"></div>
     </div>
 
-    <div class="coolinput">
-      <label class="text" for="medicamentos">Medicamentos:</label>
-      <input class="input" [(ngModel)]="datos.medicamentos" name="medicamentos" placeholder="Escribe aquí..." type="text" />
+    <div class="input-container">
+      <label for="medicamentos">Medicamentos:</label>
+      <input [(ngModel)]="datos.medicamentos" name="medicamentos" placeholder="Escribe aquí..." type="text" class="input" />
+      <div class="underline"></div>
     </div>
 
-    <div class="coolinput">
-      <label class="text" for="enfermedades">Enfermedades:</label>
-      <input class="input" [(ngModel)]="datos.enfermedades" name="enfermedades" placeholder="Escribe aquí..." type="text" />
+    <div class="input-container">
+      <label for="enfermedades">Enfermedades:</label>
+      <input [(ngModel)]="datos.enfermedades" name="enfermedades" placeholder="Escribe aquí..." type="text" class="input" />
+      <div class="underline"></div>
     </div>
 
-    <div class="coolinput">
-      <label class="text" for="contacto_emergencia">Contacto de Emergencia:</label>
-      <input class="input" [(ngModel)]="datos.contacto_emergencia" name="contacto_emergencia" placeholder="Escribe aquí..." type="text" />
+    <div class="input-container">
+      <label for="contacto_emergencia">Contacto de Emergencia:</label>
+      <input [(ngModel)]="datos.contacto_emergencia" name="contacto_emergencia" placeholder="Escribe aquí..." type="text" class="input" />
+      <div class="underline"></div>
     </div>
 
     <div class="acciones">
@@ -32,4 +38,5 @@
       <button mat-button color="warn" (click)="cerrar()">Cancelar</button>
     </div>
   </form>
+</div>
 </div>

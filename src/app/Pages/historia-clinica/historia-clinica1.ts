@@ -42,12 +42,20 @@ export class HistoriaClinica1 {
   }
 
   cargarHistorial(): void {
-    if (!this.datosMedicos) return;
-    this.historiaService.obtenerPorDatosMedicos(this.datosMedicos.id_datos).subscribe({
-      next: (historial) => this.historiaClinica = historial,
-      error: (err) => console.error(err)
-    });
-  }
+  if (!this.datosMedicos) return;
+  this.historiaService.obtenerPorDatosMedicos(this.datosMedicos.id_datos).subscribe({
+    next: (historial) => {
+      this.historiaClinica = historial;
+      // Guardar el más reciente en sessionStorage para AntecedentesH
+      if (historial.length > 0) {
+        const ultimaHistoria = historial[historial.length - 1];
+        sessionStorage.setItem('historiaClinicaId', String(ultimaHistoria.idhistoria));
+      }
+    },
+    error: (err) => console.error(err)
+  });
+}
+
 
   agregarHistoria(): void {
     if (!this.datosMedicos) return; // seguridad

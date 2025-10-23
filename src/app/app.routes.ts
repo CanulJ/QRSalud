@@ -6,6 +6,7 @@ import { DatosMedicos1 } from './Pages/datos-medicos/datos-medicos1';
 import { HistoriaClinica1 } from './Pages/historia-clinica/historia-clinica1';
 import { Navegacion } from './Pages/navegacion/navegacion';
 import { TablaMedica } from './Pages/tabla-medica/tabla-medica';
+import { AntecedentesH } from './Pages/antecedentes-h/antecedentes-h';
 
 export const routes: Routes = [
 
@@ -33,5 +34,9 @@ export const routes: Routes = [
   { path: '', component: TablaMedica },
   { path: 'tabla-medica', component: TablaMedica},
   { path: 'tabla-medica/id', component: TablaMedica },
+
+   { path: '', component: AntecedentesH },
+  { path: 'antecedentes-h', component: AntecedentesH},
+  { path: 'antecedentes-h/id', component: AntecedentesH },
 
 ];

@@ -1,20 +1,24 @@
-<div class="form-container">
-  <h3>Agregar Historia Clínica</h3>
+<div class="card">
+  <div class="card__content">
+    <h3 class="card__title">Agregar Historia Clínica</h3>
 
-  <form>
-    <div class="coolinput">
-      <label class="text" for="descripcion">Descripción:</label>
-      <textarea class="input" [(ngModel)]="historia.descripcion" name="descripcion" placeholder="Escribe aquí..."></textarea>
-    </div>
+    <form>
+      <div class="input-container">
+        <label for="descripcion">Descripción:</label>
+        <textarea class="input" [(ngModel)]="historia.descripcion" name="descripcion" placeholder="Escribe aquí..."></textarea>
+        <div class="underline"></div>
+      </div>
 
-    <div class="coolinput">
-      <label class="text" for="fecharegistro">Fecha de Registro:</label>
-      <input class="input" [(ngModel)]="historia.fecharegistro" name="fecharegistro" type="date" />
-    </div>
+      <div class="input-container">
+        <label for="fecharegistro">Fecha de Registro:</label>
+        <input class="input" [(ngModel)]="historia.fecharegistro" name="fecharegistro" type="date">
+        <div class="underline"></div>
+      </div>
 
-    <div class="acciones">
-      <button mat-flat-button color="primary" (click)="guardar()" [disabled]="!historia.descripcion">Guardar</button>
-      <button mat-button color="warn" (click)="cerrar()">Cancelar</button>
-    </div>
-  </form>
+      <div class="card__footer">
+        <button mat-flat-button color="primary" (click)="guardar()" [disabled]="!historia.descripcion">Guardar</button>
+        <button mat-button color="warn" (click)="cerrar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
 </div>
