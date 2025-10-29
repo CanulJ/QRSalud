@@ -2,6 +2,9 @@
   command = "ng build"
   publish = "dist/QRT/browser"
 
+# 🔹 No cargues el plugin angular-runtime
 [[plugins]]
   package = "@netlify/angular-runtime"
-  enabled = false
+
+  [plugins.inputs]
+  disable = true
