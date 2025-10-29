@@ -1,0 +1,7 @@
+[build]
+  command = "ng build"
+  publish = "dist/QRT/browser"
+
+[[plugins]]
+  package = "@netlify/angular-runtime"
+  enabled = false
