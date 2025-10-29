@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+
+// Importaciones de tus páginas
 import { Login } from './Pages/login/login';
 import { Inicio } from './Pages/inicio/inicio';
 import { Registro } from './Pages/registro/registro';
@@ -11,42 +13,35 @@ import { QRP } from './Pages/qrp/qrp';
 
 export const routes: Routes = [
 
-  { path: '', component: Login },
-  { path: 'login', component: Login },
-  { path: 'login/Id', component: Login },
+  // 🚪 Redirección inicial
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  { path: '', component: Inicio },
-  { path: 'inicio', component: Inicio },
-  { path: 'inicio/Id', component: Inicio },
+  // 🔐 Autenticación
+  { path: 'login', component: Login },
   { path: 'registro', component: Registro },
 
-  { path: '', component: DatosMedicos1 },
-  { path: 'datos-medicos1', component: DatosMedicos1 },
-  { path: 'datos-medicos1', component: DatosMedicos1 },
-
-  { path: '', component: HistoriaClinica1 },
-  { path: 'historia-clinica1', component: HistoriaClinica1 },
-  { path: 'historia-clinica1/id', component: HistoriaClinica1 },
-
-  { path: '', component: Navegacion },
+  // 🏠 Páginas principales
+  { path: 'inicio', component: Inicio },
   { path: 'navegacion', component: Navegacion },
-  { path: 'navegacion/id', component: Navegacion },
 
-  { path: '', component: TablaMedica },
+  // 📋 Módulos médicos
+  { path: 'datos-medicos1', component: DatosMedicos1 },
+  { path: 'historia-clinica1', component: HistoriaClinica1 },
   { path: 'tabla-medica', component: TablaMedica },
-  { path: 'tabla-medica/id', component: TablaMedica },
-
-  { path: '', component: AntecedentesH },
   { path: 'antecedentes-h', component: AntecedentesH },
-  { path: 'antecedentes-h/id', component: AntecedentesH },
 
-   { path: '', component: QRP },
-  { path: 'qrp', component: QRP},
-  { path: 'qrp/id', component: QRP },
+  // 🧾 QR principal
+  { path: 'qrp', component: QRP },
 
+  // 🎫 Acceso mediante token (lectura QR con SSR)
   {
-  path: 'acceso/:token',
-  loadComponent: () => import('./Pages/qrp/qrp').then(m => m.QRP)
-}
+    path: 'acceso/:token',
+    loadComponent: () => import('./Pages/qrp/qrp').then(m => m.QRP),
+    data: {
+      renderMode: 'server' // 👈 Renderiza al vuelo en Netlify SSR o Angular Universal
+    }
+  },
 
+  // ⚠️ Fallback (ruta no encontrada)
+  { path: '**', redirectTo: 'login' }
 ];
