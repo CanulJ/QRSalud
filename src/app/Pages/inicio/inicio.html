@@ -21,7 +21,12 @@
           </p>
         </div>
         <div class="card__footer">
-          <!-- botones o acciones -->
+          <button (click)="generarQR()" class="btn-qr">Generar QR</button>
+
+  <!-- mostrar URL generada si ya existe -->
+  <div *ngIf="qrGenerado" class="qr-url">
+    <p><strong>URL segura:</strong> {{ qrGenerado.urlqrcode }}</p>
+  </div>
         </div>
       </div>
     </div>
