@@ -1,3 +1,5 @@
+import { HistoriaClinica } from "./HistoriaClinica";
+
 export interface Antecedentes {
     id_antecedente: number;
     id_historia: number;
@@ -7,4 +9,5 @@ export interface Antecedentes {
     hermanos:string;
     otros:string;
 
+    historia?: HistoriaClinica;
 }

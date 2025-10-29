@@ -39,4 +39,9 @@ constructor() { }
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
+  obtenerPorUsuario(usuarioId: number): Observable<Antecedentes[]> {
+  return this.http.get<Antecedentes[]>(`${this.apiUrl}/usuario/${usuarioId}`);
+}
+
+
 }
