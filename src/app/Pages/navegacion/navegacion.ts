@@ -14,5 +14,6 @@ import { AntecedentesH } from '../antecedentes-h/antecedentes-h';
 })
 export class Navegacion {
 
-  //sdsdsdsd 
+  //sdsdsds
 }
+ 
