@@ -104,4 +104,5 @@ export class AntecedentesH implements OnInit {
       error: (err) => console.error('Error al recargar antecedentes', err)
     });
   }
+  //tset
 }
