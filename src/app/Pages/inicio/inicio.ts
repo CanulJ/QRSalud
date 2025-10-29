@@ -79,7 +79,7 @@ export class Inicio implements OnInit {
 
   // Método privado para generar token/URL segura
   private generarToken(): string {
-    const randomToken = Math.random().toString(36).substring(2, 10); // 8 caracteres
-    return `https://tuapp.com/acceso/${randomToken}`;
-  }
+  const randomToken = Math.random().toString(36).substring(2, 10); // 8 caracteres
+  return `https://qrtests.netlify.app/acceso/${randomToken}`;
+}
 }
