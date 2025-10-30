@@ -11,36 +11,50 @@ import { QRP } from './Pages/qrp/qrp';
 
 export const routes: Routes = [
 
+  // Login
   { path: '', component: Login },
   { path: 'login', component: Login },
   { path: 'login/Id', component: Login },
 
-  { path: '', component: Inicio },
+  // Inicio
   { path: 'inicio', component: Inicio },
   { path: 'inicio/Id', component: Inicio },
+
+  // Registro
   { path: 'registro', component: Registro },
 
-  { path: '', component: DatosMedicos1 },
-  { path: 'datos-medicos1', component: DatosMedicos1 },
+  // Datos Médicos
   { path: 'datos-medicos1', component: DatosMedicos1 },
 
-  { path: '', component: HistoriaClinica1 },
+  // Historia Clínica
   { path: 'historia-clinica1', component: HistoriaClinica1 },
   { path: 'historia-clinica1/id', component: HistoriaClinica1 },
 
-  { path: '', component: Navegacion },
+  // Navegación
   { path: 'navegacion', component: Navegacion },
   { path: 'navegacion/id', component: Navegacion },
 
-  { path: '', component: TablaMedica },
+  // Tabla Médica
   { path: 'tabla-medica', component: TablaMedica },
   { path: 'tabla-medica/id', component: TablaMedica },
 
-  { path: '', component: AntecedentesH },
+  // Antecedentes
   { path: 'antecedentes-h', component: AntecedentesH },
   { path: 'antecedentes-h/id', component: AntecedentesH },
 
-   { path: '', component: QRP },
-  { path: 'qrp', component: QRP},
+  // QRP
+  { path: 'qrp', component: QRP },
   { path: 'qrp/id', component: QRP },
+
+  // Ruta para QR dinámico
+  {
+    path: 'acceso/:token',
+    component: QRP,
+    data: {
+      renderMode: 'server' // se renderiza al vuelo, permite usar token dinámico
+    }
+  },
+
+  // Redirección por si la ruta no existe
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
