@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, inject, Inject, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { DatosMedicosService } from '../../Services/datos-medicos.service';
@@ -20,7 +20,7 @@ export class Inicio implements OnInit {
 
   usuario: any = null;
   datosMedicos: DatosMedicos | null = null;
-  qrGenerado: QRCodigos | null = null; // Para almacenar QR generado
+  qrGenerado: QRCodigos | null = null;
 
   private router = inject(Router);
   private datosMedicosService = inject(DatosMedicosService);
@@ -28,33 +28,35 @@ export class Inicio implements OnInit {
   private historiaClinicaService = inject(historiaClinicaService);
   private qrService = inject(QRService);
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {} // inyectamos PLATFORM_ID
+
   ngOnInit(): void {
-    const usuarioData = sessionStorage.getItem('usuario');
-    if (usuarioData) {
-      this.usuario = JSON.parse(usuarioData);
+    // Solo ejecutar en navegador
+    if (isPlatformBrowser(this.platformId)) {
+      const usuarioData = sessionStorage.getItem('usuario');
+      if (usuarioData) {
+        this.usuario = JSON.parse(usuarioData);
+        const userId = this.usuario.id;
 
-      const userId = this.usuario.id;
-      if (!userId) {
-        console.error('No se encontró un ID válido para el usuario', this.usuario);
-        return;
+        if (!userId) {
+          console.error('No se encontró un ID válido para el usuario', this.usuario);
+          return;
+        }
+
+        this.datosMedicosService.obtenerPorUsuario(userId).subscribe({
+          next: (datos) => {
+            this.datosMedicos = datos.length > 0 ? datos[0] : null;
+          },
+          error: (err) => console.error('Error al obtener datos médicos', err)
+        });
+
+        this.qrService.obtenerPorUsuario(userId).subscribe({
+          next: (qrs) => {
+            if (qrs.length > 0) this.qrGenerado = qrs[0];
+          },
+          error: (err) => console.warn('No hay QR generado aún', err)
+        });
       }
-
-      this.datosMedicosService.obtenerPorUsuario(userId).subscribe({
-        next: (datos) => {
-          this.datosMedicos = datos.length > 0 ? datos[0] : null;
-        },
-        error: (err) => console.error('Error al obtener datos médicos', err)
-      });
-
-      // Opcional: cargar QR existente si ya hay uno
-      this.qrService.obtenerPorUsuario(userId).subscribe({
-        next: (qrs) => {
-          if (qrs.length > 0) {
-            this.qrGenerado = qrs[0]; // toma el más reciente
-          }
-        },
-        error: (err) => console.warn('No hay QR generado aún', err)
-      });
     }
   }
 
@@ -70,16 +72,15 @@ export class Inicio implements OnInit {
     this.qrService.crearQR(datos).subscribe({
       next: (qr) => {
         console.log('QR generado:', qr);
-        this.qrGenerado = qr; // almacenar para mostrarlo en la tarjeta
+        this.qrGenerado = qr;
         alert(`Se generó la URL segura para la tarjeta: ${qr.urlqrcode}`);
       },
       error: (err) => console.error('Error al generar QR', err)
     });
   }
 
-  // Método privado para generar token/URL segura
   private generarToken(): string {
-  const randomToken = Math.random().toString(36).substring(2, 10); // 8 caracteres
-  return `https://qrtests.netlify.app/acceso/${randomToken}`;
-}
+    const randomToken = Math.random().toString(36).substring(2, 10);
+    return `https://qrtests.netlify.app/acceso/${randomToken}`;
+  }
 }
