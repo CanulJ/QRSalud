@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { HistoriaClinica } from '../../Models/HistoriaClinica';
 import { historiaClinicaService } from '../../Services/historia-clinica.service';
@@ -23,7 +23,15 @@ export class HistoriaClinica1 {
   datosMedicos: DatosMedicos | null = null;
   historiaClinica: HistoriaClinica[] = [];
 
+  private isBrowser: boolean;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
   ngOnInit(): void {
+    if (!this.isBrowser) return; // Evitar SSR/prerendering
+
     const usuarioData = sessionStorage.getItem('usuario');
     if (usuarioData) {
       this.usuario = JSON.parse(usuarioData);
@@ -42,23 +50,24 @@ export class HistoriaClinica1 {
   }
 
   cargarHistorial(): void {
-  if (!this.datosMedicos) return;
-  this.historiaService.obtenerPorDatosMedicos(this.datosMedicos.id_datos).subscribe({
-    next: (historial) => {
-      this.historiaClinica = historial;
-      // Guardar el más reciente en sessionStorage para AntecedentesH
-      if (historial.length > 0) {
-        const ultimaHistoria = historial[historial.length - 1];
-        sessionStorage.setItem('historiaClinicaId', String(ultimaHistoria.idhistoria));
-      }
-    },
-    error: (err) => console.error(err)
-  });
-}
+    if (!this.datosMedicos || !this.isBrowser) return;
 
+    this.historiaService.obtenerPorDatosMedicos(this.datosMedicos.id_datos).subscribe({
+      next: (historial) => {
+        this.historiaClinica = historial;
+
+        // Guardar el más reciente en sessionStorage para AntecedentesH
+        if (historial.length > 0) {
+          const ultimaHistoria = historial[historial.length - 1];
+          sessionStorage.setItem('historiaClinicaId', String(ultimaHistoria.idhistoria));
+        }
+      },
+      error: (err) => console.error(err)
+    });
+  }
 
   agregarHistoria(): void {
-    if (!this.datosMedicos) return; // seguridad
+    if (!this.datosMedicos || !this.isBrowser) return; // seguridad
 
     const sheetRef = this.bottomSheet.open(ForHistoriaC, {
       data: { datosmedicosid: this.datosMedicos.id_datos },
