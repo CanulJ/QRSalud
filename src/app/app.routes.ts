@@ -43,6 +43,4 @@ export const routes: Routes = [
    { path: '', component: QRP },
   { path: 'qrp', component: QRP},
   { path: 'qrp/id', component: QRP },
-
-  { path: 'acceso/:token', component: QRP },
 ];
