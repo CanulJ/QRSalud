@@ -14,37 +14,31 @@ export class QRService {
 
   constructor() { }
 
-  // Traer todos los códigos QR
   listar(): Observable<QRCodigos[]> {
     return this.http.get<QRCodigos[]>(this.apiUrl);
   }
 
-  // Traer un código QR por su id
   obtenerPorId(idqr: number): Observable<QRCodigos> {
     return this.http.get<QRCodigos>(`${this.apiUrl}/${idqr}`);
   }
 
-  // Traer códigos QR de un usuario
   obtenerPorUsuario(userid: number): Observable<QRCodigos[]> {
     return this.http.get<QRCodigos[]>(`${this.apiUrl}/usuario/${userid}`);
   }
 
-  // Crear un nuevo código QR
-  crearQR(data: { userid: number; urlqrcode: string; estado?: string }): Observable<QRCodigos> {
+  crearQR(data: { userid: number; urlqrcode: string; estado?: string; nfc_uid?: string }): Observable<QRCodigos> {
     return this.http.post<QRCodigos>(this.apiUrl, data);
   }
 
-  // Actualizar un código QR existente
   actualizarQR(idqr: number, data: Partial<QRCodigos>): Observable<QRCodigos> {
     return this.http.put<QRCodigos>(`${this.apiUrl}/${idqr}`, data);
   }
 
-  // Eliminar un código QR
   eliminarQR(idqr: number): Observable<{ deleted: boolean }> {
     return this.http.delete<{ deleted: boolean }>(`${this.apiUrl}/${idqr}`);
   }
 
-  obtenerPorToken(token: string) {
+  obtenerPorToken(token: string): Observable<QRCodigos> {
     return this.http.get<QRCodigos>(`${this.apiUrl}/token/${token}`);
   }
 

@@ -31,7 +31,7 @@ export class QRP implements OnInit {
             return;
           }
 
-          // 👇 Aquí guardamos TODO el usuario
+          // Guardamos todo el usuario
           const usuario = {
             id: qr.usuario.id,
             nombre: qr.usuario.nombre,
@@ -46,6 +46,10 @@ export class QRP implements OnInit {
           };
 
           sessionStorage.setItem('usuario', JSON.stringify(usuario));
+
+          // Guardamos también el UID de la tarjeta NFC
+          const nfcUID = qr.nfc_uid || null;
+          if (nfcUID) sessionStorage.setItem('nfc_uid', nfcUID);
 
           this.router.navigate(['/inicio']);
         },
