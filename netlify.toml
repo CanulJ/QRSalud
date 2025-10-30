@@ -2,5 +2,8 @@
   command = "ng build --configuration production"
   publish = "dist/QRT/browser"
 
-[[plugins]]
-  package = "@netlify/angular-runtime"
+# Para que SPA funcione con rutas
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

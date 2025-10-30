@@ -10,30 +10,23 @@ import { AntecedentesH } from './Pages/antecedentes-h/antecedentes-h';
 import { QRP } from './Pages/qrp/qrp';
 
 export const routes: Routes = [
-  // Redireccionar ruta raíz a login
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-
-  // Rutas normales
   { path: 'login', component: Login },
+  { path: 'login/:id', component: Login },
   { path: 'inicio', component: Inicio },
+  { path: 'inicio/:id', component: Inicio },
   { path: 'registro', component: Registro },
   { path: 'datos-medicos1', component: DatosMedicos1 },
-  { path: 'historia-clinica1', component: HistoriaClinica1 },
-  { path: 'navegacion', component: Navegacion },
-  { path: 'tabla-medica', component: TablaMedica },
-  { path: 'antecedentes-h', component: AntecedentesH },
-  { path: 'qrp', component: QRP },
-
-  // Rutas dinámicas (SPA puro, sin prerender)
-  { path: 'login/:id', component: Login },
-  { path: 'inicio/:id', component: Inicio },
   { path: 'datos-medicos1/:id', component: DatosMedicos1 },
+  { path: 'historia-clinica1', component: HistoriaClinica1 },
   { path: 'historia-clinica1/:id', component: HistoriaClinica1 },
+  { path: 'navegacion', component: Navegacion },
   { path: 'navegacion/:id', component: Navegacion },
+  { path: 'tabla-medica', component: TablaMedica },
   { path: 'tabla-medica/:id', component: TablaMedica },
+  { path: 'antecedentes-h', component: AntecedentesH },
   { path: 'antecedentes-h/:id', component: AntecedentesH },
+  { path: 'qrp', component: QRP },
   { path: 'qrp/:id', component: QRP },
-
-  // Ruta con token
   { path: 'acceso/:token', component: QRP }
 ];
