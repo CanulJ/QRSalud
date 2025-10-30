@@ -1,25 +1,18 @@
 import { Usuarios } from "./Usuarios";
 
 export interface Usuario {
-  id: number;
-  nombre: string;
-  apellidos?: string;
-  correo?: string;
-  fechanacimiento?: Date;
-  genero?: string;
-  telefono?: string;
-  curp?: string;
-  originario?: string;
-  fecha_creacion?: Date;
+    id: number;
+    nombre: string;
+    email?: string;
+    // cualquier otro campo que necesites mostrar
 }
 
 export interface QRCodigos {
-  idqr: number;
-  userid: number;
-  urlqrcode: string;
-  fechacreacion: Date;
-  estado: string;
-  nfc_uid?: string; // 🔒 UID NFC opcional
+    idqr: number;
+    userid: number;
+    urlqrcode: string;
+    fechacreacion: Date;
+    estado: string;
 
-  usuario?: Usuario;
+    usuario?: Usuarios; 
 }

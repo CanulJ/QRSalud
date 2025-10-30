@@ -12,43 +12,40 @@ export class QRService {
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'qrcodigos';
 
-  // 🔹 Listar todos los QR
+  constructor() { }
+
+  // Traer todos los códigos QR
   listar(): Observable<QRCodigos[]> {
     return this.http.get<QRCodigos[]>(this.apiUrl);
   }
 
-  // 🔹 Obtener QR por ID
+  // Traer un código QR por su id
   obtenerPorId(idqr: number): Observable<QRCodigos> {
     return this.http.get<QRCodigos>(`${this.apiUrl}/${idqr}`);
   }
 
-  // 🔹 Obtener QR por usuario
+  // Traer códigos QR de un usuario
   obtenerPorUsuario(userid: number): Observable<QRCodigos[]> {
     return this.http.get<QRCodigos[]>(`${this.apiUrl}/usuario/${userid}`);
   }
 
-  // 🔹 Crear QR con UID NFC opcional
-  crearQR(data: { userid: number; urlqrcode: string; estado?: string; nfc_uid?: string }): Observable<QRCodigos> {
+  // Crear un nuevo código QR
+  crearQR(data: { userid: number; urlqrcode: string; estado?: string }): Observable<QRCodigos> {
     return this.http.post<QRCodigos>(this.apiUrl, data);
   }
 
-  // 🔹 Actualizar QR
+  // Actualizar un código QR existente
   actualizarQR(idqr: number, data: Partial<QRCodigos>): Observable<QRCodigos> {
     return this.http.put<QRCodigos>(`${this.apiUrl}/${idqr}`, data);
   }
 
-  // 🔹 Eliminar QR
+  // Eliminar un código QR
   eliminarQR(idqr: number): Observable<{ deleted: boolean }> {
     return this.http.delete<{ deleted: boolean }>(`${this.apiUrl}/${idqr}`);
   }
 
-  // 🔹 Obtener por token y UID de tarjeta NFC
-  obtenerPorTokenYUID(token: string, nfc_uid: string): Observable<QRCodigos> {
-    return this.http.post<QRCodigos>(`${this.apiUrl}/validar-nfc`, { token, nfc_uid });
+  obtenerPorToken(token: string) {
+    return this.http.get<QRCodigos>(`${this.apiUrl}/token/${token}`);
   }
-
-  verificarTokenYUID(token: string, uid: string) {
-  return this.http.get<QRCodigos>(`${this.apiUrl}/verificar/${token}/${uid}`);
-}
 
 }
