@@ -44,6 +44,10 @@ export const routes: Routes = [
   { path: 'qrp', component: QRP},
   { path: 'qrp/id', component: QRP },
 
-  { path: 'acceso/:token', component: QRP }, // en lugar de AccesoQRComponent
+  { 
+  path: 'acceso/:token', 
+  component: QRP,
+  data: { renderMode: 'client-only' } // <--- esto evita prerender
+}
 
 ];
