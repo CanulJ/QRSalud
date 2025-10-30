@@ -45,12 +45,4 @@ export const routes: Routes = [
   { path: 'qrp/id', component: QRP },
 
   { path: 'acceso/:token', component: QRP },
-
-  {
-  path: 'acceso/:token',
-  loadComponent: () =>
-    import('./Pages/inicio/inicio').then(m => m.Inicio),
-  data: { renderMode: 'client' } // 👈 evita que Netlify intente prerenderizarla
-}
-
 ];
