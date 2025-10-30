@@ -46,4 +46,9 @@ export class QRService {
   obtenerPorTokenYUID(token: string, nfc_uid: string): Observable<QRCodigos> {
     return this.http.post<QRCodigos>(`${this.apiUrl}/validar-nfc`, { token, nfc_uid });
   }
+
+  verificarTokenYUID(token: string, uid: string) {
+  return this.http.get<QRCodigos>(`${this.apiUrl}/verificar/${token}/${uid}`);
+}
+
 }
