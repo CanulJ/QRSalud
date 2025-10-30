@@ -1,3 +1,5 @@
+import { Usuarios } from "./Usuarios";
+
 export interface Usuario {
     id: number;
     nombre: string;
@@ -12,5 +14,5 @@ export interface QRCodigos {
     fechacreacion: Date;
     estado: string;
 
-    usuario?: Usuario; 
+    usuario?: Usuarios; 
 }
