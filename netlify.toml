@@ -1,6 +1,8 @@
 [build]
-  command = "ng build"
+  command = "ng build --configuration production"
   publish = "dist/QRT/browser"
 
 [[plugins]]
   package = "@netlify/angular-runtime"
+  [plugins.inputs]
+    prerender = false
