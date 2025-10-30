@@ -88,4 +88,33 @@ export class QRP implements OnInit {
       this.router.navigate(['/']);
     }
   }
+
+  // qrp.ts
+async iniciarEscaneo() {
+  if ('NDEFReader' in window) {
+    try {
+      const ndef = new (window as any).NDEFReader();
+      await ndef.scan();
+      alert('Acerque la tarjeta NFC al lector...');
+      ndef.onreading = (event: any) => {
+        const uid = event.serialNumber;
+        const token = this.route.snapshot.paramMap.get('token');
+        this.qrService.verificarTokenYUID(token!, uid).subscribe((res: any) => {
+          if (res.valido) {
+            alert('✅ Acceso concedido');
+          } else {
+            alert('❌ Acceso denegado');
+          }
+        });
+      };
+    } catch (error) {
+      console.error('🚫 Error NFC:', error);
+      alert('No se pudo acceder al NFC. Revisa permisos o intenta de nuevo.');
+    }
+  } else {
+    alert('Tu navegador no soporta NFC.');
+  }
+}
+
+
 }
