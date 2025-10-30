@@ -45,8 +45,7 @@ export class QRService {
   }
 
   obtenerPorToken(token: string) {
-  return this.http.get<QRCodigos>(`${this.apiUrl}/qr/token/${token}`);
-}
-
+    return this.http.get<QRCodigos>(`${this.apiUrl}/token/${token}`);
+  }
 
 }
