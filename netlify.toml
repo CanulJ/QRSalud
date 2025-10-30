@@ -1,6 +1,11 @@
 [build]
-  publish = "dist/QRT/browser"
   command = "ng build"
+  publish = "dist/QRT/browser"
 
 [[plugins]]
   package = "@netlify/angular-runtime"
+
+# Excluir rutas dinámicas de prerender
+[plugins.inputs]
+  prerender = true
+  exclude = ["acceso/:token"]
