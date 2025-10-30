@@ -20,40 +20,35 @@ export class QRP implements OnInit {
   usuarioId: number | null = null;
 
   ngOnInit(): void {
-    const token = this.route.snapshot.paramMap.get('token'); // Leer token de la URL
-
-    if (token) {
-      this.qrService.obtenerPorToken(token).subscribe({
-        next: (qr) => {
-          if (!qr) {
-            alert('Token inválido o expirado');
-            this.router.navigate(['/']); // Redirige al login
-            return;
-          }
-
-          // Guardamos el ID del usuario usando AuthService
-          this.usuarioId = qr.userid;
-          this.authService.setUsuario(this.usuarioId);
-
-          // Cargar los QR de ese usuario
-          this.cargarQRs(this.usuarioId);
-
-          // Redirigir al inicio
-          this.router.navigate(['/inicio']);
-        },
-        error: (err) => {
-          console.error('Error al validar el token', err);
-          this.router.navigate(['/']);
+  const token = this.route.snapshot.paramMap.get('token'); // Leer token de la URL
+  if (token) {
+    this.qrService.obtenerPorToken(token).subscribe({
+      next: (qr) => {
+        if (!qr) {
+          alert('Token inválido o expirado');
+          this.router.navigate(['/']); // Redirige al login
+          return;
         }
-      });
-    } else {
-      // Si no hay token en la URL, revisamos si ya hay usuario logueado
-      const usuario = this.authService.getUsuario();
-      if (!usuario) {
+
+        // Guardamos la info del usuario en sessionStorage
+        const usuario = {
+          id: qr.userid,
+          nombre: qr.usuario?.nombre, // si tu API devuelve la relación usuario
+          email: qr.usuario?.email
+        };
+        sessionStorage.setItem('usuario', JSON.stringify(usuario));
+
+        // Redirigimos al inicio, ahora ya “logueado”
+        this.router.navigate(['/inicio']);
+      },
+      error: (err) => {
+        console.error('Error al validar el token', err);
         this.router.navigate(['/']);
       }
-    }
+    });
   }
+}
+
 
   cargarQRs(userid: number) {
     this.qrService.obtenerPorUsuario(userid).subscribe({
