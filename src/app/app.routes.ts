@@ -10,8 +10,10 @@ import { AntecedentesH } from './Pages/antecedentes-h/antecedentes-h';
 import { QRP } from './Pages/qrp/qrp';
 
 export const routes: Routes = [
+  // Redireccionar ruta raíz a login
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
   // Rutas normales
-  { path: '', component: Login },
   { path: 'login', component: Login },
   { path: 'inicio', component: Inicio },
   { path: 'registro', component: Registro },
@@ -22,16 +24,16 @@ export const routes: Routes = [
   { path: 'antecedentes-h', component: AntecedentesH },
   { path: 'qrp', component: QRP },
 
-  // Rutas dinámicas → client-only para evitar prerender
-  { path: 'login/:id', component: Login, data: { renderMode: 'client-only' } },
-  { path: 'inicio/:id', component: Inicio, data: { renderMode: 'client-only' } },
-  { path: 'datos-medicos1/:id', component: DatosMedicos1, data: { renderMode: 'client-only' } },
-  { path: 'historia-clinica1/:id', component: HistoriaClinica1, data: { renderMode: 'client-only' } },
-  { path: 'navegacion/:id', component: Navegacion, data: { renderMode: 'client-only' } },
-  { path: 'tabla-medica/:id', component: TablaMedica, data: { renderMode: 'client-only' } },
-  { path: 'antecedentes-h/:id', component: AntecedentesH, data: { renderMode: 'client-only' } },
-  { path: 'qrp/:id', component: QRP, data: { renderMode: 'client-only' } },
+  // Rutas dinámicas (SPA puro, sin prerender)
+  { path: 'login/:id', component: Login },
+  { path: 'inicio/:id', component: Inicio },
+  { path: 'datos-medicos1/:id', component: DatosMedicos1 },
+  { path: 'historia-clinica1/:id', component: HistoriaClinica1 },
+  { path: 'navegacion/:id', component: Navegacion },
+  { path: 'tabla-medica/:id', component: TablaMedica },
+  { path: 'antecedentes-h/:id', component: AntecedentesH },
+  { path: 'qrp/:id', component: QRP },
 
-  // Ruta de token
-  { path: 'acceso/:token', component: QRP, data: { renderMode: 'client-only' } }
+  // Ruta con token
+  { path: 'acceso/:token', component: QRP }
 ];
