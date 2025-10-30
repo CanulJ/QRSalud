@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QRService } from '../../Services/qrs.service';
+import { AuthService } from '../../Services/auth.service';
 import { QRCodigos } from '../../Models/QRModels';
 
 @Component({
@@ -11,6 +12,7 @@ import { QRCodigos } from '../../Models/QRModels';
 export class QRP implements OnInit {
 
   private qrService = inject(QRService);
+  private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -19,6 +21,7 @@ export class QRP implements OnInit {
 
   ngOnInit(): void {
     const token = this.route.snapshot.paramMap.get('token'); // Leer token de la URL
+
     if (token) {
       this.qrService.obtenerPorToken(token).subscribe({
         next: (qr) => {
@@ -27,12 +30,15 @@ export class QRP implements OnInit {
             this.router.navigate(['/']); // Redirige al login
             return;
           }
-          // Guardamos el ID del usuario en sessionStorage
+
+          // Guardamos el ID del usuario usando AuthService
           this.usuarioId = qr.userid;
-          sessionStorage.setItem('usuario', JSON.stringify({ id: this.usuarioId }));
+          this.authService.setUsuario(this.usuarioId);
+
           // Cargar los QR de ese usuario
           this.cargarQRs(this.usuarioId);
-          // Redirigir al inicio para que cargue datos completos
+
+          // Redirigir al inicio
           this.router.navigate(['/inicio']);
         },
         error: (err) => {
@@ -40,6 +46,12 @@ export class QRP implements OnInit {
           this.router.navigate(['/']);
         }
       });
+    } else {
+      // Si no hay token en la URL, revisamos si ya hay usuario logueado
+      const usuario = this.authService.getUsuario();
+      if (!usuario) {
+        this.router.navigate(['/']);
+      }
     }
   }
 
