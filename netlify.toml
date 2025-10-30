@@ -4,8 +4,3 @@
 
 [[plugins]]
   package = "@netlify/angular-runtime"
-
-# Excluir rutas dinámicas de prerender
-[plugins.inputs]
-  prerender = true
-  exclude = ["acceso/:token"]
