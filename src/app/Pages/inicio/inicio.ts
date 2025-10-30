@@ -18,7 +18,7 @@ import { QRCodigos } from '../../Models/QRModels';
 })
 export class Inicio implements OnInit {
 
-  usuario: any = null;
+   usuario: any = null;
   datosMedicos: DatosMedicos | null = null;
   qrGenerado: QRCodigos | null = null;
 
@@ -28,10 +28,9 @@ export class Inicio implements OnInit {
   private historiaClinicaService = inject(historiaClinicaService);
   private qrService = inject(QRService);
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {} // inyectamos PLATFORM_ID
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    // Solo ejecutar en navegador
     if (isPlatformBrowser(this.platformId)) {
       const usuarioData = sessionStorage.getItem('usuario');
       if (usuarioData) {
@@ -44,16 +43,12 @@ export class Inicio implements OnInit {
         }
 
         this.datosMedicosService.obtenerPorUsuario(userId).subscribe({
-          next: (datos) => {
-            this.datosMedicos = datos.length > 0 ? datos[0] : null;
-          },
+          next: (datos) => this.datosMedicos = datos.length > 0 ? datos[0] : null,
           error: (err) => console.error('Error al obtener datos médicos', err)
         });
 
         this.qrService.obtenerPorUsuario(userId).subscribe({
-          next: (qrs) => {
-            if (qrs.length > 0) this.qrGenerado = qrs[0];
-          },
+          next: (qrs) => { if (qrs.length > 0) this.qrGenerado = qrs[0]; },
           error: (err) => console.warn('No hay QR generado aún', err)
         });
       }
@@ -66,21 +61,26 @@ export class Inicio implements OnInit {
       return;
     }
 
+    // 1️⃣ Generar solo el token
     const tokenSeguro = this.generarToken();
+
+    // 2️⃣ Mostrar al usuario la URL completa sin guardarla en la DB
+    const urlAcceso = `https://qrtests.netlify.app/acceso/${tokenSeguro}`;
+    alert(`Se generó la URL segura: ${urlAcceso}`);
+
+    // 3️⃣ Guardar solo el token en la base de datos
     const datos = { userid: this.usuario.id, urlqrcode: tokenSeguro };
 
     this.qrService.crearQR(datos).subscribe({
       next: (qr) => {
         console.log('QR generado:', qr);
         this.qrGenerado = qr;
-        alert(`Se generó la URL segura para la tarjeta: ${qr.urlqrcode}`);
       },
       error: (err) => console.error('Error al generar QR', err)
     });
   }
 
   private generarToken(): string {
-    const randomToken = Math.random().toString(36).substring(2, 10);
-    return `https://qrtests.netlify.app/acceso/${randomToken}`;
+    return Math.random().toString(36).substring(2, 10); // Solo el token, ej: 'ryl9ignh'
   }
 }
