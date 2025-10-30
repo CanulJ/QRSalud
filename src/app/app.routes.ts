@@ -50,9 +50,6 @@ export const routes: Routes = [
   {
     path: 'acceso/:token',
     component: QRP,
-    data: {
-      renderMode: 'server' // se renderiza al vuelo, permite usar token dinámico
-    }
   },
 
   // Redirección por si la ruta no existe
