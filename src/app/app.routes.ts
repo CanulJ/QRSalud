@@ -10,44 +10,48 @@ import { AntecedentesH } from './Pages/antecedentes-h/antecedentes-h';
 import { QRP } from './Pages/qrp/qrp';
 
 export const routes: Routes = [
-
+  // Ruta principal (Login)
   { path: '', component: Login },
   { path: 'login', component: Login },
-  { path: 'login/Id', component: Login },
 
-  { path: '', component: Inicio },
-  { path: 'inicio', component: Inicio },
-  { path: 'inicio/Id', component: Inicio },
+  // Registro
   { path: 'registro', component: Registro },
 
-  { path: '', component: DatosMedicos1 },
-  { path: 'datos-medicos1', component: DatosMedicos1 },
-  { path: 'datos-medicos1', component: DatosMedicos1 },
+  // Inicio
+  { path: 'inicio', component: Inicio },
+  { path: 'inicio/:id', component: Inicio },
 
-  { path: '', component: HistoriaClinica1 },
+  // Datos médicos
+  { path: 'datos-medicos1', component: DatosMedicos1 },
+  { path: 'datos-medicos1/:id', component: DatosMedicos1 },
+
+  // Historia clínica
   { path: 'historia-clinica1', component: HistoriaClinica1 },
-  { path: 'historia-clinica1/id', component: HistoriaClinica1 },
+  { path: 'historia-clinica1/:id', component: HistoriaClinica1 },
 
-  { path: '', component: Navegacion },
+  // Navegación
   { path: 'navegacion', component: Navegacion },
-  { path: 'navegacion/id', component: Navegacion },
+  { path: 'navegacion/:id', component: Navegacion },
 
-  { path: '', component: TablaMedica },
+  // Tabla médica
   { path: 'tabla-medica', component: TablaMedica },
-  { path: 'tabla-medica/id', component: TablaMedica },
+  { path: 'tabla-medica/:id', component: TablaMedica },
 
-  { path: '', component: AntecedentesH },
+  // Antecedentes
   { path: 'antecedentes-h', component: AntecedentesH },
-  { path: 'antecedentes-h/id', component: AntecedentesH },
+  { path: 'antecedentes-h/:id', component: AntecedentesH },
 
-   { path: '', component: QRP },
-  { path: 'qrp', component: QRP},
-  { path: 'qrp/id', component: QRP },
+  // QR
+  { path: 'qrp', component: QRP },
+  { path: 'qrp/:id', component: QRP },
 
+  // Ruta dinámica de acceso QR (client-only)
   { 
-  path: 'acceso/:token', 
-  component: QRP,
-  data: { renderMode: 'client-only' } // <--- esto evita prerender
-}
+    path: 'acceso/:token', 
+    component: QRP,
+    data: { renderMode: 'client-only' }
+  },
 
+  // Fallback para cualquier otra ruta
+  { path: '**', redirectTo: '' }
 ];
