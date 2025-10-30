@@ -6,7 +6,7 @@ import { QRCodigos } from '../../Models/QRModels';
 @Component({
   selector: 'app-qrp',
   templateUrl: './qrp.html',
-  styleUrls: ['./qrp.css']
+  styleUrl: './qrp.css'
 })
 export class QRP implements OnInit {
 
