@@ -43,11 +43,4 @@ export class QRService {
   eliminarQR(idqr: number): Observable<{ deleted: boolean }> {
     return this.http.delete<{ deleted: boolean }>(`${this.apiUrl}/${idqr}`);
   }
-
-  // Validar si un token existe o es válido
-validarToken(token: string): Observable<QRCodigos | null> {
-  return this.http.get<QRCodigos | null>(`${this.apiUrl}/validar/${token}`);
-}
-
-
 }

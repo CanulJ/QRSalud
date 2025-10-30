@@ -1,45 +1,31 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { QRService } from '../../Services/qrs.service';
 import { QRCodigos } from '../../Models/QRModels';
 
 @Component({
   selector: 'app-qrp',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './qrp.html',
   styleUrl: './qrp.css'
 })
 export class QRP implements OnInit {
-  private qrService = inject(QRService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
 
-  mensaje = 'Verificando acceso...';
-  qrUsuario: QRCodigos | null = null;
+  private qrService = inject(QRService);
+
+  qrUsuario: QRCodigos[] = [];
+  usuarioId: number | null = null; // Este lo podrías obtener al leer la tarjeta NFC
 
   ngOnInit(): void {
-    const token = this.route.snapshot.paramMap.get('token');
-    if (!token) {
-      this.mensaje = 'Token no encontrado.';
-      return;
+    // Si ya tienes el ID del usuario desde la tarjeta
+    if (this.usuarioId) {
+      this.cargarQRs(this.usuarioId);
     }
+  }
 
-    this.qrService.validarToken(token).subscribe({
-      next: (data) => {
-        if (data) {
-          this.qrUsuario = data;
-          this.mensaje = 'Acceso autorizado. Redirigiendo...';
-          setTimeout(() => this.router.navigate(['/inicio']), 2000);
-        } else {
-          this.mensaje = 'Token no válido o expirado.';
-        }
-      },
-      error: (err) => {
-        console.error('Error al validar token:', err);
-        this.mensaje = 'Error en la validación del token.';
-      }
+  cargarQRs(userid: number) {
+    this.qrService.obtenerPorUsuario(userid).subscribe({
+      next: (data) => this.qrUsuario = data,
+      error: (err) => console.error('Error al cargar códigos QR del usuario', err)
     });
   }
 }
