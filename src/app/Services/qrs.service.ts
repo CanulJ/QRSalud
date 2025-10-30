@@ -43,4 +43,10 @@ export class QRService {
   eliminarQR(idqr: number): Observable<{ deleted: boolean }> {
     return this.http.delete<{ deleted: boolean }>(`${this.apiUrl}/${idqr}`);
   }
+
+  obtenerPorToken(token: string) {
+  return this.http.get<QRCodigos>(`${this.apiUrl}/qr/token/${token}`);
+}
+
+
 }
