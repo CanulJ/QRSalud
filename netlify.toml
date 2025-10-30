@@ -1,6 +1,5 @@
 [build]
-  command = "npm run build"
   publish = "dist/QRT/browser"
+  command = "ng build"
 
-[[plugins]]
-  package = "@netlify/angular-runtime"
+

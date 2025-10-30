@@ -44,6 +44,6 @@ export const routes: Routes = [
   { path: 'qrp', component: QRP},
   { path: 'qrp/id', component: QRP },
 
-  { path: 'acceso/:token', component: QRP, data: { renderMode: 'client-only' } },
+  { path: 'acceso/:token', component: QRP, data: { renderMode: 'ssr' } }
 
 ];
