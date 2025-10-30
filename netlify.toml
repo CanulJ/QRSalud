@@ -1,5 +1,8 @@
 [build]
   publish = "dist/QRT/browser"
-  command = "ng build"
+  command = "ng build --configuration=production"
 
-
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
