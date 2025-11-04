@@ -3,10 +3,11 @@ import { SeguroMedico } from '../../Models/SeguroMedicoM';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-seguro-medico-for',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,MatButtonModule],
   templateUrl: './seguro-medico-for.html',
   styleUrl: './seguro-medico-for.css',
 })
