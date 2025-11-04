@@ -1,0 +1,182 @@
+/* ==================== CONTENEDOR PRINCIPAL ==================== */
+.seguro-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.titulo {
+  font-size: 1.8em;
+  color: #6d28d9;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ==================== BOTÓN AGREGAR ==================== */
+.acciones {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-agregar {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-agregar:hover {
+  background: #5a189a;
+  transform: scale(1.05);
+}
+
+/* ==================== TABLA CARD ==================== */
+.tabla-card {
+  width: 90%;
+  max-width: 950px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 2px solid rgba(124, 58, 237, 0.5);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+  overflow-x: auto;
+  transition: all 0.4s ease;
+}
+
+.tabla-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(124, 58, 237, 0.25);
+}
+
+/* ==================== TABLA ==================== */
+.tabla-seguros {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 15px;
+}
+
+.tabla-seguros th, .tabla-seguros td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabla-seguros th {
+  background-color: #7c3aed;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+}
+
+.tabla-seguros td {
+  color: #1e293b;
+}
+
+.tabla-seguros tr:hover {
+  background-color: #f5f3ff;
+  cursor: pointer;
+}
+
+.seleccionado {
+  background-color: #ede9fe !important;
+  border-left: 4px solid #7c3aed;
+}
+
+/* ==================== BOTÓN VER ==================== */
+.btn-ver {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.btn-ver:hover {
+  background: #5a189a;
+  transform: scale(1.05);
+}
+
+/* ==================== DETALLE CARD ==================== */
+.detalle-card {
+  width: 90%;
+  max-width: 600px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 2px solid rgba(124, 58, 237, 0.5);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+  padding: 20px;
+  transition: all 0.4s ease;
+}
+
+.detalle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(124, 58, 237, 0.25);
+}
+
+.detalle-card h3 {
+  color: #5b21b6;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ==================== BOTÓN VOLVER ==================== */
+.btn-volver {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  margin-top: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-volver:hover {
+  background: #5a189a;
+  transform: scale(1.05);
+}
+
+/* ==================== MENSAJE VACÍO ==================== */
+.mensaje-vacio {
+  color: #6b7280;
+  font-style: italic;
+  background: #f3f0ff;
+  border: 1px dashed #7c3aed;
+  border-radius: 12px;
+  padding: 15px 20px;
+  text-align: center;
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .tabla-card, .detalle-card {
+    width: 95%;
+  }
+
+  .tabla-seguros th, .tabla-seguros td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .btn-agregar {
+    width: 100%;
+  }
+}

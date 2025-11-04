@@ -8,11 +8,12 @@ import { historiaClinicaService } from '../../Services/historia-clinica.service'
 import { Navegacion } from '../navegacion/navegacion';
 import { QRService } from '../../Services/qrs.service';
 import { QRCodigos } from '../../Models/QRModels';
+import { SeguroMedicoComponent } from '../seguro-medico/seguro-medico';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule, Navegacion],
+  imports: [CommonModule, MatBottomSheetModule, Navegacion, SeguroMedicoComponent],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
 })

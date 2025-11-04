@@ -1,0 +1,39 @@
+<div class="seguro-main">
+  <h2 class="titulo">Seguros Médicos</h2>
+
+  <div class="acciones">
+    <button class="btn-agregar" (click)="openBottomSheet()">+ Agregar Seguro Médico</button>
+  </div>
+
+  <!-- Tabla -->
+  <div class="tabla-card" *ngIf="seguros.length > 0; else sinDatos">
+    <table class="tabla-seguros">
+      <thead>
+        <tr>
+          <th>Tipo de Seguro</th>
+          <th>Institución</th>
+          <th>Número de Póliza</th>
+          <th>Vigencia</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let seguro of seguros">
+          <td>{{ seguro.tiposeguro }}</td>
+          <td>{{ seguro.institucion }}</td>
+          <td>{{ seguro.numeropoliza }}</td>
+          <td>{{ seguro.vigencia | date:'mediumDate' }}</td>
+          <td>
+            <button class="btn-editar" (click)="editarSeguro(seguro)">✏️ Editar</button>
+            <button class="btn-eliminar" (click)="eliminarSeguro(seguro)">🗑️ Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sin datos -->
+  <ng-template #sinDatos>
+    <p class="mensaje-vacio">No hay seguros médicos registrados aún.</p>
+  </ng-template>
+</div>
