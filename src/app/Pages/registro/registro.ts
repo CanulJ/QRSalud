@@ -3,10 +3,19 @@ import { UsuariosService } from '../../Services/usuarios.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-registro',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatButtonModule,
+    MatBottomSheetModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule],
   templateUrl: './registro.html',
   styleUrls: ['./registro.css']
 })

@@ -1,13 +1,20 @@
 import { Component, Inject } from '@angular/core';
 import { SeguroMedico } from '../../Models/SeguroMedicoM';
-import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetModule, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-seguro-medico-for',
-  imports: [CommonModule, FormsModule,MatButtonModule],
+  imports: [CommonModule, FormsModule,MatButtonModule, MatButtonModule,
+    MatBottomSheetModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule],
   templateUrl: './seguro-medico-for.html',
   styleUrl: './seguro-medico-for.css',
 })

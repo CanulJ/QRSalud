@@ -6,11 +6,19 @@ import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-s
 import { ForAntecedentesC } from '../for-antecedentes-c/for-antecedentes-c';
 import { HistoriaClinica } from '../../Models/HistoriaClinica';
 import { historiaClinicaService } from '../../Services/historia-clinica.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-antecedentes-h',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule],
+  imports: [CommonModule, MatBottomSheetModule,MatButtonModule,
+    MatBottomSheetModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule],
   templateUrl: './antecedentes-h.html',
   styleUrls: ['./antecedentes-h.css']
 })

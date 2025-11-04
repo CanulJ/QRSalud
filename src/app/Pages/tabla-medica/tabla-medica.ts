@@ -7,11 +7,19 @@ import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-s
 import { historiaClinicaService } from '../../Services/historia-clinica.service';
 import { DatosMedicos1 } from '../datos-medicos/datos-medicos1';
 import { HistoriaClinica1 } from '../historia-clinica/historia-clinica1';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-tabla-medica',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule],
+  imports: [CommonModule, MatBottomSheetModule, MatButtonModule,
+    MatBottomSheetModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule],
   templateUrl: './tabla-medica.html',
   styleUrls: ['./tabla-medica.css']
 })
