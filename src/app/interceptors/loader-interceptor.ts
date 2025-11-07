@@ -12,3 +12,4 @@ export const LoaderInterceptor: HttpInterceptorFn = (req, next) => {
     finalize(() => loaderService.hide()) // Ocultar loader al terminar
   );
 };
+ 

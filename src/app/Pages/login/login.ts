@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { WelcomeToast } from '../welcome-toast/welcome-toast';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatInputModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    WelcomeToast
   ],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
@@ -28,11 +30,14 @@ export class Login implements OnInit {
   mensajeError: string = '';
   private isBrowser: boolean;
 
+  // 👇 referencia al componente del toast
+  @ViewChild('toast') toast!: WelcomeToast;
+
   constructor(
     private usuariosService: UsuariosService,
     private fb: FormBuilder,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object  // Inyectamos PLATFORM_ID
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
@@ -54,15 +59,17 @@ export class Login implements OnInit {
 
     this.usuariosService.login({ correo, password }).subscribe({
       next: (usuario) => {
-        alert(`Bienvenido, ${usuario.nombre}`);
+        // 🚀 Mostramos la tarjeta de bienvenida
+        this.toast.mostrar(usuario.nombre);
 
-        // 🔹 Guardamos usuario solo si estamos en navegador
         if (this.isBrowser) {
           sessionStorage.setItem('usuario', JSON.stringify(usuario));
         }
 
         this.mensajeError = '';
-        this.router.navigate(['/inicio']);
+
+        // 🔹 Le damos un pequeño delay antes de navegar (para que se vea el toast)
+        setTimeout(() => this.router.navigate(['/inicio']), 1000);
       },
       error: (err) => {
         console.error('Error en login:', err);
