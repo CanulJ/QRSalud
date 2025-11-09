@@ -10,6 +10,7 @@ import { AntecedentesH } from './Pages/antecedentes-h/antecedentes-h';
 import { QRP } from './Pages/qrp/qrp';
 import { AuthGuard } from './guards/auth.guard';
 import { AccesoDenegado } from './Pages/acceso-denegado/acceso-denegado';
+import { VerTarjeta } from './Pages/ver-tarjeta/ver-tarjeta';
 
 export const routes: Routes = [
 
@@ -45,6 +46,10 @@ export const routes: Routes = [
    { path: '', component: QRP },
   { path: 'qrp', component: QRP},
   { path: 'qrp/id', component: QRP },
+
+  {path: '', component: VerTarjeta },
+  { path: 'ver-tarjeta', component: VerTarjeta,canActivate: [AuthGuard]},
+  { path: 'ver-tarjeta/id', component: VerTarjeta },
 
   {path: 'acceso-denegado', component: AccesoDenegado},
 

@@ -6,36 +6,40 @@ import { DatosMedicosService } from '../../Services/datos-medicos.service';
 import { DatosMedicos } from '../../Models/DatosMedicos';
 import { historiaClinicaService } from '../../Services/historia-clinica.service';
 import { Navegacion } from '../navegacion/navegacion';
-import { QRService } from '../../Services/qrs.service';
-import { QRCodigos } from '../../Models/QRModels';
 import { SeguroMedicoComponent } from '../seguro-medico/seguro-medico';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ConfirmacionContrasena } from '../confirmacion-contrasena/confirmacion-contrasena';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule, Navegacion, SeguroMedicoComponent,MatButtonModule,
+  imports: [
+    CommonModule,
     MatBottomSheetModule,
+    Navegacion,
+    SeguroMedicoComponent,
+    MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatFormFieldModule],
+    MatFormFieldModule
+  ],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
 })
 export class Inicio implements OnInit {
 
-   usuario: any = null;
+  usuario: any = null;
   datosMedicos: DatosMedicos | null = null;
-  qrGenerado: QRCodigos | null = null;
 
   private router = inject(Router);
   private datosMedicosService = inject(DatosMedicosService);
-  private bottomSheet = inject(MatBottomSheet);
   private historiaClinicaService = inject(historiaClinicaService);
-  private qrService = inject(QRService);
+  private bottomSheet = inject(MatBottomSheet);
+  private dialog = inject(MatDialog);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -55,41 +59,20 @@ export class Inicio implements OnInit {
           next: (datos) => this.datosMedicos = datos.length > 0 ? datos[0] : null,
           error: (err) => console.error('Error al obtener datos médicos', err)
         });
-
-        this.qrService.obtenerPorUsuario(userId).subscribe({
-          next: (qrs) => { if (qrs.length > 0) this.qrGenerado = qrs[0]; },
-          error: (err) => console.warn('No hay QR generado aún', err)
-        });
       }
     }
   }
 
-  generarQR(): void {
-    if (!this.usuario?.id) {
-      console.error('Usuario no definido');
-      return;
-    }
-
-    // 1️⃣ Generar solo el token
-    const tokenSeguro = this.generarToken();
-
-    // 2️⃣ Mostrar al usuario la URL completa sin guardarla en la DB
-    const urlAcceso = `https://qrtests.netlify.app/acceso/${tokenSeguro}`;
-    alert(`Se generó la URL segura: ${urlAcceso}`);
-
-    // 3️⃣ Guardar solo el token en la base de datos
-    const datos = { userid: this.usuario.id, urlqrcode: tokenSeguro };
-
-    this.qrService.crearQR(datos).subscribe({
-      next: (qr) => {
-        console.log('QR generado:', qr);
-        this.qrGenerado = qr;
-      },
-      error: (err) => console.error('Error al generar QR', err)
+  abrirDialogoTarjeta(): void {
+    const dialogRef = this.dialog.open(ConfirmacionContrasena, {
+      width: '350px',
+      data: { correo: this.usuario?.correo }
     });
-  }
 
-  private generarToken(): string {
-    return Math.random().toString(36).substring(2, 10); // Solo el token, ej: 'ryl9ignh'
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.router.navigate(['/ver-tarjeta']);
+      }
+    });
   }
 }

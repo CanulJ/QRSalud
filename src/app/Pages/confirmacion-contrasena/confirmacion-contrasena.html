@@ -1,0 +1,23 @@
+<div class="confirm-container">
+  <div class="confirm-card">
+    <h3>🔐 Confirma tu contraseña</h3>
+
+    <form [formGroup]="form" (ngSubmit)="confirmar()">
+      <div class="form-group">
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Ingresa tu contraseña"
+          class="input-field"
+        />
+      </div>
+
+      <div class="error" *ngIf="mensajeError">{{ mensajeError }}</div>
+
+      <div class="acciones">
+        <button type="submit" class="btn-confirmar">Confirmar</button>
+        <button type="button" class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

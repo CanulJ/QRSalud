@@ -1,12 +1,12 @@
-<!-- Contenedor principal -->
 <div class="inicio-main">
 
-  <!-- Contenedor de la tarjeta de perfil -->
+  <!-- Tarjeta de perfil -->
   <div class="card-container">
     <div class="card card-perfil">
       <div class="card__image">
         <img src="/usser.webp" alt="Foto de perfil">
       </div>
+
       <div class="card__content">
         <div class="card__text" style="text-align: center">
           <p class="card__title">{{ usuario?.nombre || 'Usuario' }} {{ usuario?.apellidos || '' }}</p>
@@ -20,25 +20,19 @@
             <strong>Fecha de registro:</strong> {{ usuario?.fecha_creacion | date:'mediumDate' }}
           </p>
         </div>
-        <div class="card__footer">
-          <button (click)="generarQR()" class="btn-qr">Generar QR</button>
 
-  <!-- mostrar URL generada si ya existe -->
-  <div *ngIf="qrGenerado" class="qr-url">
-    <p><strong>Token de acceso:</strong> {{ qrGenerado.urlqrcode }}</p>
-  </div>
+        <div class="card__footer">
+          <button (click)="abrirDialogoTarjeta()" class="btn-qr">Ver mi tarjeta</button>
         </div>
       </div>
     </div>
   </div>
 
-    <!-- Contenedor de navegación / tabla -->
+  <!-- Módulos inferiores -->
   <div class="tabla-container">
     <app-seguro-medico></app-seguro-medico>
   </div>
 
-
-  <!-- Contenedor de navegación / tabla -->
   <div class="tabla-container">
     <app-navegacion></app-navegacion>
   </div>
