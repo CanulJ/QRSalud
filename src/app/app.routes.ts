@@ -8,6 +8,8 @@ import { Navegacion } from './Pages/navegacion/navegacion';
 import { TablaMedica } from './Pages/tabla-medica/tabla-medica';
 import { AntecedentesH } from './Pages/antecedentes-h/antecedentes-h';
 import { QRP } from './Pages/qrp/qrp';
+import { AuthGuard } from './guards/auth.guard';
+import { AccesoDenegado } from './Pages/acceso-denegado/acceso-denegado';
 
 export const routes: Routes = [
 
@@ -16,7 +18,7 @@ export const routes: Routes = [
   { path: 'login/Id', component: Login },
 
   { path: '', component: Inicio },
-  { path: 'inicio', component: Inicio },
+  { path: 'inicio', component: Inicio, canActivate: [AuthGuard] },
   { path: 'inicio/Id', component: Inicio },
   { path: 'registro', component: Registro },
 
@@ -43,6 +45,8 @@ export const routes: Routes = [
    { path: '', component: QRP },
   { path: 'qrp', component: QRP},
   { path: 'qrp/id', component: QRP },
+
+  {path: 'acceso-denegado', component: AccesoDenegado},
 
   { path: 'acceso/:token', component: QRP },
 ];
