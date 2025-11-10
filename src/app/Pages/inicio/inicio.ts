@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, OnInit, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, HostListener, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { DatosMedicosService } from '../../Services/datos-medicos.service';
@@ -41,6 +41,9 @@ export class Inicio implements OnInit {
   private bottomSheet = inject(MatBottomSheet);
   private dialog = inject(MatDialog);
 
+  private tiempoInactividad = 10 * 60 * 1000; // 10 minutos
+  private temporizador: any;
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
@@ -59,8 +62,34 @@ export class Inicio implements OnInit {
           next: (datos) => this.datosMedicos = datos.length > 0 ? datos[0] : null,
           error: (err) => console.error('Error al obtener datos médicos', err)
         });
+
+        // Inicia el temporizador de inactividad
+        this.reiniciarTemporizador();
       }
     }
+  }
+
+  /** Detecta movimiento o teclas para reiniciar el temporizador */
+  @HostListener('document:mousemove')
+  @HostListener('document:keydown')
+  manejarActividadUsuario() {
+    this.reiniciarTemporizador();
+  }
+
+  private reiniciarTemporizador() {
+    clearTimeout(this.temporizador);
+    this.temporizador = setTimeout(() => {
+      this.cerrarSesion(true);
+    }, this.tiempoInactividad);
+  }
+
+  /** Cierra sesión manual o automática */
+  cerrarSesion(auto = false): void {
+    sessionStorage.clear();
+    if (auto) {
+      alert('Por seguridad, su sesión ha expirado por inactividad.');
+    }
+    this.router.navigate(['/login']);
   }
 
   abrirDialogoTarjeta(): void {

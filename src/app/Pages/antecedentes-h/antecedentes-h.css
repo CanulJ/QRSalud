@@ -1,9 +1,8 @@
-
-
 /* Tarjetas base (perfil y médica) */
 .card {
   --card-bg: #ffffff;
-  --card-accent: #7c3aed; /* morado */
+  --card-accent: #7c3aed;
+  /* morado */
   --card-text: #1e293b;
   width: 80%;
   margin: 0 auto;
@@ -64,12 +63,14 @@
 .card__footer {
   display: flex;
   justify-content: center;
-  gap: 15px; /* espacio entre botones */
+  gap: 15px;
+  /* espacio entre botones */
   margin-top: 15px;
 }
 
 
-button, .btn-agregar {
+button,
+.btn-agregar {
   display: inline-block;
   padding: 10px 20px;
   border-radius: 10px;
@@ -81,7 +82,8 @@ button, .btn-agregar {
   transition: all 0.3s ease;
 }
 
-button:hover, .btn-agregar:hover {
+button:hover,
+.btn-agregar:hover {
   background: #5a189a;
   transform: scale(1.05);
 }
@@ -90,7 +92,7 @@ button:hover, .btn-agregar:hover {
 .card:hover {
   transform: translateY(-10px);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-              0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
   border-color: rgba(124, 58, 237, 0.8);
 }
 
@@ -99,3 +101,17 @@ table {
 }
 
 
+/* Botón con color morado personalizado */
+.btn-accent {
+  background-color: var(--card-accent) !important;
+  color: white !important;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.btn-accent:hover {
+  background-color: #5a189a !important;
+  transform: scale(1.05);
+}

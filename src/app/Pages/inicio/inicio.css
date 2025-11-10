@@ -119,3 +119,30 @@ mat-tab-group {
 .tabla-container .mat-table {
   width: 100%;
 }
+
+/* Contenedor de botones */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Botón rojo para cerrar sesión */
+.btn-logout {
+  background-color: #dc2626 !important; /* rojo intenso */
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: #b91c1c !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(220, 38, 38, 0.4);
+}

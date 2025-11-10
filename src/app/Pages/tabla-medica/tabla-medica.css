@@ -98,4 +98,16 @@ table {
   width: 100%;
 }
 
+.btn-accent {
+  background-color: var(--card-accent) !important;
+  color: white !important;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
 
+.btn-accent:hover {
+  background-color: #5a189a !important;
+  transform: scale(1.05);
+}
