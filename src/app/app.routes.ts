@@ -11,6 +11,7 @@ import { QRP } from './Pages/qrp/qrp';
 import { AuthGuard } from './guards/auth.guard';
 import { AccesoDenegado } from './Pages/acceso-denegado/acceso-denegado';
 import { VerTarjeta } from './Pages/ver-tarjeta/ver-tarjeta';
+import { SolicitudTarjetasComponent } from './Pages/solicitud-tarjetas/solicitud-tarjetas';
 
 export const routes: Routes = [
 
@@ -50,6 +51,8 @@ export const routes: Routes = [
   {path: '', component: VerTarjeta },
   { path: 'ver-tarjeta', component: VerTarjeta,canActivate: [AuthGuard]},
   { path: 'ver-tarjeta/id', component: VerTarjeta },
+
+  { path: 'solicitud-tarjetas', component: SolicitudTarjetasComponent },
 
   {path: 'acceso-denegado', component: AccesoDenegado},
 

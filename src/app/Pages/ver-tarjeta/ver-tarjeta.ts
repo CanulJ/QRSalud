@@ -8,7 +8,8 @@ import { QRService } from '../../Services/qrs.service';
 import { QRCodigos } from '../../Models/QRModels';
 import { DialogoMensaje } from '../dialogo-mensaje/dialogo-mensaje';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { TarjetasService } from '../../Services/tarjetas-s.service';
+import { SolicitudTarjeta } from '../../Models/Solicitud';
 
 @Component({
   selector: 'app-ver-tarjeta',
@@ -21,12 +22,14 @@ export class VerTarjeta implements OnInit {
 
   usuario: any = null;
   qrGenerado: QRCodigos | null = null;
+  solicitud: SolicitudTarjeta | null = null; // ✅ propiedad para manejar la solicitud
   cargando = false;
 
   constructor(
     private qrService: QRService,
+    private tarjetasService: TarjetasService,
     private router: Router,
-      private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private dialog: MatDialog,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -37,22 +40,68 @@ export class VerTarjeta implements OnInit {
       if (usuarioData) {
         this.usuario = JSON.parse(usuarioData);
         const userId = this.usuario?.id;
+
         if (userId) {
+          // Obtener QR
           this.qrService.obtenerPorUsuario(userId).subscribe({
             next: (qrs) => {
-              if (qrs.length > 0) {
-                this.qrGenerado = qrs[0];
-              }
+              if (qrs.length > 0) this.qrGenerado = qrs[0];
             },
             error: (err) => console.error('Error al obtener QR:', err),
+          });
+
+          // Obtener solicitud existente
+          this.tarjetasService.getSolicitudes().subscribe({
+            next: (sols) => {
+              this.solicitud = sols.find(s => s.userId === userId) || null;
+            },
+            error: (err) => console.error('Error al obtener solicitudes:', err),
           });
         }
       }
     }
   }
 
+ solicitarTarjeta(): void {
+  if (!this.usuario) return;
+
+  const tokenSeguro = Math.random().toString(36).substring(2, 10);
+
+  const nuevaSolicitud: SolicitudTarjeta = {
+    userId: this.usuario.id,
+    fecha_Solicitud: new Date().toISOString(),
+    estado: 'pendiente',
+    qrId: undefined,
+    token: tokenSeguro as any
+  };
+
+  this.tarjetasService.createSolicitud(nuevaSolicitud).subscribe({
+    next: (solicitudCreada) => {
+      // 🔹 Actualizamos la propiedad para que la vista cambie automáticamente
+      this.solicitud = solicitudCreada;
+
+      this.dialog.open(DialogoMensaje, {
+        data: {
+          titulo: '✅ Solicitud enviada',
+          mensaje: `Tu solicitud ha sido enviada correctamente. Tu token es: ${tokenSeguro}`,
+        },
+      });
+    },
+    error: (err) => {
+      console.error('Error al enviar solicitud:', err);
+      this.dialog.open(DialogoMensaje, {
+        data: {
+          titulo: '❌ Error',
+          mensaje: 'No se pudo enviar tu solicitud. Inténtalo nuevamente.',
+        },
+      });
+    }
+  });
+}
+
+
+
   generarQR(): void {
-    // 🚫 Si ya tiene un QR generado, mostrar aviso
     if (this.qrGenerado) {
       this.dialog.open(DialogoMensaje, {
         data: {
@@ -72,7 +121,6 @@ export class VerTarjeta implements OnInit {
     this.qrService.crearQR(datos).subscribe({
       next: (qr) => {
         this.cargando = false;
-        console.log('Nuevo QR generado:', qr);
         this.qrGenerado = qr;
 
         this.dialog.open(DialogoMensaje, {
@@ -95,17 +143,16 @@ export class VerTarjeta implements OnInit {
     });
   }
 
- copiarToken(): void {
-  if (this.qrGenerado?.urlqrcode) {
-    navigator.clipboard.writeText(this.qrGenerado.urlqrcode);
-   this.snackBar.open('📋 Token copiado al portapapeles', '', {
-  duration: 3000,
-  horizontalPosition: 'center',
-  verticalPosition: 'bottom',
-});
+  copiarToken(): void {
+    if (this.qrGenerado?.urlqrcode) {
+      navigator.clipboard.writeText(this.qrGenerado.urlqrcode);
+      this.snackBar.open('📋 Token copiado al portapapeles', '', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+      });
+    }
   }
-}
-
 
   regresarInicio(): void {
     this.router.navigate(['/inicio']);

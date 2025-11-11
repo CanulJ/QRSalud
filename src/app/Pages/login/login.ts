@@ -50,54 +50,62 @@ export class Login implements OnInit {
   }
 
   login(): void {
-    if (this.loginForm.invalid) {
-      this.mensajeError = 'Por favor completa todos los campos';
-      return;
-    }
-
-    const { correo, password } = this.loginForm.value;
-
-    this.usuariosService.login({ correo, password }).subscribe({
-      next: (usuario) => {
-        // 🚀 Mostramos la tarjeta de bienvenida
-        this.toast.mostrar(usuario.nombre);
-
-        if (this.isBrowser) {
-          sessionStorage.setItem('usuario', JSON.stringify(usuario));
-        }
-
-        this.mensajeError = '';
-
-        // 🔹 Le damos un pequeño delay antes de navegar (para que se vea el toast)
-        setTimeout(() => this.router.navigate(['/inicio']), 1000);
-      },
-      error: (err) => {
-        console.error('Error en login:', err);
-
-        let mensaje = 'Usuario o contraseña incorrectos';
-        if (err && err.status) {
-          if (err.status === 0) mensaje = 'No se pudo conectar al servidor';
-          else if (err.status === 401) mensaje = 'No autorizado';
-          else if (err.status === 500) mensaje = 'Error interno del servidor';
-        }
-
-        const payload = err?.error;
-        if (payload) {
-          if (typeof payload === 'string') mensaje = payload;
-          else if (payload.message)
-            mensaje = Array.isArray(payload.message)
-              ? payload.message.join(', ')
-              : payload.message;
-          else if (payload.errors)
-            mensaje = Array.isArray(payload.errors)
-              ? payload.errors.map((e: any) => e.message || e).join(', ')
-              : payload.errors;
-        } else if (err?.message) mensaje = err.message;
-
-        this.mensajeError = mensaje;
-      }
-    });
+  if (this.loginForm.invalid) {
+    this.mensajeError = 'Por favor completa todos los campos';
+    return;
   }
+
+  const { correo, password } = this.loginForm.value;
+
+  this.usuariosService.login({ correo, password }).subscribe({
+    next: (usuario) => {
+      // 🚀 Mostramos la tarjeta de bienvenida
+      this.toast.mostrar(usuario.nombre);
+
+      if (this.isBrowser) {
+        sessionStorage.setItem('usuario', JSON.stringify(usuario));
+      }
+
+      this.mensajeError = '';
+
+      // 🔹 Le damos un pequeño delay antes de navegar (para que se vea el toast)
+      setTimeout(() => {
+        // 🔹 Redirigimos según el rol del usuario
+        if (usuario.rolid === 2) {
+          this.router.navigate(['/solicitud-tarjetas']); // Administrador
+        } else {
+          this.router.navigate(['/inicio']); // Usuario normal
+        }
+      }, 1000);
+    },
+    error: (err) => {
+      console.error('Error en login:', err);
+
+      let mensaje = 'Usuario o contraseña incorrectos';
+      if (err && err.status) {
+        if (err.status === 0) mensaje = 'No se pudo conectar al servidor';
+        else if (err.status === 401) mensaje = 'No autorizado';
+        else if (err.status === 500) mensaje = 'Error interno del servidor';
+      }
+
+      const payload = err?.error;
+      if (payload) {
+        if (typeof payload === 'string') mensaje = payload;
+        else if (payload.message)
+          mensaje = Array.isArray(payload.message)
+            ? payload.message.join(', ')
+            : payload.message;
+        else if (payload.errors)
+          mensaje = Array.isArray(payload.errors)
+            ? payload.errors.map((e: any) => e.message || e).join(', ')
+            : payload.errors;
+      } else if (err?.message) mensaje = err.message;
+
+      this.mensajeError = mensaje;
+    }
+  });
+}
+
 
   irARegistro(): void {
     this.router.navigate(['/registro']);

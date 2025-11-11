@@ -1,41 +1,56 @@
-<div class="tarjeta-main" *ngIf="usuario && qrGenerado; else sinQR">
+<div class="tarjeta-main" *ngIf="solicitud; else sinSolicitud">
 
-  <div class="card-container">
-    <div class="card card-tarjeta">
-      <!-- Imagen del usuario -->
-      <div class="card__image">
-        <img src="/usser.webp" alt="usuario" />
-      </div>
-
-      <!-- Contenido de la tarjeta -->
-      <div class="card__content">
-        <div class="card__text" style="text-align: center">
-          <p class="card__title">{{ usuario.nombre }} {{ usuario.apellidos }}</p>
-          <p class="card__description">
-            <strong>CURP:</strong> {{ usuario.curp }} <br>
-            <strong>Correo:</strong> {{ usuario.correo }} <br>
-            <strong>Token de acceso:</strong> {{ qrGenerado.urlqrcode }}
-          </p>
+  <!-- Mostrar tarjeta si fue aprobada -->
+  <div *ngIf="solicitud.estado === 'aprobada' && qrGenerado; else enProceso">
+    <div class="card-container">
+      <div class="card card-tarjeta">
+        <div class="card__image">
+          <img src="/usser.webp" alt="usuario" />
         </div>
 
-        <div class="card__footer">
-          <button (click)="copiarToken()">Copiar token</button>
-          <button class="btn-secundario" (click)="generarQR()">Generar nuevo</button>
-          <button class="btn-volver" (click)="regresarInicio()">⬅ Volver al inicio</button>
+        <div class="card__content">
+          <div class="card__text" style="text-align: center">
+            <p class="card__title">{{ usuario.nombre }} {{ usuario.apellidos }}</p>
+            <p class="card__description">
+              <strong>CURP:</strong> {{ usuario.curp }} <br>
+              <strong>Correo:</strong> {{ usuario.correo }} <br>
+              <strong>Token de acceso:</strong> {{ qrGenerado.urlqrcode }}
+            </p>
+          </div>
+
+          <div class="card__footer">
+            <button (click)="copiarToken()">Copiar token</button>
+            <button class="btn-secundario" (click)="generarQR()">Generar nuevo</button>
+            <button class="btn-volver" (click)="regresarInicio()">⬅ Volver al inicio</button>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="emitido">
+      <p>Emitido por el <strong>Sistema de Vida Conectada</strong></p>
+    </div>
   </div>
 
-  <div class="emitido">
-    <p>Emitido por el <strong>Sistema de Vida Conectada</strong></p>
-  </div>
+  <!-- Mostrar estado si está en revisión -->
+  <ng-template #enProceso>
+    <div class="no-qr">
+      <p *ngIf="solicitud.estado === 'pendiente'">
+        🕒 Tu solicitud está en revisión. Por favor, espera la aprobación.
+      </p>
+      <p *ngIf="solicitud.estado === 'rechazada'">
+        ❌ Tu solicitud fue rechazada. Puedes intentar nuevamente.
+      </p>
+      <button class="btn-volver" (click)="regresarInicio()">⬅ Volver</button>
+    </div>
+  </ng-template>
 
 </div>
 
-<ng-template #sinQR>
+<!-- Mostrar si no hay ninguna solicitud -->
+<ng-template #sinSolicitud>
   <div class="no-qr">
-    <p>No se ha generado una tarjeta aún.</p>
-    <button class="btn-volver" (click)="regresarInicio()">⬅ Volver</button>
+    <p>No has realizado ninguna solicitud de tarjeta aún.</p>
+    <button class="btn-secundario" (click)="solicitarTarjeta()">Solicitar tarjeta</button>
   </div>
 </ng-template>
