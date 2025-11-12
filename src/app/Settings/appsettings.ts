@@ -1,3 +1,3 @@
 export const appsettings = {
-  apiUrl: 'http://localhost:3000/',
+  apiUrl: 'https://scattered-virginia-utcams-f4d0a4ac.koyeb.app/',
 };
