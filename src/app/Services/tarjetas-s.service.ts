@@ -22,13 +22,18 @@ export class TarjetasService {
   }
 
   // 🔹 Crear una nueva solicitud
-  createSolicitud(solicitud: SolicitudTarjeta): Observable<SolicitudTarjeta> {
+  createSolicitud(solicitud: Partial<SolicitudTarjeta>): Observable<SolicitudTarjeta> {
     return this.http.post<SolicitudTarjeta>(this.apiUrl, solicitud);
   }
 
   // 🔹 Actualizar una solicitud existente
-  updateSolicitud(id: number, solicitud: SolicitudTarjeta): Observable<SolicitudTarjeta> {
-    return this.http.put<SolicitudTarjeta>(`${this.apiUrl}/${id}`, solicitud);
+  updateSolicitud(id: number, solicitud: Partial<SolicitudTarjeta>): Observable<SolicitudTarjeta> {
+    // 👇 limpia campos null o undefined antes de enviar
+    const solicitudLimpia = Object.fromEntries(
+      Object.entries(solicitud).filter(([_, v]) => v !== undefined)
+    );
+
+    return this.http.put<SolicitudTarjeta>(`${this.apiUrl}/${id}`, solicitudLimpia);
   }
 
   // 🔹 Eliminar una solicitud

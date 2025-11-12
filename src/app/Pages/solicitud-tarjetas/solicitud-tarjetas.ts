@@ -84,18 +84,46 @@ export class SolicitudTarjetasComponent implements OnInit {
   }
 
   rechazarSolicitud(solicitud: SolicitudTarjeta) {
-    if (!solicitud.idSolicitud) return;
+  if (!solicitud.idSolicitud) return;
 
-    const solicitudActualizada: SolicitudTarjeta = {
-      ...solicitud,
-      estado: 'rechazada'
-    };
-
-    this.tarjetasService.updateSolicitud(solicitud.idSolicitud, solicitudActualizada).subscribe({
-      next: () => solicitud.estado = 'rechazada',
-      error: (err) => console.error('Error al rechazar solicitud:', err)
+  // Si tiene un QR asociado, primero lo eliminamos
+  if ((solicitud as any).qrId) {
+    this.qrService.eliminarQR((solicitud as any).qrId).subscribe({
+      next: () => {
+        console.log('QR eliminado correctamente.');
+        this.actualizarSolicitudRechazada(solicitud);
+      },
+      error: (err) => {
+        console.error('Error al eliminar QR:', err);
+        // Aunque falle la eliminación, seguimos con la actualización del estado
+        this.actualizarSolicitudRechazada(solicitud);
+      }
     });
+  } else {
+    // Si no tiene QR, simplemente se rechaza
+    this.actualizarSolicitudRechazada(solicitud);
   }
+}
+
+// 🔹 Método auxiliar para no repetir código
+private actualizarSolicitudRechazada(solicitud: SolicitudTarjeta) {
+  const solicitudActualizada: SolicitudTarjeta = {
+    ...solicitud,
+    estado: 'rechazada',
+    qrId: null, // 🔸 Limpiamos relación con el QR
+    fecha_Revision: new Date().toISOString()
+  };
+
+  this.tarjetasService.updateSolicitud(solicitud.idSolicitud!, solicitudActualizada).subscribe({
+    next: () => {
+      solicitud.estado = 'rechazada';
+      solicitud.qrId = null;
+      console.log('Solicitud rechazada y actualizada correctamente.');
+    },
+    error: (err) => console.error('Error al rechazar solicitud:', err)
+  });
+}
+
 
   
 

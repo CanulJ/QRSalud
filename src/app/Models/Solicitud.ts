@@ -5,9 +5,8 @@ export interface SolicitudTarjeta {
   fecha_Revision?: string;
   estado: 'pendiente' | 'aprobada' | 'rechazada';
   motivo?: string;
-  qrId?: number;
+  qrId?: number | null; // 👈 ahora puede ser null
   usuario?: any;
   qr?: any;
-
-   token?: string;
+  token?: string;
 }

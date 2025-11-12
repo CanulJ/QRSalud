@@ -52,7 +52,7 @@ export const routes: Routes = [
   { path: 'ver-tarjeta', component: VerTarjeta,canActivate: [AuthGuard]},
   { path: 'ver-tarjeta/id', component: VerTarjeta },
 
-  { path: 'solicitud-tarjetas', component: SolicitudTarjetasComponent },
+  { path: 'solicitud-tarjetas', component: SolicitudTarjetasComponent, canActivate: [AuthGuard] },
 
   {path: 'acceso-denegado', component: AccesoDenegado},
 

@@ -74,12 +74,19 @@ td.mat-cell {
 }
 
 /* Botones */
+/* Botones generales */
 button[mat-raised-button] {
-  margin: 0 5px;
-  min-width: 90px;
+  margin: 0 5px 5px 5px; /* agrega margen inferior para móviles */
+  min-width: 60px;        /* más pequeño que antes */
+  padding: 6px 10px;      /* reduce tamaño interno */
   font-weight: 600;
+  font-size: 0.9rem;      /* texto más compacto */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* Color de botones */
 button[mat-raised-button][color="primary"] {
   background-color: #1976d2;
   color: white;
@@ -90,11 +97,10 @@ button[mat-raised-button][color="warn"] {
   color: white;
 }
 
-/* Mensaje de “sin datos” */
-.sin-datos {
-  text-align: center;
-  font-style: italic;
-  color: #555;
-  margin-top: 20px;
+/* Responsive: en pantallas pequeñas, los botones se apilan */
+@media (max-width: 600px) {
+  td.mat-cell button[mat-raised-button] {
+    width: 100%;        /* ocupa toda la celda */
+    margin: 5px 0;      /* separa verticalmente */
+  }
 }
-
