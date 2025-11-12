@@ -97,6 +97,18 @@ button[mat-raised-button][color="warn"] {
   color: white;
 }
 
+/* 🔹 Scroll horizontal en móviles */
+.tabla-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* Ajuste visual para que no quede pegado */
+.tabla-scroll table {
+  min-width: 700px; /* evita que se comprima demasiado */
+}
+
+
 /* Responsive: en pantallas pequeñas, los botones se apilan */
 @media (max-width: 600px) {
   td.mat-cell button[mat-raised-button] {
