@@ -1,59 +1,93 @@
-<div class="registro-container">
-  <h2>Crear cuenta</h2>
+<div class="registro-wrapper">
+  <div class="registro-container">
+    <div class="logo-section">
+      <div class="logo-icon">
+        <img src="/logo.png" alt="Logo médico" class="registro-logo-img" />
+      </div>
+      <h1 class="app-title">Vida Conectada</h1>
+      <h2 class="welcome-text">Crear cuenta</h2>
+      <p class="subtitle-text">Completa tus datos para registrarte</p>
+    </div>
 
-  <form (ngSubmit)="registrarUsuario()" #formRegistro="ngForm">
-    <!-- Nombre -->
-    <label>Nombre</label>
-    <input type="text" [(ngModel)]="nuevoUsuario.nombre" name="nombre" required>
+    <form (ngSubmit)="registrarUsuario()" #formRegistro="ngForm" novalidate>
+      <!-- Nombre -->
+      <div class="form-group">
+        <label class="form-label">Nombre</label>
+        <input type="text" [(ngModel)]="nuevoUsuario.nombre" name="nombre" required class="form-input" placeholder="Ej. Carlos" />
+        <div class="error-message" *ngIf="formRegistro.submitted && !nuevoUsuario.nombre">El nombre es obligatorio</div>
+      </div>
 
-    <!-- Apellidos -->
-    <label>Apellidos</label>
-    <input type="text" [(ngModel)]="nuevoUsuario.apellidos" name="apellidos" required>
+      <!-- Apellidos -->
+      <div class="form-group">
+        <label class="form-label">Apellidos</label>
+        <input type="text" [(ngModel)]="nuevoUsuario.apellidos" name="apellidos" required class="form-input" placeholder="Ej. López Ramírez" />
+        <div class="error-message" *ngIf="formRegistro.submitted && !nuevoUsuario.apellidos">Los apellidos son obligatorios</div>
+      </div>
 
-    <!-- Correo -->
-    <label>Correo electrónico</label>
-    <input type="email" [(ngModel)]="nuevoUsuario.correo" name="correo" required>
+      <!-- Correo -->
+      <div class="form-group">
+        <label class="form-label">Correo electrónico</label>
+        <input type="email" [(ngModel)]="nuevoUsuario.correo" name="correo" required class="form-input" placeholder="ejemplo@correo.com" />
+        <div class="error-message" *ngIf="formRegistro.submitted && !nuevoUsuario.correo">El correo es obligatorio</div>
+      </div>
 
-    <!-- Contraseña -->
-    <label>Contraseña</label>
-    <input type="password" [(ngModel)]="nuevoUsuario.password_hash" name="password_hash" required>
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input type="password" [(ngModel)]="nuevoUsuario.password_hash" name="password_hash" required class="form-input" placeholder="••••••••" />
+        <div class="error-message" *ngIf="formRegistro.submitted && !nuevoUsuario.password_hash">La contraseña es obligatoria</div>
+      </div>
 
-    <!-- CURP -->
-    <label>CURP</label>
-    <input type="text" [(ngModel)]="nuevoUsuario.curp" name="curp" maxlength="18">
+      <!-- CURP -->
+      <div class="form-group">
+        <label class="form-label">CURP</label>
+        <input type="text" [(ngModel)]="nuevoUsuario.curp" name="curp" maxlength="18" class="form-input" placeholder="Ej. GOMC010101HDFRLL09" />
+      </div>
 
-    <!-- Teléfono -->
-    <label>Teléfono</label>
-    <input type="tel" [(ngModel)]="nuevoUsuario.telefono" name="telefono" pattern="[0-9]{10}" placeholder="Ej. 9811234567">
+      <!-- Teléfono -->
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input type="tel" [(ngModel)]="nuevoUsuario.telefono" name="telefono" pattern="[0-9]{10}" class="form-input" placeholder="Ej. 9811234567" />
+      </div>
 
-    <!-- Fecha de nacimiento -->
-    <label>Fecha de nacimiento</label>
-    <input type="date" [(ngModel)]="nuevoUsuario.fechanacimiento" name="fechanacimiento">
+      <!-- Fecha de nacimiento -->
+      <div class="form-group">
+        <label class="form-label">Fecha de nacimiento</label>
+        <input type="date" [(ngModel)]="nuevoUsuario.fechanacimiento" name="fechanacimiento" class="form-input" />
+      </div>
 
-    <!-- Género -->
-    <label>Género</label>
-    <select [(ngModel)]="nuevoUsuario.genero" name="genero" required>
-      <option value="">Seleccione...</option>
-      <option value="Masculino">Masculino</option>
-      <option value="Femenino">Femenino</option>
-      <option value="Otro">Otro</option>
-    </select>
+      <!-- Género -->
+      <div class="form-group">
+        <label class="form-label">Género</label>
+        <select [(ngModel)]="nuevoUsuario.genero" name="genero" required class="form-input">
+          <option value="">Seleccione...</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <div class="error-message" *ngIf="formRegistro.submitted && !nuevoUsuario.genero">Seleccione un género</div>
+      </div>
 
-    <!-- Originario -->
-    <label>Originario de</label>
-    <input type="text" [(ngModel)]="nuevoUsuario.originario" name="originario">
+      <!-- Originario -->
+      <div class="form-group">
+        <label class="form-label">Originario de</label>
+        <input type="text" [(ngModel)]="nuevoUsuario.originario" name="originario" class="form-input" placeholder="Ej. Campeche, México" />
+      </div>
 
-    <!-- Campo oculto de rolid -->
-    <input type="hidden" [(ngModel)]="nuevoUsuario.rolid" name="rolid" value="2">
+      <!-- Rol -->
+      <input type="hidden" [(ngModel)]="nuevoUsuario.rolid" name="rolid" value="2" />
 
-    <button type="submit" [disabled]="formRegistro.invalid">Registrarse</button>
-  </form>
+      <!-- Botón -->
+      <button type="submit" class="registro-button" [disabled]="formRegistro.invalid">Registrarse</button>
 
-  <p class="mensaje" *ngIf="mensaje">{{ mensaje }}</p>
-  <p class="error" *ngIf="error">{{ error }}</p>
- 
-  <p class="volver-login">
-    ¿Ya tienes una cuenta?
-    <a (click)="irALogin()">Inicia sesión aquí</a>
-  </p>
+      <!-- Mensajes -->
+      <p class="mensaje" *ngIf="mensaje">{{ mensaje }}</p>
+      <p class="error" *ngIf="error">{{ error }}</p>
+    </form>
+
+    <div class="login-link">
+      <p>¿Ya tienes una cuenta?</p>
+      <a (click)="irALogin()" class="login-button-link">Inicia sesión aquí</a>
+    </div>
+  </div>
 </div>

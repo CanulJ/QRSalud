@@ -1,59 +1,292 @@
-.registro-container {
-  width: 350px;
-  margin: 60px auto;
-  padding: 30px;
-  background: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  text-align: center;
+/* ===== Fondo principal ===== */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100%;
+  overflow: hidden;
 }
 
-h2 {
-  color: #1a237e;
+.registro-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #8b45db 0%, #a855f7 50%, #c084fc 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+}
+
+/* Luces decorativas */
+.registro-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ===== Tarjeta del registro ===== */
+.registro-container {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(139, 69, 219, 0.12);
+  max-width: 380px;
+  width: 100%;
+  max-height: 85vh; /* 🔥 límite visual */
+  overflow-y: auto; /* 🔥 scroll interno */
+  border: 2px solid #e8e5ff;
+  position: relative;
+  z-index: 2;
+}
+
+/* Scroll elegante */
+.registro-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.registro-container::-webkit-scrollbar-thumb {
+  background-color: #a855f7;
+  border-radius: 10px;
+}
+
+.registro-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.registro-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #8b45db, #a855f7, #c084fc);
+}
+
+/* ===== Encabezado ===== */
+.logo-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.logo-icon {
+  width: 85px;
+  height: 85px;
+  margin: 0 auto 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(139, 69, 219, 0.25);
+  background: #fff;
+  animation: popIn 0.6s ease;
+}
+
+.registro-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #8b45db;
+  margin-bottom: 4px;
+}
+
+.welcome-text {
+  font-size: 19px;
+  font-weight: 600;
+  color: #4c1d95;
+  margin-bottom: 2px;
+}
+
+.subtitle-text {
+  font-size: 14px;
+  color: #6b7280;
   margin-bottom: 20px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+/* ===== Formulario ===== */
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
 }
 
-input {
-  padding: 10px;
-  border: 1px solid #ccc;
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4c1d95;
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e8e5ff;
   border-radius: 10px;
+  font-size: 15px;
+  color: #374151;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
   outline: none;
+  border-color: #8b45db;
+  box-shadow: 0 0 0 3px rgba(139, 69, 219, 0.1);
 }
 
-button {
-  background: #1a73e8;
-  color: #fff;
+.error-message {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+/* ===== Botón principal ===== */
+.registro-button {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #8b45db, #a855f7);
+  color: white;
   border: none;
-  padding: 10px;
   border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
 }
 
-button:hover {
-  background: #0f59d1;
+.registro-button:hover {
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(139, 69, 219, 0.25);
 }
 
-.mensaje {
-  color: green;
+.registro-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== Enlace de inicio de sesión ===== */
+.login-link {
+  text-align: center;
+  padding: 16px;
+  background: linear-gradient(135deg, #f8f9ff, #ede9fe);
+  border-radius: 10px;
+  border: 1px solid #e8e5ff;
+}
+
+.login-link p {
+  color: #6b7280;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.login-button-link {
+  color: #8b45db;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.login-button-link:hover {
+  background: rgba(139, 69, 219, 0.1);
+  transform: translateY(-1px);
 }
 
 .error {
-  color: red;
+  color: #ef4444;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 13px;
 }
 
-.volver-login {
-  margin-top: 15px;
-}
+/* ===== RESPONSIVIDAD ===== */
+@media (max-width: 480px) {
+  html, body {
+    overflow: auto;
+  }
 
-.volver-login a {
-  color: #1a73e8;
-  cursor: pointer;
-  text-decoration: underline;
+  .registro-wrapper {
+    padding: 0;
+  }
+
+  .registro-container {
+    max-width: 310px;
+    padding: 18px 16px;
+    border-radius: 15px;
+    max-height: 90vh;
+  }
+
+  .logo-icon {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 10px;
+  }
+
+  .app-title {
+    font-size: 18px;
+  }
+
+  .welcome-text {
+    font-size: 15px;
+  }
+
+  .subtitle-text {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+
+  .form-label {
+    font-size: 12px;
+  }
+
+  .form-input {
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+
+  .registro-button {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .login-link {
+    padding: 10px;
+  }
+
+  .login-link p {
+    font-size: 11px;
+  }
+
+  .login-button-link {
+    font-size: 12px;
+  }
 }
