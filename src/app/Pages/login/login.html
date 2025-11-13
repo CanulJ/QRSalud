@@ -1,48 +1,63 @@
 <app-welcome-toast #toast></app-welcome-toast>
-<div class="card login-card">
+
+<div class="login-wrapper">
   <div class="login-container">
-    <div class="header">
-      <mat-icon class="icon-salud">local_hospital</mat-icon>
-      <h2>Bienvenido al Sistema de Salud</h2>
-    </div>
-    <p class="subtitulo">Ingresa tus credenciales para continuar</p>
+    <div class="logo-section">
+  <div class="logo-icon">
+    <img src="/logo.png" alt="Logo médico" class="login-logo-img" />
+  </div>
+  <h1 class="app-title">Vida Conectada</h1>
+  <h2 class="welcome-text">Bienvenido de vuelta</h2>
+  <p class="subtitle-text">Inicia sesión en tu cuenta</p>
+</div>
+
 
     <form [formGroup]="loginForm" (ngSubmit)="login()">
-
-      <!-- Email -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Correo electrónico</mat-label>
-        <mat-icon matPrefix>mail</mat-icon>
-        <input matInput type="email" formControlName="correo" placeholder="ejemplo@correo.com">
-        <mat-error *ngIf="loginForm.get('correo')?.hasError('required')">
+      <!-- Correo -->
+      <div class="form-group">
+        <label class="form-label">Correo electrónico</label>
+        <input
+          matInput
+          type="email"
+          class="form-input"
+          formControlName="correo"
+          placeholder="ejemplo@correo.com"
+        />
+        <div class="error-message" *ngIf="loginForm.get('correo')?.hasError('required')">
           El correo es obligatorio
-        </mat-error>
-        <mat-error *ngIf="loginForm.get('correo')?.hasError('email') && !loginForm.get('correo')?.hasError('required')">
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('correo')?.hasError('email') && !loginForm.get('correo')?.hasError('required')">
           Formato de correo inválido
-        </mat-error>
-      </mat-form-field>
+        </div>
+      </div>
 
-      <!-- Password -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Contraseña</mat-label>
-        <mat-icon matPrefix>lock</mat-icon>
-        <input matInput type="password" formControlName="password" placeholder="••••••••">
-        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input
+          matInput
+          type="password"
+          class="form-input"
+          formControlName="password"
+          placeholder="••••••••"
+        />
+        <div class="error-message" *ngIf="loginForm.get('password')?.hasError('required')">
           La contraseña es obligatoria
-        </mat-error>
-      </mat-form-field>
+        </div>
+      </div>
 
-      <!-- Botón login -->
-      <button type="submit" [disabled]="loginForm.invalid">
-        <span>Ingresar</span>
+      <!-- Botón -->
+      <button type="submit" class="login-button" [disabled]="loginForm.invalid">
+        Iniciar Sesión
       </button>
 
       <!-- Error general -->
       <p class="error" *ngIf="mensajeError">{{ mensajeError }}</p>
     </form>
 
-    <p class="registro">
-      ¿No tienes una cuenta? <a (click)="irARegistro()">Regístrate ahora</a>
-    </p>
+    <div class="register-link">
+      <div class="register-text">¿No tienes cuenta?</div>
+      <a (click)="irARegistro()" class="register-button">Regístrate aquí</a>
+    </div>
   </div>
 </div>

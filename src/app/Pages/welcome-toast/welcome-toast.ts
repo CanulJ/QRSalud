@@ -15,6 +15,6 @@ export class WelcomeToast {
   mostrar(nombre: string) {
     this.nombre = nombre;
     this.visible = true;
-    setTimeout(() => (this.visible = false), 3000);
+    setTimeout(() => (this.visible = false), 5000);
   }
 }

@@ -1,49 +1,111 @@
 .toast-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(248, 249, 255, 0.9);
+  backdrop-filter: blur(5px);
   z-index: 10000;
-  background: rgba(0, 0, 0, 0.4); /* un fondo suave */
-  animation: fadeIn 0.4s ease forwards;
+  animation: fadeIn 0.5s ease;
 }
 
-.toast-card {
+.welcome-card {
   background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 60px;
-  border-top: 6px solid #3f51b5;
-  animation: popIn 0.4s ease;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(139, 69, 219, 0.15);
   text-align: center;
+  max-width: 500px;
+  width: 90%;
+  border: 2px solid #e8e5ff;
+  position: relative;
+  overflow: hidden;
+  animation: slideUp 0.6s ease;
 }
 
-.toast-card .emoji {
-  font-size: 60px;
-  margin-bottom: 10px;
+.welcome-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #8b45db, #a855f7, #c084fc);
 }
 
-.toast-card .mensaje h2 {
-  margin: 0;
-  font-size: 26px;
+/* Imagen del logo circular sin fondo morado */
+.medical-icon {
+  margin: 0 auto 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: popIn 0.6s ease;
+}
+
+.toast-img {
+  width: 140px;              /* Más grande */
+  height: 140px;
+  border-radius: 50%;        /* Circular */
+  object-fit: cover;         /* Recorta lo innecesario */
+  background: #fff;          /* Por si hay transparencia */
+  box-shadow: 0 8px 20px rgba(139, 69, 219, 0.25); /* sombra sutil con tono violeta */
+  animation: logoPop 0.8s ease; /* Animación suave */
+}
+
+/* Títulos */
+.welcome-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #8b45db;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.user-name {
+  font-size: 28px;
   font-weight: 700;
-  color: #3f51b5;
+  color: #4c1d95;
+  margin-bottom: 16px;
+  text-transform: capitalize;
 }
 
-.toast-card .mensaje h1 {
-  margin: 8px 0 0 0;
-  font-size: 40px;
-  font-weight: 800;
-  color: #222;
+.welcome-subtitle {
+  font-size: 16px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 24px;
 }
 
+.decorative-line {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #8b45db, #a855f7);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .welcome-card {
+    padding: 30px 20px;
+  }
+
+  .toast-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .welcome-title {
+    font-size: 28px;
+  }
+
+  .user-name {
+    font-size: 24px;
+  }
+}
+
+/* Animaciones */
 @keyframes popIn {
   from {
     transform: scale(0.7);
@@ -52,6 +114,31 @@
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes logoPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

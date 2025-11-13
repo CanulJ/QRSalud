@@ -1,9 +1,12 @@
 <div class="toast-overlay" *ngIf="visible">
-  <div class="toast-card">
-    <div class="emoji">👋</div>
-    <div class="mensaje">
-      <h2>¡Bienvenido!</h2>
-      <h1>{{ nombre }}</h1>
+  <div class="welcome-card">
+    <div class="medical-icon">
+      <img src="/logo.png" alt="Logo médico" class="toast-img" />
     </div>
+
+    <h1 class="welcome-title">¡Bienvenido!</h1>
+    <h2 class="user-name">{{ nombre }}</h2>
+    <p class="welcome-subtitle">Esperamos que tengas un excelente día</p>
+    <div class="decorative-line"></div>
   </div>
 </div>

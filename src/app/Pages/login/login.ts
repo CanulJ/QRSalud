@@ -76,7 +76,7 @@ export class Login implements OnInit {
         } else {
           this.router.navigate(['/inicio']); // Usuario normal
         }
-      }, 1000);
+      }, 1500);
     },
     error: (err) => {
       console.error('Error en login:', err);
@@ -110,4 +110,5 @@ export class Login implements OnInit {
   irARegistro(): void {
     this.router.navigate(['/registro']);
   }
+
 }
