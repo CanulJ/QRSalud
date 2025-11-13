@@ -3,14 +3,13 @@
 <div class="login-wrapper">
   <div class="login-container">
     <div class="logo-section">
-  <div class="logo-icon">
-    <img src="/logo.png" alt="Logo médico" class="login-logo-img" />
-  </div>
-  <h1 class="app-title">Vida Conectada</h1>
-  <h2 class="welcome-text">Bienvenido de vuelta</h2>
-  <p class="subtitle-text">Inicia sesión en tu cuenta</p>
-</div>
-
+      <div class="logo-icon">
+        <img src="/logo.png" alt="Logo médico" class="login-logo-img" />
+      </div>
+      <h1 class="app-title">Vida Conectada</h1>
+      <h2 class="welcome-text">Bienvenido de vuelta</h2>
+      <p class="subtitle-text">Inicia sesión en tu cuenta</p>
+    </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="login()">
       <!-- Correo -->
@@ -23,10 +22,23 @@
           formControlName="correo"
           placeholder="ejemplo@correo.com"
         />
-        <div class="error-message" *ngIf="loginForm.get('correo')?.hasError('required')">
+        <div
+          class="error-message"
+          *ngIf="
+            loginForm.get('correo')?.hasError('required') &&
+            (loginForm.get('correo')?.touched || loginForm.get('correo')?.dirty)
+          "
+        >
           El correo es obligatorio
         </div>
-        <div class="error-message" *ngIf="loginForm.get('correo')?.hasError('email') && !loginForm.get('correo')?.hasError('required')">
+        <div
+          class="error-message"
+          *ngIf="
+            loginForm.get('correo')?.hasError('email') &&
+            !loginForm.get('correo')?.hasError('required') &&
+            (loginForm.get('correo')?.touched || loginForm.get('correo')?.dirty)
+          "
+        >
           Formato de correo inválido
         </div>
       </div>
@@ -41,7 +53,13 @@
           formControlName="password"
           placeholder="••••••••"
         />
-        <div class="error-message" *ngIf="loginForm.get('password')?.hasError('required')">
+        <div
+          class="error-message"
+          *ngIf="
+            loginForm.get('password')?.hasError('required') &&
+            (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)
+          "
+        >
           La contraseña es obligatoria
         </div>
       </div>
