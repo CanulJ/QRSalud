@@ -2,3 +2,26 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+  --primary-purple: #7c3aed;
+  --primary-purple-dark: #5a189a;
+  --primary-purple-light: #9333ea;
+  --purple-50: #faf5ff;
+  --purple-100: #f3e8ff;
+  --purple-200: #e9d5ff;
+  --purple-300: #d8b4fe;
+  --white: #ffffff;
+  --white-purple: #fdfbff;
+  --gray-50: #f9fafb;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --red-600: #dc2626;
+  --red-700: #b91c1c;
+  --green-500: #10b981;
+}
