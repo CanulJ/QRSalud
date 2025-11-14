@@ -28,7 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatFormFieldModule
   ],
   templateUrl: './inicio.html',
-  styleUrls: ['./inicio.css']
+  styleUrls: ['./inicio.css'],
 })
 export class Inicio implements OnInit {
 
