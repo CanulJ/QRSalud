@@ -1,77 +1,18 @@
-/* ==================== Variables de colores ==================== */
-:root {
-  --primary-purple: #7c3aed;
-  --primary-purple-dark: #5a189a;
-  --primary-purple-light: #9333ea;
-  --purple-50: #faf5ff;
-  --purple-100: #f3e8ff;
-  --purple-200: #e9d5ff;
-  --white: #ffffff;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --blue-500: #3b82f6;
-  --blue-600: #2563eb;
-  --blue-700: #1d4ed8;
-  --red-600: #dc2626;
-  --red-700: #b91c1c;
-  --green-500: #10b981;
-}
-
 /* ==================== CONTENEDOR PRINCIPAL ==================== */
 .seguro-main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  padding: 0;
+  gap: 30px;
+  padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  width: 100%;
-}
-
-/* ==================== HEADER ==================== */
-.seguro-header {
-  text-align: center;
-  width: 100%;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(124, 58, 237, 0.1);
-}
-
-.header-icon {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 0.75rem;
-  background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-purple-light) 100%);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
-}
-
-.header-icon svg {
-  width: 26px;
-  height: 26px;
-  color: var(--white);
-  stroke-width: 2;
 }
 
 .titulo {
-  font-size: 1.5rem;
-  color: var(--primary-purple-dark);
-  font-weight: 700;
-  margin: 0 0 0.35rem 0;
-  line-height: 1.2;
-}
-
-.subtitulo {
-  font-size: 0.875rem;
-  color: var(--gray-600);
-  margin: 0;
-  font-weight: 400;
+  font-size: 1.8em;
+  color: #6d28d9;
+  font-weight: bold;
+  text-align: center;
 }
 
 /* ==================== BOTÓN AGREGAR ==================== */
@@ -82,417 +23,253 @@
 }
 
 .btn-agregar {
-  background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-purple-light) 100%);
-  color: var(--white);
+  background: #7c3aed;
+  color: #fff;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 12px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  padding: 10px 25px;
+  border-radius: 10px;
+  font-size: 16px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-agregar::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.5s, height 0.5s;
-}
-
-.btn-agregar:hover::before {
-  width: 200px;
-  height: 200px;
+  transition: all 0.3s ease;
 }
 
 .btn-agregar:hover {
-  background: linear-gradient(135deg, var(--primary-purple-dark) 0%, var(--primary-purple) 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
-}
-
-.btn-agregar:active {
-  transform: translateY(0);
-}
-
-.btn-icon {
-  width: 18px;
-  height: 18px;
-  stroke-width: 2.5;
-  position: relative;
-  z-index: 1;
+  background: #5a189a;
+  transform: scale(1.05);
 }
 
 /* ==================== TABLA CARD ==================== */
 .tabla-card {
-  width: 100%;
-  background: linear-gradient(135deg, var(--white) 0%, var(--purple-50) 100%);
-  border-radius: 16px;
-  border: 1.5px solid rgba(124, 58, 237, 0.2);
-  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.12);
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+   width: 103%;        /* ocupa todo el ancho disponible */
+  max-width: 1100px;  /* mucho más ancha */
+  background: #ffffff;
+  border-radius: 20px;
+  border: 2px solid rgba(124, 58, 237, 0.5);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+  overflow-x: auto;
+  transition: all 0.4s ease;
+  
 }
 
 .tabla-card:hover {
-  box-shadow: 0 10px 32px rgba(124, 58, 237, 0.18);
-  border-color: rgba(124, 58, 237, 0.3);
-}
-
-.tabla-wrapper {
-  overflow-x: auto;
-  overflow-y: visible;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(124, 58, 237, 0.25);
 }
 
 /* ==================== TABLA ==================== */
 .tabla-seguros {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  text-align: left;
+  font-size: 15px;
 }
 
-.tabla-seguros thead {
-  background: linear-gradient(135deg, var(--primary-purple) 0%, var(--primary-purple-light) 100%);
-  position: relative;
-}
-
-.tabla-seguros thead::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+.tabla-seguros th, .tabla-seguros td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .tabla-seguros th {
-  padding: 1rem 1.25rem;
-  color: var(--white);
+  background-color: #7c3aed;
+  color: #fff;
   font-weight: 600;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.th-content {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.th-icon {
-  width: 18px;
-  height: 18px;
-  color: var(--white);
-  stroke-width: 2;
-  opacity: 0.9;
+  text-align: center;
 }
 
 .tabla-seguros td {
-  padding: 1rem 1.25rem;
-  color: var(--gray-800);
-  border-bottom: 1px solid rgba(124, 58, 237, 0.08);
-  transition: background-color 0.3s ease;
+  color: #1e293b;
 }
 
-.tabla-seguros tbody tr {
-  transition: all 0.3s ease;
-}
-
-.tabla-seguros tbody tr:hover {
-  background: linear-gradient(90deg, var(--purple-50) 0%, transparent 100%);
-}
-
-.tabla-seguros tbody tr:last-child td {
-  border-bottom: none;
+.tabla-seguros tr:hover {
+  background-color: #f5f3ff;
+  cursor: pointer;
 }
 
 .seleccionado {
-  background: linear-gradient(90deg, var(--purple-100) 0%, var(--purple-50) 100%) !important;
-  border-left: 4px solid var(--primary-purple);
+  background-color: #ede9fe !important;
+  border-left: 4px solid #7c3aed;
 }
 
-/* ==================== BADGES Y ESTILOS DE CELDAS ==================== */
-.td-badge {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--primary-purple-light) 0%, var(--primary-purple) 100%);
-  color: var(--white);
-  padding: 0.35rem 0.875rem;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.td-code {
-  display: inline-block;
-  background: var(--gray-100);
-  color: var(--gray-700);
-  padding: 0.35rem 0.75rem;
-  border-radius: 6px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.td-date {
-  color: var(--gray-700);
-  font-weight: 500;
-}
-
-/* ==================== BOTONES DE ACCIÓN ==================== */
-.td-acciones {
-  text-align: center;
-  white-space: nowrap;
-}
-
-.btn-editar,
-.btn-eliminar {
+/* ==================== BOTÓN VER ==================== */
+.btn-ver {
+  background: #7c3aed;
+  color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
+  padding: 6px 12px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  position: relative;
-  overflow: hidden;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
-.btn-editar::before,
-.btn-eliminar::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s;
+.btn-ver:hover {
+  background: #5a189a;
+  transform: scale(1.05);
 }
 
-.btn-editar:hover::before,
-.btn-eliminar:hover::before {
-  width: 150px;
-  height: 150px;
+/* ==================== DETALLE CARD ==================== */
+.detalle-card {
+  width: 90%;
+  max-width: 600px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 2px solid rgba(124, 58, 237, 0.5);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+  padding: 20px;
+  transition: all 0.4s ease;
 }
 
-.btn-icon-action {
-  width: 16px;
-  height: 16px;
-  stroke-width: 2.5;
-  position: relative;
-  z-index: 1;
+.detalle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(124, 58, 237, 0.25);
 }
 
-/* Botón Editar - Azul */
-.btn-editar {
-  background: linear-gradient(135deg, var(--blue-500) 0%, var(--blue-600) 100%);
-  color: var(--white);
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
-  margin-right: 0.5rem;
+.detalle-card h3 {
+  color: #5b21b6;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-align: center;
 }
 
-.btn-editar:hover {
-  background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-700) 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+/* ==================== BOTÓN VOLVER ==================== */
+.btn-volver {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  margin-top: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.btn-editar:active {
-  transform: translateY(0);
-}
-
-/* Botón Eliminar - Rojo */
-.btn-eliminar {
-  background: linear-gradient(135deg, var(--red-600) 0%, var(--red-700) 100%);
-  color: var(--white);
-  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
-}
-
-.btn-eliminar:hover {
-  background: linear-gradient(135deg, var(--red-700) 0%, #991b1b 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
-}
-
-.btn-eliminar:active {
-  transform: translateY(0);
+.btn-volver:hover {
+  background: #5a189a;
+  transform: scale(1.05);
 }
 
 /* ==================== MENSAJE VACÍO ==================== */
-.mensaje-vacio-card {
-  width: 100%;
-  max-width: 500px;
-  background: linear-gradient(135deg, var(--white) 0%, var(--purple-50) 100%);
-  border: 2px dashed rgba(124, 58, 237, 0.3);
-  border-radius: 16px;
-  padding: 3rem 2rem;
+.mensaje-vacio {
+  color: #6b7280;
+  font-style: italic;
+  background: #f3f0ff;
+  border: 1px dashed #7c3aed;
+  border-radius: 12px;
+  padding: 15px 20px;
+  text-align: center;
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ==================== BOTONES DE ACCIÓN ==================== */
+.btn-editar, .btn-eliminar {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Botón Editar */
+.btn-editar {
+  background: #2563eb; /* azul brillante */
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.btn-editar:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+}
+
+/* Botón Eliminar */
+.btn-eliminar {
+  background: #dc2626; /* rojo */
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+}
+
+.btn-eliminar:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4);
+}
+
+/* Opcional: darle un espaciado limpio entre ellos */
+td button + button {
+  margin-left: 8px;
+}
+
+/* Efecto suave al pasar sobre la celda de acciones */
+td:last-child {
   text-align: center;
 }
 
-.vacio-icon {
-  width: 70px;
-  height: 70px;
-  margin: 0 auto 1.25rem;
-  background: linear-gradient(135deg, var(--purple-100) 0%, var(--purple-200) 100%);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.vacio-icon svg {
-  width: 36px;
-  height: 36px;
-  color: var(--primary-purple);
-  stroke-width: 2;
-}
-
-.mensaje-vacio {
-  color: var(--gray-700);
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
-}
-
-.mensaje-vacio-sub {
-  color: var(--gray-500);
-  font-size: 0.875rem;
-  margin: 0;
-}
-
-/* ==================== ANIMACIONES ==================== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.tabla-card,
-.mensaje-vacio-card {
-  animation: fadeIn 0.4s ease-out;
-}
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
-  .titulo {
-    font-size: 1.25rem;
+  .tabla-card, .detalle-card {
+    width: 98%;
   }
 
-  .subtitulo {
-    font-size: 0.8rem;
-  }
-
-  .tabla-seguros {
-    font-size: 0.85rem;
-  }
-
-  .tabla-seguros th,
-  .tabla-seguros td {
-    padding: 0.875rem 0.75rem;
-  }
-
-  .th-icon {
-    display: none;
+  .tabla-seguros th, .tabla-seguros td {
+    padding: 10px;
+    font-size: 14px;
   }
 
   .btn-agregar {
     width: 100%;
-    justify-content: center;
   }
 
-  .td-acciones {
+/* ==================== RESPONSIVE BOTONES ACCIÓN ==================== */
+@media (max-width: 768px) {
+  .btn-editar, .btn-eliminar {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+
+  td button + button {
+    margin-left: 4px;
+  }
+}
+
+/* En móviles muy pequeños, apilamos los botones con espacio */
+@media (max-width: 550px) {
+  td:last-child {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    align-items: stretch;
+    align-items: center;
+    gap: 10px; /* <- Espacio más amplio entre botones */
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 
-  .btn-editar,
-  .btn-eliminar {
+  .btn-editar, .btn-eliminar {
     width: 100%;
+    max-width: 130px;
     justify-content: center;
-    margin-right: 0;
+    font-size: 13px;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-editar:hover,
+  .btn-eliminar:hover {
+    transform: scale(1.04);
   }
 }
 
-@media (max-width: 480px) {
-  .seguro-main {
-    gap: 1rem;
-  }
 
-  .header-icon {
-    width: 45px;
-    height: 45px;
-  }
-
-  .header-icon svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .tabla-seguros th,
-  .tabla-seguros td {
-    padding: 0.75rem 0.5rem;
-    font-size: 0.8rem;
-  }
-
-  .td-badge {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.625rem;
-  }
-
-  .td-code {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-  }
-
-  .btn-editar,
-  .btn-eliminar {
-    font-size: 0.8rem;
-    padding: 0.5rem 0.75rem;
-  }
-
-  .mensaje-vacio-card {
-    padding: 2rem 1.5rem;
-  }
-
-  .vacio-icon {
-    width: 60px;
-    height: 60px;
-  }
-
-  .vacio-icon svg {
-    width: 30px;
-    height: 30px;
-  }
-}
-
-/* ==================== ACCESIBILIDAD ==================== */
-button:focus-visible {
-  outline: 3px solid var(--primary-purple);
-  outline-offset: 2px;
 }
