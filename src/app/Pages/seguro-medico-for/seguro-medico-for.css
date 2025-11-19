@@ -1,10 +1,12 @@
-/* seguro-medico-for.css (basado en tu estilo) */
-
-/* Contenedor del Bottom Sheet */
+/* ===================== BOTTOM SHEET ===================== */
 ::ng-deep .mat-bottom-sheet-container {
   display: flex !important;
   justify-content: center !important;
   align-items: flex-start !important;
+
+  /* Esta línea es LA CLAVE para eliminar el desplazamiento */
+  width: 100% !important;
+
   padding: 20px !important;
   margin: 0 !important;
   background: transparent !important;
@@ -14,32 +16,38 @@
   overflow-y: auto !important;
 }
 
-/* Tarjeta */
+/* ===================== TARJETA ===================== */
 .card {
   width: 90%;
   max-width: 700px;
+
   padding: 40px;
   border-radius: 17px;
   background: #ffffff;
   box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  margin: 0 auto;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+
+  transition: 0.28s ease;
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* Hover y click */
 .card:hover {
-  border: 1px solid rgba(0,0,0,0.08);
+  border-color: rgba(0,0,0,0.1);
   transform: scale(1.01);
 }
 
-/* Contenedor formulario */
+/* ===================== FORMULARIO ===================== */
 .form-container {
   width: 100%;
 }
 
-/* Inputs flotantes */
 .input-container {
   position: relative;
   margin-bottom: 18px;
@@ -53,7 +61,6 @@
   font-size: 16px;
 }
 
-/* Aplica a todos los inputs que usan class="input" */
 .input {
   padding: 16px 18px;
   font-size: 16px;
@@ -79,14 +86,13 @@
   width: 0;
   height: 3px;
   background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-  transition: width 0.28s;
+  transition: width 0.28s ease;
 }
-
 .input:focus + .underline {
   width: 100%;
 }
 
-/* Botones */
+/* ===================== BOTONES ===================== */
 .acciones {
   display: flex;
   justify-content: space-between;
@@ -100,13 +106,11 @@
   border-radius: 10px;
 }
 
-/* Tip: si usas Angular Material, añade estilos para mat-button/mat-flat-button */
 .acciones button[mat-flat-button] {
   background: linear-gradient(90deg, #7c3aed, #5a189a);
   color: #fff;
   border: none;
 }
-
 .acciones button[mat-flat-button]:hover {
   filter: brightness(0.95);
 }
@@ -116,7 +120,7 @@
   border: 1px solid #e5e7eb;
 }
 
-/* Fuente y título */
+/* ===================== TÍTULO ===================== */
 .form-container h3 {
   font-size: 24px;
   text-align: center;
@@ -124,12 +128,14 @@
   margin-bottom: 22px;
 }
 
-/* Responsive */
+/* ===================== RESPONSIVE ===================== */
 @media (max-width: 700px) {
   .card {
     width: 95%;
-    padding: 20px;
+    padding: 22px;
+    margin-top: 30px;
   }
+
   .acciones {
     flex-direction: column;
   }
