@@ -78,6 +78,8 @@ body {
   font-size: 1.65rem;
   font-weight: 700;
   margin-bottom: 0.35rem;
+  letter-spacing: 0.3px;
+  word-spacing: 4px;   /* ← La clave */
 }
 
 .card__subtitle {
@@ -251,4 +253,11 @@ button:hover::before {
   button {
     width: 100%;
   }
+
+  @media (max-width: 480px) {
+  .card__title {
+    font-size: 1.50rem;
+    word-spacing: 6px;   /* ← Más espacio en pantallas pequeñas */
+  }
+}
 }

@@ -11,42 +11,46 @@
   height: 100vh !important;            /* altura total de pantalla */
   overflow-y: auto !important;         /* scroll único */
 }
-
 /* Tarjeta */
 .card {
   width: 90%;
   max-width: 700px;
   padding: 40px;
   border-radius: 17px;
-  background: #ffffff;               /* blanco sólido elegante */
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15); /* sombra suave */
+  background: #ffffff;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
   align-items: stretch;
-
-  max-height: none;     
-  overflow-y: visible;  
-  margin: 0 auto;       
+  margin: 0 auto;
+  transition: transform 0.2s ease, border 0.2s ease;
 }
 
-
-
-/* Hover y click */
+/* Hover */
 .card:hover {
-  border: 1px solid black;
-  transform: scale(1.02);
+  border: 1px solid rgba(0,0,0,0.08);
+  transform: scale(1.01);
 }
 
 .card:active {
-  transform: scale(0.995); /* apenas se reduce */
+  transform: scale(0.995);
 }
 
-/* Contenedor formulario */
+/* Contenedor del formulario */
 .form-container {
   width: 100%;
 }
 
-/* Inputs flotantes */
+/* Título */
+.form-container h3 {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  color: #4b0082;
+  margin-bottom: 25px;
+}
+
+/* Input Container */
 .input-container {
   position: relative;
   margin-bottom: 20px;
@@ -54,117 +58,90 @@
 
 .input-container label {
   display: block;
-  margin-bottom: 5px;
-  color: #333;
+  margin-bottom: 6px;
+  color: #4b0082;
   font-weight: 600;
+  font-size: 16px;
 }
 
-.input[type="text"] {
-  padding: 20px 25px;
+/* Inputs */
+.input {
+  padding: 16px 18px;
   font-size: 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #f1f1f1;
   color: #333;
   width: 100%;
   outline: none;
   box-sizing: border-box;
+  transition: background-color 0.2s;
 }
 
+.input:focus {
+  background-color: #ede9fe;
+}
+
+/* Underline animada */
 .underline {
   position: absolute;
-  bottom: 0;
+  bottom: 6px;
   left: 0;
   width: 0;
-  height: 2px;
+  height: 3px;
   background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-  transition: width 0.3s;
+  transition: width 0.28s;
 }
 
-.input[type="text"]:focus + .underline {
+.input:focus + .underline {
   width: 100%;
 }
 
-/* Botones */
+/* Botones con el estilo del otro formulario */
 .acciones {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
-  margin-top: 30px;
+  gap: 12px;
+  margin-top: 25px;
 }
 
 .acciones button {
   flex: 1;
+  padding: 12px 18px;
+  border-radius: 10px;
 }
 
-.acciones button.mat-button,
-.acciones button.mat-flat-button {
-  display: block;
-  align-items: unset;
-  justify-content: center;
-  text-align: center;
-}
-
-.acciones button.mat-button:hover,
-.acciones button.mat-flat-button:hover {
-  background-color: #C850C0;
-}
-
-
-/* Cambiar fuente global de la tarjeta y formulario */
-.card, 
-.card * {
-  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* elegante y limpia */
-  color: #333;  /* texto legible */
-}
-
-/* Título del formulario */
-.form-container h3 {
-  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 28px;       /* más grande y destacado */
-  font-weight: 600;
-  text-align: center;
-  color: #4b0082;        /* sigue elegante */
-  margin-bottom: 30px;
-}
-
-/* Labels de inputs */
-.input-container label {
-  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 16px;       /* más grande y legible */
-  font-weight: 600;
-  color: #4b0082;        /* más suave que negro */
-  margin-bottom: 8px;
-}
-
-/* Inputs */
-.input[type="text"] {
-  font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 18px;       /* más grande para comodidad visual */
-  color: #333;
-  padding: 20px 25px;
-  border-radius: 6px;
-  background-color: #f1f1f1;
+/* Botón principal (Guardar) */
+.acciones button[mat-flat-button] {
+  background: linear-gradient(90deg, #7c3aed, #5a189a);
+  color: #fff;
   border: none;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
+  font-weight: 600;
 }
 
+.acciones button[mat-flat-button]:hover {
+  filter: brightness(0.95);
+}
+
+/* Botón secundario (Cancelar) */
+.acciones button[mat-button] {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  font-weight: 600;
+}
+
+.acciones button[mat-button]:hover {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+}
 
 /* Responsive */
 @media (max-width: 700px) {
   .card {
     width: 95%;
-    padding: 25px;
+    padding: 22px;
   }
-
   .acciones {
     flex-direction: column;
-    gap: 15px;
-  }
-
-  .acciones button {
-    width: 100%;
   }
 }

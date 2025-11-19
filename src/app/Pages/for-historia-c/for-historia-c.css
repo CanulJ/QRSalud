@@ -1,37 +1,33 @@
 /* ===================== TARJETA ===================== */
 .card {
-  --card-bg: #ffffff;
-  --card-accent: #7c3aed; /* morado */
-  --card-text: #1e293b;
-  width: 80%;
+  width: 90%;
   max-width: 700px;
-  margin: 50px auto; /* centrado vertical y horizontal */
-  display: flex;
-  flex-direction: column;
-  border-radius: 20px;
-  overflow: hidden;
+  padding: 40px;
+  border-radius: 17px;
+  background: #ffffff;
   box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  border: 2px solid rgba(124, 58, 237, 0.3);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--card-bg);
+  border: 2px solid rgba(124, 58, 237, 0.15);
+  margin: 40px auto;
+  transition: all 0.25s ease;
 }
 
-/* Contenido de la tarjeta */
+.card:hover {
+  transform: scale(1.01);
+  border-color: rgba(124, 58, 237, 0.35);
+}
+
+/* ===================== CONTENIDO ===================== */
 .card__content {
-  padding: 2em;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25em;
+  width: 100%;
 }
 
 /* Título */
 .card__title {
-  color: var(--card-text);
-  font-size: 1.6em;
-  font-weight: 700;
-  margin: 0;
+  font-size: 24px;
   text-align: center;
+  color: #4b0082;
+  font-weight: 600;
+  margin-bottom: 25px;
 }
 
 /* ===================== INPUTS / TEXTAREA ===================== */
@@ -42,75 +38,93 @@
 
 .input-container label {
   display: block;
-  margin-bottom: 5px;
-  color: #1e293b;
+  margin-bottom: 6px;
+  color: #4b0082;
   font-weight: 600;
-  font-size: 1em;
+  font-size: 16px;
 }
 
-.input[type="text"],
-.input[type="date"],
+.input,
 textarea.input {
-  padding: 18px 20px;
-  font-size: 1rem;
+  padding: 16px 18px;
+  font-size: 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #f1f1f1;
-  color: #1e293b;
+  color: #333;
   width: 100%;
   outline: none;
   box-sizing: border-box;
-  resize: vertical; /* textarea puede cambiar altura */
-  min-height: 80px;
+  transition: background-color 0.2s;
 }
 
+/* Textarea tamaño elegante */
+textarea.input {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.input:focus,
+textarea.input:focus {
+  background-color: #ede9fe;
+}
+
+/* Underline animada */
 .underline {
   position: absolute;
-  bottom: 0;
+  bottom: 6px;
   left: 0;
   width: 0;
-  height: 2px;
+  height: 3px;
   background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-  transition: width 0.3s;
+  transition: width 0.28s;
 }
 
-.input:focus + .underline {
+.input:focus + .underline,
+textarea.input:focus + .underline {
   width: 100%;
 }
 
 /* ===================== BOTONES ===================== */
 .card__footer {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 25px;
 }
 
-button, .btn-agregar {
-  display: inline-block;
-  padding: 12px 25px;
+.card__footer button {
+  flex: 1;
+  padding: 12px 18px;
   border-radius: 10px;
-  border: none;
-  background: var(--card-accent);
+  font-weight: 600;
+}
+
+/* Botón Guardar */
+.card__footer button[mat-flat-button] {
+  background: linear-gradient(90deg, #7c3aed, #5a189a);
   color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  border: none;
 }
 
-button:hover, .btn-agregar:hover {
-  background: #5a189a;
-  transform: scale(1.05);
+.card__footer button[mat-flat-button]:hover {
+  filter: brightness(0.95);
+  transform: scale(1.03);
 }
 
-/* Hover de la tarjeta */
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 25px rgba(0,0,0,0.1);
-  border-color: rgba(124, 58, 237, 0.5);
+/* Botón Cancelar */
+.card__footer button[mat-button] {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  color: #333;
 }
 
-/* ===================== BOTTOM SHEET CENTRADO ===================== */
+.card__footer button[mat-button]:hover {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+}
+
+/* ===================== BOTTOM SHEET ===================== */
 ::ng-deep .mat-bottom-sheet-container {
   display: flex !important;
   justify-content: center !important;
@@ -121,22 +135,17 @@ button:hover, .btn-agregar:hover {
   box-shadow: none !important;
   border-radius: 0 !important;
   height: 100vh !important;
-  overflow-y: auto !important; /* scroll único */
+  overflow-y: auto !important;
 }
 
-/* Responsive */
+/* ===================== RESPONSIVE ===================== */
 @media (max-width: 700px) {
   .card {
     width: 95%;
-    padding: 20px;
-  }
-
-  button, .btn-agregar {
-    width: 100%;
+    padding: 22px;
   }
 
   .card__footer {
     flex-direction: column;
-    gap: 12px;
   }
 }
