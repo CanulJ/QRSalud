@@ -4,22 +4,24 @@
   justify-content: center !important;
   align-items: flex-start !important;
   padding: 20px !important;
-  margin: 0 auto !important;        /* esto sí centra */
+  margin: 0 auto !important;
   background: transparent !important;
   box-shadow: none !important;
   border-radius: 0 !important;
   height: 100vh !important;
   overflow-y: auto !important;
-  transform: none !important;       /* 🔥 clave: cancela el desalineado */
-  left: 0 !important;               /* asegura posición natural */
-  right: 0 !important;
+
+  /* 🔥 clave extra */
+  max-width: 100% !important;   /* evita que se achique y se pegue */
+  width: 100% !important;       /* ocupa todo el ancho */
 }
 
 /* Tarjeta */
 /* Tarjeta */
 .card {
-  width: 90%;
+  width: 100%;                  /* que se adapte al contenedor */
   max-width: 700px;
+  margin: 20px auto !important; /* esto sí lo centra */
   padding: 40px;
   border-radius: 17px;
   background: #ffffff;
@@ -27,10 +29,6 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-   margin: 20px auto !important;
-  transition: transform 0.2s ease, border 0.2s ease;
-  left: 0 !important;
-  right: 0 !important;
 }
 
 /* Hover */
@@ -144,10 +142,15 @@
 
 /* Responsive */
 @media (max-width: 700px) {
+  ::ng-deep .mat-bottom-sheet-container {
+    padding: 10px !important;   /* menos padding en móvil */
+  }
   .card {
     width: 95%;
     padding: 22px;
   }
+
+
   .acciones {
     flex-direction: column;
   }
