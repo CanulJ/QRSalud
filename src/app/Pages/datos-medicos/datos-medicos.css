@@ -1,16 +1,21 @@
 /* Contenedor del Bottom Sheet */
 ::ng-deep .mat-bottom-sheet-container {
   display: flex !important;
-  justify-content: center !important; /* centrado horizontal */
-  align-items: flex-start !important;  /* comienza desde arriba */
-  padding: 20px !important;            /* espacio superior */
-  margin: 0 !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  padding: 20px !important;
+  margin: 0 auto !important;        /* esto sí centra */
   background: transparent !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-  height: 100vh !important;            /* altura total de pantalla */
-  overflow-y: auto !important;         /* scroll único */
+  height: 100vh !important;
+  overflow-y: auto !important;
+  transform: none !important;       /* 🔥 clave: cancela el desalineado */
+  left: 0 !important;               /* asegura posición natural */
+  right: 0 !important;
 }
+
+/* Tarjeta */
 /* Tarjeta */
 .card {
   width: 90%;
@@ -22,8 +27,10 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  margin: 0 auto;
+   margin: 20px auto !important;
   transition: transform 0.2s ease, border 0.2s ease;
+  left: 0 !important;
+  right: 0 !important;
 }
 
 /* Hover */
