@@ -231,17 +231,16 @@ button::before {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.5s, height 0.5s;
-}
-
-button:hover::before {
   width: 250px;
   height: 250px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.45s ease-out;
+  will-change: transform;
+}
+button:hover::before {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .btn-icon {
