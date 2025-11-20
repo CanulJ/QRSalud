@@ -1,65 +1,70 @@
 <div class="tarjeta-main" *ngIf="solicitud; else sinSolicitud">
   <div class="card card-tarjeta">
-    
+    <!-- Imagen del usuario -->
     <div class="card__image">
       <img src="/usser.webp" alt="usuario" />
     </div>
 
+    <!-- Contenido -->
     <div class="card__content">
+      <div class="card__text">
+        <p class="card__title">{{ usuario.nombre }} {{ usuario.apellidos }}</p>
 
-      <p class="card__title">
-        {{ usuario.nombre }} {{ usuario.apellidos }}
-      </p>
+        <!-- Estado aprobado -->
+        <ng-container *ngIf="solicitud.estado === 'aprobada' && qrGenerado; else estado">
+          <p class="card__description">
+            ¡Hola {{ usuario.nombre }}! 🎉<br>
+            Tu tarjeta está lista.<br>
+            <strong>CURP:</strong> {{ usuario.curp }}<br>
+            <strong>Correo:</strong> {{ usuario.correo }}<br>
+            <strong>Token de acceso:</strong>
+            <span class="token">{{ qrGenerado.urlqrcode }}</span>
+          </p>
+        </ng-container>
 
-      <!-- Estado Aprobada -->
-      <ng-container *ngIf="solicitud.estado === 'aprobada'; else estadoGenerico">
-        <p class="card__description" *ngIf="qrGenerado">
-          ¡Hola {{ usuario.nombre }}! 🎉<br>
-          Tu tarjeta está lista.<br>
-          <strong>CURP:</strong> {{ usuario.curp }}<br>
-          <strong>Correo:</strong> {{ usuario.correo }}<br>
-          <strong>Token de acceso:</strong>
-          <span class="token">{{ qrGenerado.urlqrcode }}</span>
-        </p>
-      </ng-container>
+        <!-- Estado pendiente o rechazada -->
+        <ng-template #estado>
+          <p class="card__description" *ngIf="solicitud.estado === 'pendiente'">
+            🕒 ¡No te preocupes! Estamos revisando tu solicitud.<br>
+            Pronto recibirás tu tarjeta.
+          </p>
+          <p class="card__description" *ngIf="solicitud.estado === 'rechazada'">
+            ❌ Lo sentimos, tu solicitud fue rechazada.<br>
+            Puedes intentarlo de nuevo cuando quieras.
+          </p>
+        </ng-template>
+      </div>
 
-      <!-- Estado pendiente o rechazada -->
-      <ng-template #estadoGenerico>
-        <p class="card__description" *ngIf="solicitud.estado === 'pendiente'">
-          🕒 Estamos revisando tu solicitud.<br>
-          Pronto recibirás tu tarjeta.
-        </p>
-
-        <p class="card__description" *ngIf="solicitud.estado === 'rechazada'">
-          ❌ Tu solicitud fue rechazada.<br>
-          Puedes intentarlo de nuevo cuando quieras.
-        </p>
-      </ng-template>
-
-      <!-- Footer -->
+      <!-- Footer con botones -->
       <div class="card__footer">
-
+        <!-- Botón volver a solicitar (solo si fue rechazada) -->
         <button
           *ngIf="solicitud.estado === 'rechazada'"
           class="btn-secundario"
-          (click)="volverASolicitar()">
+          (click)="volverASolicitar()"
+        >
           🔁 Volver a solicitar
         </button>
 
-        <ng-container *ngIf="solicitud.estado === 'aprobada'">
-          <button class="btn-principal" (click)="copiarToken()">
-            📋 Copiar token
-          </button>
-
-          <button class="btn-secundario" (click)="generarQR()">
-            🔄 Generar nuevo
-          </button>
-        </ng-container>
-
-        <button class="btn-volver" (click)="regresarInicio()">
-          ⬅ Volver
+        <!-- Botones cuando está aprobada -->
+        <button
+          *ngIf="solicitud.estado === 'aprobada'"
+          class="btn-principal"
+          (click)="copiarToken()"
+        >
+          📋 Copiar token
         </button>
 
+        <button
+          *ngIf="solicitud.estado === 'aprobada'"
+          class="btn-secundario"
+          (click)="generarQR()"
+        >
+          🔄 Generar nuevo
+        </button>
+
+        <!-- Botón de volver (siempre visible) -->
+        <button class="btn-volver" (click)="regresarInicio()">⬅ Volver</button>
       </div>
     </div>
   </div>
@@ -69,14 +74,14 @@
   </div>
 </div>
 
-<!-- SIN SOLICITUD -->
+<!-- Sin solicitudes -->
 <ng-template #sinSolicitud>
   <div class="card card-tarjeta no-solicitud">
     <div class="card__content">
       <p class="card__description">
-        ¡Hola! 😃<br>
-        Aún no tienes tu tarjeta.<br>
-        Solicítala ahora.
+        ¡Hola! 😃<br />
+        Aún no tienes tu tarjeta.<br />
+        Solicítala ahora y obtén acceso inmediato.
       </p>
       <button class="btn-secundario" (click)="solicitarTarjeta()">
         🆕 Solicitar tarjeta
