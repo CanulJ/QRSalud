@@ -15,11 +15,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 @Component({
   selector: 'app-tabla-medica',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule, MatButtonModule,
+  imports: [
+    CommonModule,
     MatBottomSheetModule,
+    MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatFormFieldModule],
+    MatFormFieldModule
+  ],
   templateUrl: './tabla-medica.html',
   styleUrls: ['./tabla-medica.css']
 })
@@ -33,19 +36,31 @@ export class TablaMedica implements OnInit {
   private bottomSheet = inject(MatBottomSheet);
   private historiaClinicaService = inject(historiaClinicaService);
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {} // inyectamos PLATFORM_ID
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const usuarioData = sessionStorage.getItem('usuario');
-      if (usuarioData) {
-        this.usuario = JSON.parse(usuarioData);
 
-        this.datosMedicosService.obtenerPorUsuario(this.usuario.id).subscribe({
-          next: (datos) => this.datosMedicos = datos.length > 0 ? datos[0] : null,
-          error: (err) => console.error(err)
-        });
+    // 🔹 Solo se ejecuta en navegador (evita errores en SSR)
+    if (isPlatformBrowser(this.platformId)) {
+
+      // 🔹 Recuperamos el usuario guardado del login / token
+      const usuarioData = sessionStorage.getItem('usuario');
+
+      if (!usuarioData) {
+        console.warn('No hay usuario en sessionStorage, regresando al inicio.');
+        this.router.navigate(['/']);
+        return;
       }
+
+      this.usuario = JSON.parse(usuarioData);
+
+      // 🔹 Cargar datos médicos desde la API
+      this.datosMedicosService.obtenerPorUsuario(this.usuario.id).subscribe({
+        next: (datos) => {
+          this.datosMedicos = datos.length > 0 ? datos[0] : null;
+        },
+        error: (err) => console.error(err)
+      });
     }
   }
 
@@ -59,16 +74,21 @@ export class TablaMedica implements OnInit {
       if (!result) return;
 
       const id = this.datosMedicos?.id_datos;
+
       if (id) {
+        // 🔹 ACTUALIZAR datos ya existentes
         this.datosMedicosService.actualizar(id, result).subscribe({
           next: (updated) => this.datosMedicos = updated,
-          error: (err) => console.error('Error al actualizar datos médicos', err)
+          error: (err) =>
+            console.error('Error al actualizar datos médicos', err)
         });
       } else {
+        // 🔹 CREAR nuevos datos médicos
         const datosConUsuario = { ...result, id_usuario: this.usuario.id };
         this.datosMedicosService.crear(datosConUsuario).subscribe({
           next: (created) => this.datosMedicos = created,
-          error: (err) => console.error('Error al crear datos médicos', err)
+          error: (err) =>
+            console.error('Error al crear datos médicos', err)
         });
       }
     });
@@ -85,7 +105,8 @@ export class TablaMedica implements OnInit {
 
       this.historiaClinicaService.crear(result).subscribe({
         next: (res) => console.log('Historial creado', res),
-        error: (err) => console.error('Error al crear historial', err)
+        error: (err) =>
+          console.error('Error al crear historial', err)
       });
     });
   }
