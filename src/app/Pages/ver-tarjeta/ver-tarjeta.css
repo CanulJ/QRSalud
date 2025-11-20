@@ -1,9 +1,8 @@
-/* ==================== Contenedor principal ==================== */
+/* Contenedor principal */
 .tarjeta-main {
   display: flex;
-  justify-content: center; /* centra verticalmente */
-  align-items: center;     /* centra horizontalmente */
-  height: 100vh;               
+  justify-content: center;
+  align-items: center;
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
@@ -11,93 +10,61 @@
   flex-direction: column;
 }
 
-.card__footer {
-  display: flex;
-  justify-content: flex-end; /* empuja los botones a la derecha */
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-/* Alinea el botón “Volver a solicitar” a la izquierda */
-.card__footer .btn-secundario:first-child {
-  margin-right: auto; /* empuja el resto a la derecha */
-}
-
-
-/* ==================== Tarjeta principal ==================== */
+/* Tarjeta principal */
 .card.card-tarjeta {
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
-  min-height: 380px;       /* altura mínima */
-  max-height: 90vh;        /* no sobrepasa la pantalla */
   border-radius: 20px;
-  overflow: hidden;
   background: linear-gradient(135deg, #fdfdfd, #f0f0ff);
   border: 1px solid rgba(124, 58, 237, 0.4);
   box-shadow: 0 10px 25px rgba(124, 58, 237, 0.1);
-  text-align: center;
-  transition: all 0.4s ease;
-  margin: 20px auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* distribuye contenido y footer */
-  padding: 10px 0;
+  margin: 20px auto;
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 35px rgba(124, 58, 237, 0.2);
-}
-
-/* ==================== Imagen del usuario ==================== */
+/* Imagen del usuario */
 .card__image {
   width: 100%;
-  height: 220px; /* aumenta un poco la altura para cubrir más espacio */
+  height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #7c3aed, #c084fc); /* gradiente morado */
-  margin: -10px 0 0 0; /* mueve la imagen un poco hacia arriba para eliminar espacio blanco */
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  background: linear-gradient(135deg, #7c3aed, #c084fc);
 }
-
-/* La imagen centrada */
 .card__image img {
   width: 130px;
   height: 130px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #fff;
-  margin-top: 0; /* asegura que no haya espacio extra */
 }
 
-
-/* ==================== Contenido de la tarjeta ==================== */
-.card__content {
-  padding: 1.5em 2em;
+/* Contenido con QR a la derecha */
+.card__body {
   display: flex;
-  flex-direction: column;
-  gap: 1.2em;
-  align-items: center;
-  flex: 1; /* ocupa el espacio disponible */
+  flex-direction: row;
+  justify-content: flex-start; /* QR más cerca del contenido */
+  align-items: flex-start;
+  padding: 20px;
+  gap: 30px;
 }
 
+/* Texto */
+.card__text {
+  flex: 1;
+}
 .card__title {
-  font-size: 1.8em;   /* título grande */
+  font-size: 1.8em;
   font-weight: 700;
   color: #1e293b;
 }
-
 .card__description {
-  font-size: 1.2em;   /* texto grande y legible */
+  font-size: 1.2em;
   color: #1e293b;
-  opacity: 0.9;
   line-height: 1.7;
-  text-align: center;
 }
-
 .token {
   background: #e0e7ff;
   padding: 5px 8px;
@@ -106,7 +73,19 @@
   font-size: 1.1em;
 }
 
-/* ==================== Footer de botones ==================== */
+.card__content {
+  padding-bottom: 20px; /* espacio seguro debajo de todo el contenido */
+}
+
+
+/* QR container */
+.qr-container img {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+}
+
+/* Footer de botones */
 .card__footer {
   display: flex;
   flex-wrap: wrap;
@@ -120,7 +99,7 @@ button {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 12px 20px; /* botones más grandes */
+  padding: 12px 20px;
   border-radius: 12px;
   border: none;
   font-size: 16px;
@@ -128,139 +107,21 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 button:hover {
   transform: scale(1.05);
 }
+.btn-principal { background: #7c3aed; color: #fff; }
+.btn-principal:hover { background: #5a189a; }
+.btn-secundario { background: #10b981; color: #fff; }
+.btn-secundario:hover { background: #059669; }
+.btn-volver { background: #dc2626; color: #fff; }
+.btn-volver:hover { background: #b91c1c; }
 
-/* Colores de botones */
-.btn-principal {
-  background: #7c3aed;
-  color: #fff;
-}
-.btn-principal:hover {
-  background: #5a189a;
-}
+/* Pie */
+.emitido { text-align: center; font-size: 1em; color: #475569; opacity: 0.85; margin-top: 10px; }
 
-.btn-secundario {
-  background: #10b981;
-  color: #fff;
-}
-.btn-secundario:hover {
-  background: #059669;
-}
-
-.btn-volver {
-  background: #dc2626;
-  color: #fff;
-}
-.btn-volver:hover {
-  background: #b91c1c;
-}
-
-/* ==================== Pie de la tarjeta ==================== */
-.emitido {
-  text-align: center;
-  font-size: 1em;
-  color: #475569;
-  opacity: 0.85;
-  margin-top: 10px;
-}
-
-/* ==================== Sin solicitudes ==================== */
-.no-solicitud .card__content {
-  gap: 15px;
-  font-size: 1.2em;
-  text-align: center;
-}
-
-/* ==================== Responsive para móviles ==================== */
+/* Responsive */
 @media (max-width: 768px) {
-  .tarjeta-main {
-    padding: 10px;
-    height: auto;
-    min-height: 100vh;
-  }
-
-  .card.card-tarjeta {
-    width: 95%;
-    min-height: auto;
-    padding: 15px 0;
-  }
-
-  .card__image {
-    height: 180px;
-  }
-
-  .card__image img {
-    width: 100px;
-    height: 100px;
-  }
-
-  .card__title {
-    font-size: 1.4em;
-  }
-
-  .card__description {
-    font-size: 1em;
-    line-height: 1.5;
-  }
-
-  .token {
-    font-size: 0.95em;
-    word-break: break-all;
-  }
-
-  .card__content {
-    padding: 1em;
-    gap: 1em;
-  }
-
-  /* Footer en columna */
-  .card__footer {
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .card__footer button {
-    width: 100%;
-    justify-content: center;
-    font-size: 15px;
-    padding: 10px 0;
-  }
-
-  .emitido {
-    font-size: 0.9em;
-    margin-top: 15px;
-    text-align: center;
-  }
-}
-
-/* ==================== Responsive extra pequeño (<= 480px) ==================== */
-@media (max-width: 480px) {
-  .card__image {
-    height: 160px;
-  }
-
-  .card__image img {
-    width: 90px;
-    height: 90px;
-  }
-
-  .card__title {
-    font-size: 1.2em;
-  }
-
-  .card__description {
-    font-size: 0.95em;
-  }
-
-  .btn-principal,
-  .btn-secundario,
-  .btn-volver {
-    font-size: 14px;
-    padding: 9px 0;
-  }
+  .card__body { flex-direction: column; align-items: center; }
+  .qr-container { margin-top: 15px; }
 }

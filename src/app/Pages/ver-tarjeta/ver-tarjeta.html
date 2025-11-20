@@ -1,43 +1,52 @@
 <div class="tarjeta-main" *ngIf="solicitud; else sinSolicitud">
   <div class="card card-tarjeta">
+
     <!-- Imagen del usuario -->
     <div class="card__image">
       <img src="/usser.webp" alt="usuario" />
     </div>
 
-    <!-- Contenido -->
+    <!-- Contenido principal: datos + QR -->
     <div class="card__content">
-      <div class="card__text">
-        <p class="card__title">{{ usuario.nombre }} {{ usuario.apellidos }}</p>
+      <div class="card__body">
+        <!-- Datos del usuario -->
+        <div class="card__text">
+          <p class="card__title">{{ usuario.nombre }} {{ usuario.apellidos }}</p>
 
-        <!-- Estado aprobado -->
-        <ng-container *ngIf="solicitud.estado === 'aprobada' && qrGenerado; else estado">
-          <p class="card__description">
-            ¡Hola {{ usuario.nombre }}! 🎉<br>
-            Tu tarjeta está lista.<br>
-            <strong>CURP:</strong> {{ usuario.curp }}<br>
-            <strong>Correo:</strong> {{ usuario.correo }}<br>
-            <strong>Token de acceso:</strong>
-            <span class="token">{{ qrGenerado.urlqrcode }}</span>
-          </p>
-        </ng-container>
+          <ng-container *ngIf="solicitud.estado === 'aprobada' && qrGenerado; else estado">
+            <p class="card__description">
+              ¡Hola {{ usuario.nombre }}! 🎉<br>
+              Tu tarjeta está lista.<br>
+              <strong>CURP:</strong> {{ usuario.curp }}<br>
+              <strong>Correo:</strong> {{ usuario.correo }}<br>
+              <strong>Token de acceso:</strong>
+              <span class="token">{{ qrGenerado.urlqrcode }}</span>
+            </p>
+          </ng-container>
 
-        <!-- Estado pendiente o rechazada -->
-        <ng-template #estado>
-          <p class="card__description" *ngIf="solicitud.estado === 'pendiente'">
-            🕒 ¡No te preocupes! Estamos revisando tu solicitud.<br>
-            Pronto recibirás tu tarjeta.
-          </p>
-          <p class="card__description" *ngIf="solicitud.estado === 'rechazada'">
-            ❌ Lo sentimos, tu solicitud fue rechazada.<br>
-            Puedes intentarlo de nuevo cuando quieras.
-          </p>
-        </ng-template>
+          <ng-template #estado>
+            <p class="card__description" *ngIf="solicitud.estado === 'pendiente'">
+              🕒 ¡No te preocupes! Estamos revisando tu solicitud.<br>
+              Pronto recibirás tu tarjeta.
+            </p>
+            <p class="card__description" *ngIf="solicitud.estado === 'rechazada'">
+              ❌ Lo sentimos, tu solicitud fue rechazada.<br>
+              Puedes intentarlo de nuevo cuando quieras.
+            </p>
+          </ng-template>
+        </div>
+
+        <!-- QR -->
+        <div class="qr-container" *ngIf="solicitud.estado === 'aprobada' && qrGenerado">
+          <img 
+            [src]="'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://qrtests.netlify.app/acceso/' + qrGenerado.urlqrcode" 
+            alt="QR de acceso"
+          />
+        </div>
       </div>
 
       <!-- Footer con botones -->
       <div class="card__footer">
-        <!-- Botón volver a solicitar (solo si fue rechazada) -->
         <button
           *ngIf="solicitud.estado === 'rechazada'"
           class="btn-secundario"
@@ -46,7 +55,6 @@
           🔁 Volver a solicitar
         </button>
 
-        <!-- Botones cuando está aprobada -->
         <button
           *ngIf="solicitud.estado === 'aprobada'"
           class="btn-principal"
@@ -63,7 +71,6 @@
           🔄 Generar nuevo
         </button>
 
-        <!-- Botón de volver (siempre visible) -->
         <button class="btn-volver" (click)="regresarInicio()">⬅ Volver</button>
       </div>
     </div>
