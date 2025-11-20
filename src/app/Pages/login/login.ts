@@ -58,26 +58,30 @@ export class Login implements OnInit {
   const { correo, password } = this.loginForm.value;
 
   this.usuariosService.login({ correo, password }).subscribe({
-    next: (usuario) => {
-      // 🚀 Mostramos la tarjeta de bienvenida
-      this.toast.mostrar(usuario.nombre);
+  next: (usuario) => {
+    // 🚀 Mostramos la tarjeta de bienvenida
+    this.toast.mostrar(usuario.nombre);
 
-      if (this.isBrowser) {
-        sessionStorage.setItem('usuario', JSON.stringify(usuario));
+    if (this.isBrowser) {
+      sessionStorage.setItem('usuario', JSON.stringify(usuario));
+
+      // 🔐 👈 MARCAMOS QUE LA CONTRASEÑA YA FUE VALIDADA
+      sessionStorage.setItem('contrasena_confirmada', 'true');
+    }
+
+    this.mensajeError = '';
+
+    // 🔹 Le damos un pequeño delay antes de navegar (para que se vea el toast)
+    setTimeout(() => {
+      // 🔹 Redirigimos según el rol del usuario
+      if (usuario.rolid === 2) {
+        this.router.navigate(['/solicitud-tarjetas']); // Administrador
+      } else {
+        this.router.navigate(['/inicio']); // Usuario normal
       }
+    }, 1500);
+  },
 
-      this.mensajeError = '';
-
-      // 🔹 Le damos un pequeño delay antes de navegar (para que se vea el toast)
-      setTimeout(() => {
-        // 🔹 Redirigimos según el rol del usuario
-        if (usuario.rolid === 2) {
-          this.router.navigate(['/solicitud-tarjetas']); // Administrador
-        } else {
-          this.router.navigate(['/inicio']); // Usuario normal
-        }
-      }, 1500);
-    },
     error: (err) => {
       console.error('Error en login:', err);
 
@@ -105,8 +109,6 @@ export class Login implements OnInit {
     }
   });
 }
-
-
   irARegistro(): void {
     this.router.navigate(['/registro']);
   }

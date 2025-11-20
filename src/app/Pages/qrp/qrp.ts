@@ -31,7 +31,7 @@ export class QRP implements OnInit {
             return;
           }
 
-          // 👇 Aquí guardamos TODO el usuario
+          // 👇 Guardamos datos del usuario (lo que tú ya tenías)
           const usuario = {
             id: qr.usuario.id,
             nombre: qr.usuario.nombre,
@@ -46,6 +46,12 @@ export class QRP implements OnInit {
           };
 
           sessionStorage.setItem('usuario', JSON.stringify(usuario));
+
+          // 🟦 NUEVO: bandera que indica acceso mediante token
+          sessionStorage.setItem('accesoPorToken', 'true');
+
+          // 🟦 OPCIONAL: asegurar que no venga desbloqueado desde antes
+          sessionStorage.removeItem('edicionDesbloqueada');
 
           this.router.navigate(['/inicio']);
         },

@@ -48,4 +48,9 @@ export class QRService {
     return this.http.get<QRCodigos>(`${this.apiUrl}/token/${token}`);
   }
 
+  loginConQR(tokenQr: string) {
+  return this.http.post<any>(`${this.apiUrl}/login-qr`, { tokenQr });
+}
+
+
 }

@@ -9,25 +9,28 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmacionContrasena } from '../confirmacion-contrasena/confirmacion-contrasena';
 
 @Component({
   selector: 'app-seguro-medico',
   standalone: true,
-  imports: [CommonModule, MatBottomSheetModule, MatButtonModule,
-    MatBottomSheetModule,
-    MatIconModule,
-    MatInputModule,
-    MatFormFieldModule],
+  imports: [
+    CommonModule, MatBottomSheetModule, MatButtonModule,
+    MatIconModule, MatInputModule, MatFormFieldModule
+  ],
   templateUrl: './seguro-medico.html',
   styleUrls: ['./seguro-medico.css']
 })
 export class SeguroMedicoComponent implements OnInit {
+
   usuario: any = null;
   seguros: SeguroMedico[] = [];
 
   private seguroService = inject(SeguroMedicosService);
   private datosMedicosService = inject(DatosMedicosService);
   private bottomSheet = inject(MatBottomSheet);
+  private dialog = inject(MatDialog);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -41,97 +44,111 @@ export class SeguroMedicoComponent implements OnInit {
     }
   }
 
-  // 🔹 Carga los seguros del usuario logueado
-  cargarSeguros(): void {
-    const usuarioData = sessionStorage.getItem('usuario');
-    if (!usuarioData) {
-      console.error('⚠️ No se encontró el usuario en sesión.');
-      return;
+  // 🔐 Verificación de contraseña solo 1 vez por sesión
+  private async verificarContrasenaSiEsNecesario(): Promise<boolean> {
+    const yaConfirmo = sessionStorage.getItem('contrasena_confirmada');
+
+    if (yaConfirmo === 'true') return true;
+
+    const dialogRef = this.dialog.open(ConfirmacionContrasena, {
+      data: { correo: this.usuario.correo }
+    });
+
+    const resultado = await dialogRef.afterClosed().toPromise();
+
+    if (resultado === true) {
+      sessionStorage.setItem('contrasena_confirmada', 'true');
+      return true;
     }
 
+    return false;
+  }
+
+  // ✅ Carga seguros
+  cargarSeguros(): void {
+    const usuarioData = sessionStorage.getItem('usuario');
+    if (!usuarioData) return;
+
     const usuario = JSON.parse(usuarioData);
+
     this.datosMedicosService.obtenerPorUsuario(usuario.id).subscribe({
       next: (datos) => {
-        if (!datos?.length) {
-          console.warn('⚠️ No se encontraron datos médicos para este usuario.');
-          return;
-        }
+        if (!datos?.length) return;
+
         const idDatos = datos[0].id_datos;
+
         this.seguroService.Lista().subscribe({
-          next: (seguros) => {
-            this.seguros = seguros.filter(s => s.datosmedicosid === idDatos);
-            console.log('✅ Seguros cargados:', this.seguros);
-          },
-          error: (err) => console.error('❌ Error al obtener seguros médicos', err)
+          next: (seguros) =>
+            this.seguros = seguros.filter(s => s.datosmedicosid === idDatos),
+          error: (err) => console.error(err)
         });
-      },
-      error: (err) => console.error('❌ Error al obtener datos médicos del usuario', err)
+      }
     });
   }
 
-  // 🟢 Agregar nuevo seguro
-  openBottomSheet(): void {
+  // 🟢 Agregar seguro
+  async openBottomSheet(): Promise<void> {
+    const ok = await this.verificarContrasenaSiEsNecesario();
+    if (!ok) return;
+
     const sheetRef = this.bottomSheet.open(SeguroMedicoFor, { panelClass: 'custom-bottom-sheet' });
 
     sheetRef.afterDismissed().subscribe((result: SeguroMedico | null) => {
-      if (!result) return;
-      this.guardarSeguro(result);
+      if (result) this.guardarSeguro(result);
     });
   }
 
-  // 🟣 Editar seguro existente
-  editarSeguro(seguro: SeguroMedico): void {
+  // 🟣 Editar seguro
+  async editarSeguro(seguro: SeguroMedico): Promise<void> {
+    const ok = await this.verificarContrasenaSiEsNecesario();
+    if (!ok) return;
+
     const sheetRef = this.bottomSheet.open(SeguroMedicoFor, {
       panelClass: 'custom-bottom-sheet',
       data: seguro
     });
 
     sheetRef.afterDismissed().subscribe((result: SeguroMedico | null) => {
-      if (!result) return;
-      this.actualizarSeguro(seguro.idseguro, result);
+      if (result) this.actualizarSeguro(seguro.idseguro, result);
     });
   }
 
   // 🔴 Eliminar seguro
-  eliminarSeguro(seguro: SeguroMedico): void {
+  async eliminarSeguro(seguro: SeguroMedico): Promise<void> {
+    const ok = await this.verificarContrasenaSiEsNecesario();
+    if (!ok) return;
+
     const confirmar = confirm(`¿Deseas eliminar el seguro "${seguro.tiposeguro}"?`);
     if (!confirmar) return;
 
     this.seguroService.eliminarSeguro(seguro.idseguro).subscribe({
-      next: () => {
-        console.log(`🗑️ Seguro eliminado: ${seguro.tiposeguro}`);
-        this.cargarSeguros();
-      },
-      error: (err) => console.error('❌ Error al eliminar seguro', err)
+      next: () => this.cargarSeguros(),
+      error: (err) => console.error(err)
     });
   }
 
-  // ⚙️ Crear seguro (convertir fecha y asociar con datos médicos)
+  // ⚙️ Guardar seguro
   private guardarSeguro(result: SeguroMedico): void {
-    // 🔧 Si la vigencia viene como string, la convertimos a Date
     if (typeof result.vigencia === 'string') {
       result.vigencia = new Date(result.vigencia);
     }
 
     this.datosMedicosService.obtenerPorUsuario(this.usuario.id).subscribe({
       next: (datos) => {
-        if (datos.length > 0) {
-          const idDatos = datos[0].id_datos;
-          const nuevoSeguro = { ...result, datosmedicosid: idDatos };
-          this.seguroService.crearSeguro(nuevoSeguro).subscribe({
-            next: () => {
-              console.log('✅ Seguro médico agregado correctamente');
-              this.cargarSeguros();
-            },
-            error: (err) => console.error('❌ Error al crear seguro médico', err)
-          });
-        }
-      },
-      error: (err) => console.error('❌ Error al obtener datos médicos del usuario', err)
+        if (!datos.length) return;
+
+        const idDatos = datos[0].id_datos;
+        const nuevoSeguro = { ...result, datosmedicosid: idDatos };
+
+        this.seguroService.crearSeguro(nuevoSeguro).subscribe({
+          next: () => this.cargarSeguros(),
+          error: (err) => console.error(err)
+        });
+      }
     });
   }
 
-  // ⚙️ Actualizar seguro (conversión de fecha incluida)
+  // ⚙️ Actualizar seguro
   private actualizarSeguro(id: number, result: SeguroMedico): void {
     if (typeof result.vigencia === 'string') {
       result.vigencia = new Date(result.vigencia);
@@ -140,11 +157,8 @@ export class SeguroMedicoComponent implements OnInit {
     const actualizado = { ...result, idseguro: id };
 
     this.seguroService.actualizarSeguro(id, actualizado).subscribe({
-      next: () => {
-        console.log('✏️ Seguro actualizado correctamente');
-        this.cargarSeguros();
-      },
-      error: (err) => console.error('❌ Error al actualizar seguro médico', err)
+      next: () => this.cargarSeguros(),
+      error: (err) => console.error(err)
     });
   }
 }
