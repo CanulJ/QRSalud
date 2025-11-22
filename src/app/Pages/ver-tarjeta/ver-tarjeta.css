@@ -14,23 +14,24 @@
 .card.card-tarjeta {
   max-width: 700px;
   width: 100%;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #fdfdfd, #f0f0ff);
-  border: 1px solid rgba(124, 58, 237, 0.4);
-  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.1);
+  border-radius: 24px;
+  background: linear-gradient(135deg, #ffffff, #f4f1ff);
+  border: 1px solid rgba(124, 58, 237, 0.35);
+  box-shadow: 0 12px 30px rgba(124, 58, 237, 0.12);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  margin: 20px auto;
+  margin: 25px auto;
+  text-align: center;
 }
 
-/* Imagen del usuario */
+/* Imagen */
 .card__image {
   width: 100%;
-  height: 220px;
+  height: 210px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   background: linear-gradient(135deg, #7c3aed, #c084fc);
 }
 .card__image img {
@@ -38,90 +39,97 @@
   height: 130px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #fff;
+  border: 4px solid #fff;
 }
 
-/* Contenido con QR a la derecha */
+/* Contenido */
+.card__content {
+  padding: 25px;
+}
+
+/* Cuerpo */
 .card__body {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start; /* QR más cerca del contenido */
-  align-items: flex-start;
-  padding: 20px;
-  gap: 30px;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
 /* Texto */
-.card__text {
-  flex: 1;
-}
 .card__title {
-  font-size: 1.8em;
-  font-weight: 700;
+  font-size: 1.6rem;   /* ⭐ equilibrado */
+  font-weight: 800;
   color: #1e293b;
+  margin-bottom: 8px;
 }
+
 .card__description {
-  font-size: 1.2em;
+  font-size: 1.15rem;  /* ⭐ legible sin exagerar */
   color: #1e293b;
-  line-height: 1.7;
+  line-height: 1.6;
+  font-weight: 500;
 }
+
+/* Token */
 .token {
   background: #e0e7ff;
-  padding: 5px 8px;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 1.1em;
-}
-
-.card__content {
-  padding-bottom: 20px; /* espacio seguro debajo de todo el contenido */
-}
-
-
-/* QR container */
-.qr-container img {
-  width: 150px;
-  height: 150px;
+  padding: 6px 10px;
   border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: inline-block;
+  margin-top: 5px;
 }
 
-/* Footer de botones */
+/* QR */
+.qr-container img {
+  width: 160px;
+  height: 160px;
+  border-radius: 10px;
+}
+
+/* Botones */
 .card__footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
+  gap: 16px;
+  margin-top: 15px;
 }
 
-/* Botones */
 button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   padding: 12px 20px;
-  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
   border: none;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 14px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.25s ease;
 }
 button:hover {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
+
 .btn-principal { background: #7c3aed; color: #fff; }
 .btn-principal:hover { background: #5a189a; }
+
 .btn-secundario { background: #10b981; color: #fff; }
 .btn-secundario:hover { background: #059669; }
+
 .btn-volver { background: #dc2626; color: #fff; }
 .btn-volver:hover { background: #b91c1c; }
 
 /* Pie */
-.emitido { text-align: center; font-size: 1em; color: #475569; opacity: 0.85; margin-top: 10px; }
+.emitido {
+  margin-top: 12px;
+  font-size: 1.05rem;
+  color: #475569;
+  font-weight: 600;
+  opacity: 0.85;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
-  .card__body { flex-direction: column; align-items: center; }
-  .qr-container { margin-top: 15px; }
+  .card__title { font-size: 1.45rem; }
+  .card__description { font-size: 1.05rem; }
 }

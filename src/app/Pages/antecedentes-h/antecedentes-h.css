@@ -2,101 +2,130 @@
 .card {
   --card-bg: #ffffff;
   --card-accent: #7c3aed;
-  --card-text: #1e293b;
-  width: 80%;
-  max-width: 450px;
+  --card-text: #1a1a1a;
+  --card-soft: #f4f0ff;
+
+  width: 90%;
+  max-width: 500px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  border-radius: 20px;
+
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
-  border: 2px solid rgba(124, 58, 237, 0.5);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--card-bg);
+
+  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.15),
+              0 4px 14px rgba(0, 0, 0, 0.08);
+
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  transition: 0.35s ease;
+  background: var(--card-bg);
 }
 
-/* Contenido de la tarjeta */
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(124, 58, 237, 0.18),
+              0 6px 18px rgba(0, 0, 0, 0.08);
+  border-color: rgba(124, 58, 237, 0.45);
+}
+
+/* Contenido */
 .card__content {
-  padding: 1.25em;
+  padding: 2.1em 2em;
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
-  justify-content: space-between;
+  gap: 2em;
   text-align: center;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
 }
 
-/* Título */
+/* Título general */
 .card__title {
+  font-size: 2em;
+  font-weight: 900;
   color: var(--card-text);
-  font-size: 1.4em;
-  font-weight: 700;
   margin: 0;
-  transition: all 0.3s ease;
+  letter-spacing: -0.5px;
+
+  padding-bottom: 0.55em;
+  border-bottom: 2px solid rgba(124, 58, 237, 0.3);
 }
 
-/* Descripción (adaptable a móvil) */
+.card__title::before {
+  content: "🩺"; /* Ícono por defecto */
+  font-size: 1.2em;
+  margin-right: 10px;
+}
+
+/* Ícono personalizado SOLO para antecedentes */
+.card-antecedentes .card__title::before {
+  content: "🧬"; 
+}
+
+/* Descripción */
 .card__description {
   color: var(--card-text);
-  font-size: 1em;
-  opacity: 0.85;
-  margin: 0;
-  line-height: 1.6;
-  word-break: break-word;
-  white-space: normal;
+  font-size: 1.15em;
+  font-weight: 600;
+  opacity: 1;
+  margin: 0 auto;
+  line-height: 1.75;
+  max-width: 92%;
+}
+
+.card__description strong {
+  font-weight: 800;
+  color: var(--card-accent);
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 1.18em;
+}
+
+.card__description br {
+  margin-bottom: 14px;
 }
 
 /* Footer */
 .card__footer {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 /* Botón */
 .btn-accent {
   background-color: var(--card-accent) !important;
   color: white !important;
-  font-weight: 500;
-  border-radius: 10px;
-  padding: 10px 20px;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  padding: 14px 26px;
+  font-size: 1.05em;
+  border-radius: 14px;
+  transition: 0.25s ease;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
 }
 
 .btn-accent:hover {
   background-color: #5a189a !important;
-  transform: scale(1.05);
+  transform: scale(1.06);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4);
 }
 
-/* Efecto hover tarjeta */
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-              0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  border-color: rgba(124, 58, 237, 0.8);
-}
-
-/* Responsividad */
+/* Responsivo */
 @media (max-width: 480px) {
   .card {
     width: 95%;
+    border-radius: 20px;
   }
 
   .card__title {
-    font-size: 1.2em;
+    font-size: 1.7em;
   }
 
   .card__description {
-    font-size: 0.95em;
-    line-height: 1.4;
+    font-size: 1.05em;
   }
 
   .btn-accent {
-    font-size: 14px;
-    padding: 8px 16px;
+    font-size: 0.95em;
+    padding: 12px 22px;
   }
 }

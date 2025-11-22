@@ -11,11 +11,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-registro',
-  imports: [CommonModule, FormsModule, MatButtonModule,
-    MatBottomSheetModule,
-    MatIconModule,
-    MatInputModule,
-    MatFormFieldModule],
+  imports: [
+    CommonModule, FormsModule, MatButtonModule,
+    MatBottomSheetModule, MatIconModule,
+    MatInputModule, MatFormFieldModule
+  ],
   templateUrl: './registro.html',
   styleUrls: ['./registro.css']
 })
@@ -54,25 +54,26 @@ export class Registro {
       return;
     }
 
-    // Asegurar que las fechas sean Date antes de usar toISOString
-    const fechaCreacion = u.fecha_creacion instanceof Date ? u.fecha_creacion : new Date(u.fecha_creacion);
-    const fechaNacimiento = u.fechanacimiento instanceof Date ? u.fechanacimiento : new Date(u.fechanacimiento);
+    // Asegurar fechas
+    const fechaCreacion =
+      u.fecha_creacion instanceof Date ? u.fecha_creacion : new Date(u.fecha_creacion);
+    const fechaNacimiento =
+      u.fechanacimiento instanceof Date ? u.fechanacimiento : new Date(u.fechanacimiento);
 
-    // Mapear campos correctamente para el backend
+    // Mapeo igual que antes
     const usuarioParaEnviar = {
-  nombre: u.nombre,
-  apellidos: u.apellidos,
-  correo: u.correo,
-  password: u.password_hash,
-  curp: u.curp,
-  rolid: u.rolid ?? 2,             // valor por defecto (usuario normal)               // valor por defecto
-  telefono: u.telefono,
-  genero: u.genero,
-  originario: u.originario,
-  fecha_creacion: fechaCreacion.toISOString().split('T')[0],
-  fechanacimiento: fechaNacimiento.toISOString().split('T')[0],
-};
-
+      nombre: u.nombre,
+      apellidos: u.apellidos,
+      correo: u.correo,
+      password: u.password_hash,
+      curp: u.curp,
+      rolid: u.rolid ?? 2,
+      telefono: u.telefono,
+      genero: u.genero,
+      originario: u.originario,
+      fecha_creacion: fechaCreacion.toISOString().split('T')[0],
+      fechanacimiento: fechaNacimiento.toISOString().split('T')[0],
+    };
 
     console.log('Datos a enviar al backend:', usuarioParaEnviar);
 
@@ -83,8 +84,21 @@ export class Registro {
         setTimeout(() => this.router.navigate(['/login']), 1500);
       },
       error: (err) => {
-        this.error = 'Error al registrar usuario ❌';
-        console.error(err);
+
+        // -------------------------------
+        // VALIDACIÓN: MENSAJES DEL BACKEND
+        // -------------------------------
+        if (err.error?.message) {
+          // Muestra exactamente lo que manda el backend
+          // Ej: "El correo ya está registrado"
+          //     "La CURP ya está registrada"
+          this.error = err.error.message;
+        } else {
+          this.error = 'Error al registrar usuario ❌';
+        }
+
+        console.error('Backend error:', err);
+        this.mensaje = '';
       }
     });
   }
