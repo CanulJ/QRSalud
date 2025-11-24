@@ -156,7 +156,7 @@ export class VerTarjeta implements OnInit {
     });
   }
 
-  reportarPerdida(): void {
+ reportarPerdida(): void {
   if (!this.solicitud) return;
 
   // 🛑 Confirmación antes de proceder
@@ -173,26 +173,29 @@ export class VerTarjeta implements OnInit {
   dialogRef.afterClosed().subscribe((confirmado: boolean) => {
     if (!confirmado) return;
 
+    // Genera un token nuevo para invalidar el anterior
     const nuevoToken = Math.random().toString(36).substring(2, 10);
 
     const solicitudActualizada: Partial<SolicitudTarjeta> = {
       estado: "reportada",
-      token: nuevoToken,
-      fecha_Revision: new Date().toISOString()
+      token: nuevoToken,       // reemplaza el token viejo
+      fecha_Revision: new Date().toISOString(),
+      qrId: null               // elimina el QR asociado, si existía
     };
 
     this.tarjetasService.updateSolicitud(this.solicitud!.idSolicitud!, solicitudActualizada)
       .subscribe({
         next: () => {
+          // Actualiza la vista local con el nuevo estado y token
           this.solicitud!.estado = "reportada";
           this.solicitud!.token = nuevoToken;
+          this.solicitud!.qrId = null; // asegura que el QR viejo ya no funcione
 
           this.dialog.open(DialogoMensaje, {
             data: {
               titulo: "📢 Tarjeta reportada",
               mensaje:
                 `Tu tarjeta se ha marcado como perdida.
-                
 Se generó un nuevo token para validación:
 
 🔐 **${nuevoToken}**`
@@ -210,6 +213,7 @@ Se generó un nuevo token para validación:
       });
   });
 }
+
 
 
   generarQR(): void {
