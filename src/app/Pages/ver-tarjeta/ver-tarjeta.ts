@@ -172,13 +172,15 @@ export class VerTarjeta implements OnInit {
   dialogRef.afterClosed().subscribe((confirmado: boolean) => {
     if (!confirmado) return;
 
-    // 1️⃣ Borrar QR existente si hay uno
+    // 1️⃣ Eliminar el QR de la tabla QRCodigos
     if (this.solicitud!.qrId) {
       this.qrService.eliminarQR(this.solicitud!.qrId).subscribe({
         next: () => {
+          console.log('QR eliminado correctamente');
           this.actualizarSolicitudComoReportada();
         },
-        error: () => {
+        error: (err) => {
+          console.error('No se pudo eliminar el QR:', err);
           // aunque falle eliminar el QR, igual actualizamos estado
           this.actualizarSolicitudComoReportada();
         }
