@@ -42,16 +42,13 @@ export class VerTarjeta implements OnInit {
         const userId = this.usuario?.id;
 
         if (userId) {
-          // 🔹 Obtener el QR más reciente del usuario
+          // 🔹 Obtener el QR más reciente
           this.qrService.obtenerPorUsuario(userId).subscribe({
             next: (qrs) => {
               if (qrs.length > 0) {
-                // Ordenar por fecha o id descendente
-                const qrsOrdenados = qrs.sort((a, b) => {
-                  const fechaA = new Date(a.fechacreacion).getTime();
-                  const fechaB = new Date(b.fechacreacion).getTime();
-                  return fechaB - fechaA;
-                });
+                const qrsOrdenados = qrs.sort((a, b) =>
+                  new Date(b.fechacreacion).getTime() - new Date(a.fechacreacion).getTime()
+                );
                 this.qrGenerado = qrsOrdenados[0];
               }
             },
@@ -61,16 +58,12 @@ export class VerTarjeta implements OnInit {
           // 🔹 Obtener la solicitud más reciente del usuario
           this.tarjetasService.getSolicitudes().subscribe({
             next: (sols) => {
-              const solicitudesUsuario = sols.filter(s => s.userId === userId);
+              const userSols = sols.filter(s => s.userId === userId);
 
-              if (solicitudesUsuario.length > 0) {
-                // Ordenar por fecha_Solicitud descendente
-                const ordenadas = solicitudesUsuario.sort((a, b) => {
-                  const fechaA = new Date(a.fecha_Solicitud).getTime();
-                  const fechaB = new Date(b.fecha_Solicitud).getTime();
-                  return fechaB - fechaA;
-                });
-                this.solicitud = ordenadas[0]; // ✅ la más reciente
+              if (userSols.length > 0) {
+                this.solicitud = userSols.sort((a, b) =>
+                  new Date(b.fecha_Solicitud).getTime() - new Date(a.fecha_Solicitud).getTime()
+                )[0];
               } else {
                 this.solicitud = null;
               }
@@ -85,12 +78,11 @@ export class VerTarjeta implements OnInit {
   solicitarTarjeta(): void {
     if (!this.usuario) return;
 
-    // ✅ Validar si ya existe una solicitud pendiente o aprobada
     if (this.solicitud && (this.solicitud.estado === 'pendiente' || this.solicitud.estado === 'aprobada')) {
       this.dialog.open(DialogoMensaje, {
         data: {
           titulo: '⚠️ Solicitud existente',
-          mensaje: 'Ya tienes una solicitud activa o aprobada. No puedes enviar otra hasta que se resuelva.',
+          mensaje: 'Ya tienes una solicitud activa o aprobada.',
         },
       });
       return;
@@ -103,26 +95,22 @@ export class VerTarjeta implements OnInit {
       fecha_Solicitud: new Date().toISOString(),
       estado: 'pendiente',
       qrId: undefined,
-      token: tokenSeguro as any
+      token: tokenSeguro,
     };
 
     this.tarjetasService.createSolicitud(nuevaSolicitud).subscribe({
-      next: (solicitudCreada) => {
-        this.solicitud = solicitudCreada;
+      next: (sol) => {
+        this.solicitud = sol;
         this.dialog.open(DialogoMensaje, {
           data: {
             titulo: '✅ Solicitud enviada',
-            mensaje: `Tu solicitud ha sido enviada correctamente. Tu token es: ${tokenSeguro}`,
+            mensaje: `Tu solicitud ha sido enviada. Tu token es: ${tokenSeguro}`,
           },
         });
       },
-      error: (err) => {
-        console.error('Error al enviar solicitud:', err);
+      error: () => {
         this.dialog.open(DialogoMensaje, {
-          data: {
-            titulo: '❌ Error',
-            mensaje: 'No se pudo enviar tu solicitud. Inténtalo nuevamente.',
-          },
+          data: { titulo: '❌ Error', mensaje: 'No se pudo enviar la solicitud.' },
         });
       }
     });
@@ -131,12 +119,11 @@ export class VerTarjeta implements OnInit {
   volverASolicitar(): void {
     if (!this.usuario?.id) return;
 
-    // ✅ Validar si ya existe una solicitud pendiente o aprobada
     if (this.solicitud && (this.solicitud.estado === 'pendiente' || this.solicitud.estado === 'aprobada')) {
       this.dialog.open(DialogoMensaje, {
         data: {
           titulo: '⚠️ Solicitud existente',
-          mensaje: 'Ya tienes una solicitud activa o aprobada. Espera a que sea revisada antes de volver a solicitar.',
+          mensaje: 'No puedes volver a solicitar hasta que la actual sea revisada.',
         },
       });
       return;
@@ -147,7 +134,7 @@ export class VerTarjeta implements OnInit {
     const nuevaSolicitud: Partial<SolicitudTarjeta> = {
       userId: this.usuario.id,
       token: nuevoToken,
-      estado: 'pendiente' as 'pendiente',
+      estado: 'pendiente',
       fecha_Solicitud: new Date().toISOString(),
     };
 
@@ -157,28 +144,80 @@ export class VerTarjeta implements OnInit {
         this.dialog.open(DialogoMensaje, {
           data: {
             titulo: '✅ Solicitud reenviada',
-            mensaje: 'Tu nueva solicitud ha sido enviada correctamente. Espera la revisión del sistema.',
+            mensaje: 'Tu nueva solicitud ha sido enviada correctamente.',
           },
         });
       },
-      error: (err) => {
-        console.error('Error al reenviar solicitud:', err);
+      error: () => {
         this.dialog.open(DialogoMensaje, {
-          data: {
-            titulo: '❌ Error',
-            mensaje: 'Ocurrió un problema al volver a solicitar la tarjeta. Inténtalo más tarde.',
-          },
+          data: { titulo: '❌ Error', mensaje: 'No se pudo reenviar.' },
         });
       },
     });
   }
+
+  reportarPerdida(): void {
+  if (!this.solicitud) return;
+
+  // 🛑 Confirmación antes de proceder
+  const dialogRef = this.dialog.open(DialogoMensaje, {
+    data: {
+      titulo: "🛑 ¿Estás seguro?",
+      mensaje:
+        "Si reportas tu tarjeta como perdida, dejará de funcionar de inmediato. " +
+        "Además, tendrás que esperar a que un administrador valide el nuevo token. ¿Deseas continuar?",
+      modoConfirmacion: true
+    }
+  });
+
+  dialogRef.afterClosed().subscribe((confirmado: boolean) => {
+    if (!confirmado) return;
+
+    const nuevoToken = Math.random().toString(36).substring(2, 10);
+
+    const solicitudActualizada: Partial<SolicitudTarjeta> = {
+      estado: "reportada",
+      token: nuevoToken,
+      fecha_Revision: new Date().toISOString()
+    };
+
+    this.tarjetasService.updateSolicitud(this.solicitud!.idSolicitud!, solicitudActualizada)
+      .subscribe({
+        next: () => {
+          this.solicitud!.estado = "reportada";
+          this.solicitud!.token = nuevoToken;
+
+          this.dialog.open(DialogoMensaje, {
+            data: {
+              titulo: "📢 Tarjeta reportada",
+              mensaje:
+                `Tu tarjeta se ha marcado como perdida.
+                
+Se generó un nuevo token para validación:
+
+🔐 **${nuevoToken}**`
+            }
+          });
+        },
+        error: () => {
+          this.dialog.open(DialogoMensaje, {
+            data: {
+              titulo: "❌ Error",
+              mensaje: "No se pudo reportar la tarjeta. Intenta más tarde."
+            }
+          });
+        }
+      });
+  });
+}
+
 
   generarQR(): void {
     if (this.qrGenerado) {
       this.dialog.open(DialogoMensaje, {
         data: {
           titulo: '⚠️ Atención',
-          mensaje: 'Su token ya ha sido generado. No es posible crear uno nuevo.',
+          mensaje: 'Ya cuentas con un token generado.',
         },
       });
       return;
@@ -188,6 +227,7 @@ export class VerTarjeta implements OnInit {
 
     this.cargando = true;
     const tokenSeguro = Math.random().toString(36).substring(2, 10);
+
     const datos = { userid: this.usuario.id, urlqrcode: tokenSeguro };
 
     this.qrService.crearQR(datos).subscribe({
@@ -195,20 +235,13 @@ export class VerTarjeta implements OnInit {
         this.cargando = false;
         this.qrGenerado = qr;
         this.dialog.open(DialogoMensaje, {
-          data: {
-            titulo: '✅ Éxito',
-            mensaje: 'Se generó su token de acceso correctamente.',
-          },
+          data: { titulo: '✅ Éxito', mensaje: 'Token generado correctamente.' },
         });
       },
-      error: (err) => {
+      error: () => {
         this.cargando = false;
-        console.error('Error al generar QR:', err);
         this.dialog.open(DialogoMensaje, {
-          data: {
-            titulo: '❌ Error',
-            mensaje: 'No se pudo generar el token. Intente nuevamente.',
-          },
+          data: { titulo: '❌ Error', mensaje: 'No se pudo generar el token.' },
         });
       },
     });
@@ -217,7 +250,7 @@ export class VerTarjeta implements OnInit {
   copiarToken(): void {
     if (this.qrGenerado?.urlqrcode) {
       navigator.clipboard.writeText(this.qrGenerado.urlqrcode);
-      this.snackBar.open('📋 Token copiado al portapapeles', '', {
+      this.snackBar.open('📋 Token copiado', '', {
         duration: 3000,
         horizontalPosition: 'center',
         verticalPosition: 'bottom',

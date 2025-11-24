@@ -1,118 +1,158 @@
-/* Contenedor principal */
+/* ===== CONTENEDOR ===== */
 .contenedor {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 20px;
-  background-color: #f7f9fc; /* fondo suave */
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1150px;
+  margin: 25px auto;
+  padding: 20px 25px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
 }
 
-/* Título */
-.contenedor h2 {
+/* ===== TÍTULO ===== */
+.titulo-admin {
   text-align: center;
-  color: #0d47a1; /* azul principal */
-  margin-bottom: 25px;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #0d47a1;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
 }
 
-/* Spinner */
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-/* Mensaje de error */
-.error {
-  color: #d32f2f; /* rojo intenso */
+/* ===== ERROR ===== */
+.error-msg {
+  background: #fde0e0;
+  padding: 10px;
+  border-left: 4px solid #d32f2f;
+  color: #b71c1c;
+  margin-bottom: 15px;
   text-align: center;
-  margin: 15px 0;
   font-weight: 600;
 }
 
-/* Tabla */
-table.mat-elevation-z8 {
+/* ===== TABLA ===== */
+.tabla-admin {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px;
+  border-spacing: 0 8px;
 }
 
-/* Encabezado de la tabla */
 th.mat-header-cell {
-  background-color: #1976d2; /* azul cabecera */
+  background: #1565c0;
   color: white;
   font-weight: 600;
   text-align: center;
   padding: 12px;
+  font-size: 0.9rem;
 }
 
-/* Celdas */
 td.mat-cell {
-  background-color: #ffffff;
-  text-align: center;
+  background: #fdfdfd;
   padding: 12px;
-  border-radius: 8px;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 0.95rem;
   box-shadow: inset 0 -1px 0 rgba(0,0,0,0.05);
 }
 
-/* Estado con colores */
-.estado-pendiente {
-  color: #f57c00; /* naranja */
-  font-weight: bold;
+/* Hover pro */
+tr.mat-row:hover td.mat-cell {
+  background: #eef4ff;
 }
 
-.estado-aprobada {
-  color: #388e3c; /* verde */
-  font-weight: bold;
-}
-
-.estado-rechazada {
-  color: #d32f2f; /* rojo */
-  font-weight: bold;
-}
-
-/* Botones */
-/* Botones generales */
-button[mat-raised-button] {
-  margin: 0 5px 5px 5px; /* agrega margen inferior para móviles */
-  min-width: 60px;        /* más pequeño que antes */
-  padding: 6px 10px;      /* reduce tamaño interno */
+/* ===== ESTADOS (chips modernos) ===== */
+.estado-tag {
+  padding: 4px 10px;
+  border-radius: 20px;
   font-weight: 600;
-  font-size: 0.9rem;      /* texto más compacto */
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
-/* Color de botones */
-button[mat-raised-button][color="primary"] {
-  background-color: #1976d2;
-  color: white;
+.estado-tag.pendiente {
+  background: #fff3cd;
+  color: #e69500;
 }
 
-button[mat-raised-button][color="warn"] {
-  background-color: #d32f2f;
-  color: white;
+.estado-tag.aprobada {
+  background: #d4edda;
+  color: #2e7d32;
 }
 
-/* 🔹 Scroll horizontal en móviles */
+.estado-tag.rechazada {
+  background: #f8d7da;
+  color: #c62828;
+}
+
+/* ===== TOKEN ===== */
+.token {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #222;
+  background: #f4f4f4;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+/* ===== QR ===== */
+.qr-mini {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* ===== ACCIONES ===== */
+.acciones button {
+  transform: scale(1.1);
+  margin: 0 4px;
+}
+
+/* ===== SCROLL ===== */
 .tabla-scroll {
   overflow-x: auto;
+}
+
+/* ===== FILTROS ===== */
+.filtros-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 15px;
+}
+
+.filtro-buscador {
+  flex: 2;
+}
+
+.filtro-select {
+  flex: 1;
+}
+
+mat-form-field {
   width: 100%;
 }
 
-/* Ajuste visual para que no quede pegado */
-.tabla-scroll table {
-  min-width: 700px; /* evita que se comprima demasiado */
+.header-admin {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.header-admin button {
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
 }
 
 
-/* Responsive: en pantallas pequeñas, los botones se apilan */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
-  td.mat-cell button[mat-raised-button] {
-    width: 100%;        /* ocupa toda la celda */
-    margin: 5px 0;      /* separa verticalmente */
+  td.mat-cell {
+    font-size: 0.8rem;
+  }
+  .qr-mini {
+    width: 50px;
+    height: 50px;
   }
 }

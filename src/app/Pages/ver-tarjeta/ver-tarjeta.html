@@ -15,6 +15,7 @@
         <div class="card__text">
           <p class="card__title tarjeta-title">{{ usuario.nombre }} {{ usuario.apellidos }}</p>
 
+          <!-- Información cuando está aprobada -->
           <ng-container *ngIf="solicitud.estado === 'aprobada' && qrGenerado; else estado">
             <p class="card__description">
               <strong>CURP:</strong> {{ usuario.curp }}<br>
@@ -24,7 +25,7 @@
             </p>
           </ng-container>
 
-
+          <!-- Estados alternativos -->
           <ng-template #estado>
             <p class="card__description" *ngIf="solicitud.estado === 'pendiente'">
               🕒 Estamos revisando tu solicitud.<br>
@@ -35,45 +36,38 @@
               ❌ Tu solicitud fue rechazada.<br>
               Puedes intentarlo nuevamente cuando desees.
             </p>
+
+            <p class="card__description" *ngIf="solicitud.estado === 'reportada'">
+              🛑 Tu tarjeta ha sido reportada como extraviada.<br>
+              Estamos validando tu nueva solicitud.<br>
+              Por seguridad, tu tarjeta anterior dejó de funcionar.
+            </p>
           </ng-template>
         </div>
-
-        <!-- Espacio del QR (actualmente desactivado)
-        <div class="qr-container" *ngIf="solicitud.estado === 'aprobada' && qrGenerado">
-          <img 
-            [src]="'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://qrtests.netlify.app/acceso/' + qrGenerado.urlqrcode" 
-            alt="QR de acceso"
-          />
-        </div>-->
-
       </div>
-
       <!-- Footer -->
       <div class="card__footer">
-
+        <!-- 🔁 Solo si fue rechazada -->
         <button *ngIf="solicitud.estado === 'rechazada'" class="btn-secundario" (click)="volverASolicitar()">
           🔁 Volver a solicitar
         </button>
-
+        <!-- 📋 Copiar token solo si está aprobada -->
         <button *ngIf="solicitud.estado === 'aprobada'" class="btn-principal" (click)="copiarToken()">
           📋 Copiar token
         </button>
-
-        <button *ngIf="solicitud.estado === 'aprobada'" class="btn-secundario" (click)="generarQR()">
-          🔄 Generar nuevo
+        <!-- 🛑 Reportar pérdida / robo SOLO si está aprobada -->
+        <button *ngIf="solicitud.estado === 'aprobada'" class="btn-alerta" (click)="reportarPerdida()">
+          🛑 Reportar pérdida
         </button>
-
+        <!-- Botón volver SIEMPRE -->
         <button class="btn-volver" (click)="regresarInicio()">⬅ Volver</button>
       </div>
-
     </div>
   </div>
-
   <div class="emitido">
     <p>Emitido por el <strong>Sistema de Vida Conectada</strong></p>
   </div>
 </div>
-
 <!-- No hay solicitud -->
 <ng-template #sinSolicitud>
   <div class="card card-tarjeta no-solicitud">

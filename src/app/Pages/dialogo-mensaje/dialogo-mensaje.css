@@ -26,8 +26,10 @@ h3 {
 .acciones {
   display: flex;
   justify-content: center;
+  gap: 15px;
 }
 
+/* Botón Aceptar */
 .btn-confirmar {
   background-color: #7c3aed;
   color: white;
@@ -41,5 +43,22 @@ h3 {
 
 .btn-confirmar:hover {
   background-color: #5b21b6;
+  transform: scale(1.05);
+}
+
+/* Botón Cancelar */
+.btn-cancelar {
+  background-color: #e2e8f0;
+  color: #475569;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #cbd5e1;
   transform: scale(1.05);
 }

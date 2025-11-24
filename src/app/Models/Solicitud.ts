@@ -3,7 +3,7 @@ export interface SolicitudTarjeta {
   userId: number;
   fecha_Solicitud: string;
   fecha_Revision?: string;
-  estado: 'pendiente' | 'aprobada' | 'rechazada';
+  estado: 'pendiente' | 'aprobada' | 'rechazada' | 'reportada';
   motivo?: string;
   qrId?: number | null; // 👈 ahora puede ser null
   usuario?: any;

@@ -1,8 +1,22 @@
 <div class="confirm-card">
-  <h3>{{ data.titulo }}</h3>
-  <p class="mensaje">{{ data.mensaje }}</p>
 
-  <div class="acciones">
-    <button class="btn-confirmar" (click)="cerrar()">Aceptar</button>
-  </div>
+  <h3>{{ data.titulo }}</h3>
+
+  <ng-container *ngIf="data.modoConfirmacion; else mensajeSimple">
+    <p class="mensaje">{{ data.mensaje }}</p>
+
+    <div class="acciones">
+      <button class="btn-confirmar" (click)="aceptar()">Aceptar</button>
+      <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+    </div>
+  </ng-container>
+
+  <ng-template #mensajeSimple>
+    <p class="mensaje">{{ data.mensaje }}</p>
+
+    <div class="acciones">
+      <button class="btn-confirmar" (click)="aceptar()">Aceptar</button>
+    </div>
+  </ng-template>
+
 </div>
