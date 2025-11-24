@@ -1,29 +1,25 @@
 <div class="contenedor">
- <div class="header-admin">
-  <button mat-raised-button color="warn" (click)="cerrarSesion()">
-    🔓 Cerrar sesión
-  </button>
-</div>
+  
+  <div class="header-admin">
+    <button mat-raised-button color="warn" (click)="cerrarSesion()">
+      🔓 Cerrar sesión
+    </button>
+  </div>
 
-<h2 class="titulo-admin">
-  📋 Panel de Solicitudes
-</h2>
+  <h2 class="titulo-admin">
+    📋 Panel de Solicitudes
+  </h2>
 
-
-  <!-- Controles de filtros -->
+  <!-- Filtros -->
   <div class="filtros-container">
-    
+
     <!-- Buscador -->
     <mat-form-field appearance="outline" class="filtro-buscador">
       <mat-label>Buscar solicitud...</mat-label>
-      <input 
-        matInput 
-        (input)="applyFilter($event)" 
-        placeholder="ID, N Usuario, fecha, estado..."
-      />
+      <input matInput (input)="applyFilter($event)" placeholder="ID, usuario, fecha, estado...">
     </mat-form-field>
 
-    <!-- Filtro por estado -->
+    <!-- Select Estado -->
     <mat-form-field appearance="outline" class="filtro-select">
       <mat-label>Estado</mat-label>
       <mat-select (selectionChange)="filtrarPorEstado($event.value)">
@@ -31,6 +27,7 @@
         <mat-option value="pendiente">Pendiente</mat-option>
         <mat-option value="aprobada">Aprobada</mat-option>
         <mat-option value="rechazada">Rechazada</mat-option>
+        <mat-option value="reportada">Reportada / Extraviada</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -48,11 +45,7 @@
 
   <!-- Tabla -->
   <div class="tabla-scroll" *ngIf="!cargando && dataSource.data.length > 0">
-    <table 
-      mat-table 
-      [dataSource]="dataSource"
-      matSort
-      class="tabla-admin mat-elevation-z2">
+    <table mat-table [dataSource]="dataSource" matSort class="tabla-admin mat-elevation-z2">
 
       <!-- ID -->
       <ng-container matColumnDef="idSolicitud">
@@ -70,22 +63,22 @@
       <ng-container matColumnDef="estado">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
         <td mat-cell *matCellDef="let s">
-          <span class="estado-tag" 
-  [class.pendiente]="s.estado === 'pendiente'"
-  [class.aprobada]="s.estado === 'aprobada'"
-  [class.rechazada]="s.estado === 'rechazada'"
-  [class.reportada]="s.estado === 'reportada'">
-  {{ s.estado | titlecase }}
-</span>
-
+          <span class="estado-tag"
+                [class.pendiente]="s.estado === 'pendiente'"
+                [class.aprobada]="s.estado === 'aprobada'"
+                [class.rechazada]="s.estado === 'rechazada'"
+                [class.reportada]="s.estado === 'reportada'">
+            {{ s.estado | titlecase }}
+          </span>
         </td>
       </ng-container>
 
       <!-- Fecha -->
       <ng-container matColumnDef="fecha_Solicitud">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
-        <td mat-cell *matCellDef="let s">{{ s.fecha_Solicitud ? (s.fecha_Solicitud | date:'dd/MM/yyyy') : '—' }}</td>
-
+        <td mat-cell *matCellDef="let s">
+          {{ s.fecha_Solicitud ? (s.fecha_Solicitud | date:'dd/MM/yyyy') : '—' }}
+        </td>
       </ng-container>
 
       <!-- Token -->
@@ -100,11 +93,7 @@
       <ng-container matColumnDef="qr">
         <th mat-header-cell *matHeaderCellDef>QR</th>
         <td mat-cell *matCellDef="let s">
-          <img 
-            *ngIf="s.qrDataURL" 
-            [src]="s.qrDataURL" 
-            class="qr-mini" 
-            alt="QR Code" />
+          <img *ngIf="s.qrDataURL" [src]="s.qrDataURL" class="qr-mini" alt="QR Code" />
         </td>
       </ng-container>
 
@@ -112,6 +101,8 @@
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef>Acciones</th>
         <td mat-cell *matCellDef="let s" class="acciones">
+
+          <!-- Aprobar -->
           <button mat-icon-button 
                   color="primary"
                   (click)="aprobarSolicitud(s)"
@@ -119,31 +110,41 @@
             ✔️
           </button>
 
+          <!-- Rechazar -->
           <button mat-icon-button 
                   color="warn"
                   (click)="rechazarSolicitud(s)"
                   [disabled]="s.estado === 'rechazada'">
             ❌
           </button>
+
+          <!-- Reportar perdida -->
+          <button mat-icon-button
+                  color="accent"
+                  (click)="reportarPerdida(s)"
+                  [disabled]="s.estado === 'reportada'">
+            📛
+          </button>
+
         </td>
       </ng-container>
 
-      <!-- HEADER / FILAS -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
     </table>
   </div>
 
-  <!-- Pagination -->
+  <!-- Sin datos -->
+  <p *ngIf="!cargando && dataSource.data.length === 0" class="sin-datos">
+    No hay solicitudes registradas.
+  </p>
+
+  <!-- Paginador -->
   <mat-paginator 
     [pageSize]="8"
     [pageSizeOptions]="[5, 8, 15, 30]"
     showFirstLastButtons>
   </mat-paginator>
 
-  <!-- Sin datos -->
-  <p *ngIf="!cargando && dataSource.data.length === 0" class="sin-datos">
-    No hay solicitudes registradas.
-  </p>
 </div>

@@ -78,7 +78,7 @@ export class SolicitudTarjetasComponent implements OnInit {
         this.solicitudes = data;
         this.dataSource.data = data;
 
-        // Generación de QR
+        // Genera QR solo si está aprobada y tiene token
         this.solicitudes.forEach(solicitud => {
           if (solicitud.estado === 'aprobada' && (solicitud as any).token) {
             const urlAcceso = `https://qrtests.netlify.app/acceso/${(solicitud as any).token}`;
@@ -110,7 +110,6 @@ export class SolicitudTarjetasComponent implements OnInit {
     this.aplicarFiltros();
   }
 
-  // 👉 Extrae solo números
   private onlyDigits(str: string): string {
     return str.replace(/\D/g, '');
   }
@@ -121,12 +120,10 @@ export class SolicitudTarjetasComponent implements OnInit {
     const txtDigits = this.onlyDigits(txt);
 
     this.dataSource.data = this.solicitudes.filter(s => {
-
       const idMatch = s.idSolicitud?.toString().includes(txt);
       const userMatch = s.userId?.toString().includes(txt);
       const estadoMatch = s.estado?.toLowerCase().includes(txt);
 
-      // --- Variantes de fecha ---
       const fecha = s.fecha_Solicitud?.toString() ?? '';
       const f = new Date(fecha);
 
@@ -145,7 +142,6 @@ export class SolicitudTarjetasComponent implements OnInit {
       ];
 
       const fechaMatchText = fechaVariants.some(v => v.toLowerCase().includes(txt));
-
       const fechaMatchDigits = txtDigits
         ? fechaVariants.some(v => this.onlyDigits(v).includes(txtDigits))
         : false;
@@ -205,15 +201,13 @@ export class SolicitudTarjetasComponent implements OnInit {
 
         this.tarjetasService
           .updateSolicitud(solicitud.idSolicitud!, solicitudActualizada)
-          .subscribe({
-            next: () => {
-              solicitud.estado = 'aprobada';
-              solicitud.qrId = qrCreado.idqr;
-              solicitud.fecha_Revision = solicitudActualizada.fecha_Revision;
-              (solicitud as any).token = tokenSeguro;
+          .subscribe(() => {
+            solicitud.estado = 'aprobada';
+            solicitud.qrId = qrCreado.idqr;
+            solicitud.fecha_Revision = solicitudActualizada.fecha_Revision;
+            (solicitud as any).token = tokenSeguro;
 
-              this.aplicarFiltros();
-            },
+            this.aplicarFiltros();
           });
       },
     });
@@ -242,24 +236,21 @@ export class SolicitudTarjetasComponent implements OnInit {
 
     this.tarjetasService
       .updateSolicitud(solicitud.idSolicitud!, solicitudActualizada)
-      .subscribe({
-        next: () => {
-          solicitud.estado = 'rechazada';
-          solicitud.qrId = null;
-          this.aplicarFiltros();
-        },
+      .subscribe(() => {
+        solicitud.estado = 'rechazada';
+        solicitud.qrId = null;
+        this.aplicarFiltros();
       });
   }
 
-  // 👉 NUEVO: soporte para “reportar pérdida” si lo agregas en futuro
+  // NUEVO ESTADO: Reportada / Extraviada
   reportarPerdida(solicitud: SolicitudTarjeta) {
     if (!solicitud.idSolicitud) return;
 
     const solicitudActualizada: Partial<SolicitudTarjeta> = {
-  estado: "reportada" as const,
-  fecha_Revision: new Date().toISOString()
-};
-
+      estado: "reportada",
+      fecha_Revision: new Date().toISOString()
+    };
 
     this.tarjetasService
       .updateSolicitud(solicitud.idSolicitud, solicitudActualizada)
@@ -273,5 +264,4 @@ export class SolicitudTarjetasComponent implements OnInit {
     sessionStorage.clear();
     window.location.href = '/login';
   }
-
 }
