@@ -159,7 +159,6 @@ export class VerTarjeta implements OnInit {
  reportarPerdida(): void {
   if (!this.solicitud) return;
 
-  // 🛑 Confirmación antes de proceder
   const dialogRef = this.dialog.open(DialogoMensaje, {
     data: {
       titulo: "🛑 ¿Estás seguro?",
@@ -173,45 +172,56 @@ export class VerTarjeta implements OnInit {
   dialogRef.afterClosed().subscribe((confirmado: boolean) => {
     if (!confirmado) return;
 
-    // Genera un token nuevo para invalidar el anterior
-    const nuevoToken = Math.random().toString(36).substring(2, 10);
-
-    const solicitudActualizada: Partial<SolicitudTarjeta> = {
-      estado: "reportada",
-      token: nuevoToken,       // reemplaza el token viejo
-      fecha_Revision: new Date().toISOString(),
-      qrId: null               // elimina el QR asociado, si existía
-    };
-
-    this.tarjetasService.updateSolicitud(this.solicitud!.idSolicitud!, solicitudActualizada)
-      .subscribe({
+    // 1️⃣ Borrar QR existente si hay uno
+    if (this.solicitud!.qrId) {
+      this.qrService.eliminarQR(this.solicitud!.qrId).subscribe({
         next: () => {
-          // Actualiza la vista local con el nuevo estado y token
-          this.solicitud!.estado = "reportada";
-          this.solicitud!.token = nuevoToken;
-          this.solicitud!.qrId = null; // asegura que el QR viejo ya no funcione
-
-          this.dialog.open(DialogoMensaje, {
-            data: {
-              titulo: "📢 Tarjeta reportada",
-              mensaje:
-                `Tu tarjeta se ha marcado como perdida.
-Se generó un nuevo token para validación:
-
-🔐 **${nuevoToken}**`
-            }
-          });
+          this.actualizarSolicitudComoReportada();
         },
         error: () => {
-          this.dialog.open(DialogoMensaje, {
-            data: {
-              titulo: "❌ Error",
-              mensaje: "No se pudo reportar la tarjeta. Intenta más tarde."
-            }
-          });
+          // aunque falle eliminar el QR, igual actualizamos estado
+          this.actualizarSolicitudComoReportada();
         }
       });
+    } else {
+      this.actualizarSolicitudComoReportada();
+    }
   });
+}
+
+// 2️⃣ Actualizar estado y token en la solicitud
+private actualizarSolicitudComoReportada() {
+  const nuevoToken = Math.random().toString(36).substring(2, 10);
+  const solicitudActualizada: Partial<SolicitudTarjeta> = {
+    estado: "reportada",
+    token: nuevoToken,
+    fecha_Revision: new Date().toISOString(),
+    qrId: null
+  };
+
+  this.tarjetasService.updateSolicitud(this.solicitud!.idSolicitud!, solicitudActualizada)
+    .subscribe({
+      next: () => {
+        this.solicitud!.estado = "reportada";
+        this.solicitud!.token = nuevoToken;
+        this.solicitud!.qrId = null;
+
+        this.dialog.open(DialogoMensaje, {
+          data: {
+            titulo: "📢 Tarjeta reportada",
+            mensaje: `Tu tarjeta se ha marcado como perdida.\n\nSe generó un nuevo token para validación: 🔐 **${nuevoToken}**`
+          }
+        });
+      },
+      error: () => {
+        this.dialog.open(DialogoMensaje, {
+          data: {
+            titulo: "❌ Error",
+            mensaje: "No se pudo reportar la tarjeta. Intenta más tarde."
+          }
+        });
+      }
+    });
 }
 
 
